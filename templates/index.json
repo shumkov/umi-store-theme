@@ -82,7 +82,7 @@
         "text_g7XxCt"
       ],
       "custom_css": [
-        "h2 {text-transform: uppercase; font-size: 30px;}"
+        "h2 {text-transform: uppercase; font-size: 32px;}"
       ],
       "settings": {
         "desktop_content_position": "center",
