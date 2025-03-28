@@ -125,22 +125,20 @@
             </h3>
           </div>
           <div class="card__badge {{ settings.badge_position }}">
-            %- if card_product.collections %}
-            {%- assign has_specific_collection_url = false -%}
+            {%- assign is_coming_soon = false -%}
             {%- for product_collection in card_product.collections -%}
-              {%- if product_collection.url contains '/collections/specific-collection-url' -%}
-                {%- assign has_specific_collection_url = true -%}
+              {%- if product_collection.title == 'Coming soon' -%}
+                {%- assign is_coming_soon = true -%}
               {%- endif -%}
             {%- endfor -%}
-            {%- if has_specific_collection_url -%}
+            {%- if is_coming_soon -%}
               <span
                 id="Badge-{{ section_id }}-{{ card_product.id }}"
                 class="badge badge--bottom-left color-{{ settings.sold_out_badge_color_scheme }}"
               >
                 Coming soon
               </span>
-            {%- endif -%}
-          {%- elsif card_product.available == false -%}
+            {%- elsif card_product.available == false -%}
               <span
                 id="NoMediaStandardBadge-{{ section_id }}-{{ card_product.id }}"
                 class="badge badge--bottom-left color-{{ settings.sold_out_badge_color_scheme }}"
@@ -564,21 +562,19 @@
           {% endif %}
         {% endif %}
         <div class="card__badge {{ settings.badge_position }}">
-          {%- if card_product.collections %}
-            {%- assign has_specific_collection_url = false -%}
-            {%- for product_collection in card_product.collections -%}
-              {%- if product_collection.url contains '/collections/specific-collection-url' -%}
-                {%- assign has_specific_collection_url = true -%}
-              {%- endif -%}
-            {%- endfor -%}
-            {%- if has_specific_collection_url -%}
-              <span
-                id="Badge-{{ section_id }}-{{ card_product.id }}"
-                class="badge badge--bottom-left color-{{ settings.sold_out_badge_color_scheme }}"
-              >
-                Coming soon
-              </span>
+          {%- assign is_coming_soon = false -%}
+          {%- for product_collection in card_product.collections -%}
+            {%- if product_collection.title == 'Coming soon' -%}
+              {%- assign is_coming_soon = true -%}
             {%- endif -%}
+          {%- endfor -%}
+          {%- if is_coming_soon -%}
+            <span
+              id="Badge-{{ section_id }}-{{ card_product.id }}"
+              class="badge badge--bottom-left color-{{ settings.sold_out_badge_color_scheme }}"
+            >
+              Coming soon
+            </span>
           {%- elsif card_product.available == false -%}
             <span
               id="Badge-{{ section_id }}-{{ card_product.id }}"
