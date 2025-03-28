@@ -1,1 +1,159 @@
-{"sections":{"image_banner":{"type":"image-banner","blocks":{"heading":{"type":"heading","disabled":true,"settings":{"heading":"elegance for a hot climate","heading_size":"h1"}},"text_fJKc3i":{"type":"text","disabled":true,"settings":{"text":"Natural fabric wear made in Phuket, Thailand.","text_style":"body"}},"button":{"type":"buttons","disabled":true,"settings":{"button_label_1":"Shop all","button_link_1":"shopify:\/\/collections\/all","button_style_secondary_1":true,"button_label_2":"","button_link_2":"","button_style_secondary_2":false}}},"block_order":["heading","text_fJKc3i","button"],"settings":{"image":"shopify:\/\/shop_images\/background3.jpg","image_overlay_opacity":0,"image_height":"adapt","image_behavior":"none","desktop_content_position":"bottom-center","desktop_content_alignment":"center","show_text_box":false,"color_scheme":"scheme-3","stack_images_on_mobile":false,"mobile_content_alignment":"center","show_text_below":false}},"rich_text_ngkJ6U":{"type":"rich-text","blocks":{"heading_Y7b936":{"type":"heading","settings":{"heading":"Confidence is the new sexy","heading_size":"h1"}},"text_g7XxCt":{"type":"text","settings":{"text":"<p>Natural fabric wear<\/p>"}}},"block_order":["heading_Y7b936","text_g7XxCt"],"settings":{"desktop_content_position":"center","content_alignment":"center","color_scheme":"","full_width":true,"padding_top":40,"padding_bottom":4}},"featured_collection":{"type":"featured-collection","settings":{"collection":"frontpage","products_to_show":10,"title":"UMI 2025","heading_size":"h2","description":"","show_description":false,"description_style":"body","columns_desktop":4,"enable_desktop_slider":false,"full_width":false,"show_view_all":true,"view_all_style":"solid","color_scheme":"scheme-1","image_ratio":"adapt","image_shape":"default","show_secondary_image":true,"show_vendor":false,"show_rating":false,"quick_add":"none","columns_mobile":"2","swipe_on_mobile":false,"padding_top":44,"padding_bottom":36}},"featured_collection_ayiUfV":{"type":"featured-collection","settings":{"collection":"coming-soon-2025","products_to_show":4,"title":"Comming soon","heading_size":"h2","description":"","show_description":false,"description_style":"body","columns_desktop":4,"enable_desktop_slider":false,"full_width":false,"show_view_all":true,"view_all_style":"solid","color_scheme":"","image_ratio":"adapt","image_shape":"default","show_secondary_image":false,"show_vendor":false,"show_rating":false,"quick_add":"none","columns_mobile":"2","swipe_on_mobile":false,"padding_top":36,"padding_bottom":36}}},"order":["image_banner","rich_text_ngkJ6U","featured_collection","featured_collection_ayiUfV"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "image_banner": {
+      "type": "image-banner",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "heading": "elegance for a hot climate",
+            "heading_size": "h1"
+          }
+        },
+        "text_fJKc3i": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "Natural fabric wear made in Phuket, Thailand.",
+            "text_style": "body"
+          }
+        },
+        "button": {
+          "type": "buttons",
+          "disabled": true,
+          "settings": {
+            "button_label_1": "Shop all",
+            "button_link_1": "shopify://collections/all",
+            "button_style_secondary_1": true,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "text_fJKc3i",
+        "button"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/background3.jpg",
+        "image_overlay_opacity": 0,
+        "image_height": "adapt",
+        "image_behavior": "none",
+        "desktop_content_position": "bottom-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": false,
+        "color_scheme": "scheme-3",
+        "stack_images_on_mobile": false,
+        "mobile_content_alignment": "center",
+        "show_text_below": false
+      }
+    },
+    "rich_text_ngkJ6U": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_Y7b936": {
+          "type": "heading",
+          "settings": {
+            "heading": "Confidence is the new sexy",
+            "heading_size": "h1"
+          }
+        },
+        "text_g7XxCt": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Natural fabric wear</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_Y7b936",
+        "text_g7XxCt"
+      ],
+      "custom_css": [
+        "h2 {text-transform: uppercase; font-size: 30px;}"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 4
+      }
+    },
+    "featured_collection": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "frontpage",
+        "products_to_show": 10,
+        "title": "UMI 2025",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 4,
+        "enable_desktop_slider": false,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "color_scheme": "scheme-1",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "none",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 44,
+        "padding_bottom": 36
+      }
+    },
+    "featured_collection_ayiUfV": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "coming-soon-2025",
+        "products_to_show": 4,
+        "title": "Comming soon",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 4,
+        "enable_desktop_slider": false,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "color_scheme": "",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "none",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "image_banner",
+    "rich_text_ngkJ6U",
+    "featured_collection",
+    "featured_collection_ayiUfV"
+  ]
+}
