@@ -128,6 +128,9 @@
         </script>
 
         {% for link in additional_image_links %}
+          <script>
+            console.log('iterates');
+          </script>
           {% if link == media_image_url %}
             {% assign image_found = true %}
             {% break %}
