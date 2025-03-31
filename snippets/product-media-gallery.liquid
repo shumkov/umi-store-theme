@@ -137,6 +137,13 @@
           </script>
         {%- endif -%}
 
+        <script>
+          console.log('media_image_url:', '{{ media_image_url }}');
+          console.log('additional_image_links:', {{ additional_image_links }});
+          console.log('additional_image_links:', '{{ additional_image_links }}');
+          console.log('Type of additional_image_links:', typeof {{ additional_image_links }});
+        </script>
+
         {%- if product.selected_or_first_available_variant.metafields.custom_image.additional_image_link.value == null
           or additional_image_links contains media_image_url
         -%}
