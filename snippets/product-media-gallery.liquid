@@ -127,7 +127,14 @@
           }
         </script>
 
-        {%- if additional_image_links contains media_image_url -%}
+        {% for link in additional_image_links %}
+          {% if link == media_image_url %}
+            {% assign image_found = true %}
+            {% break %}
+          {% endif %}
+        {% endfor %}
+
+        {%- if image_found -%}
           <script>
             console.log('contains media_image_url');
           </script>
@@ -137,16 +144,7 @@
           </script>
         {%- endif -%}
 
-        <script>
-          console.log('media_image_url:', '{{ media_image_url }}');
-          console.log('additional_image_links:', {{ additional_image_links }});
-          console.log('additional_image_links:', '{{ additional_image_links }}');
-          console.log('Type of additional_image_links:', typeof {{ additional_image_links }});
-        </script>
-
-        {%- if product.selected_or_first_available_variant.metafields.custom_image.additional_image_link.value == null
-          or additional_image_links contains media_image_url
-        -%}
+        {%- if additional_image_links == empty or image_found -%}
           {%- unless media.id == product.selected_or_first_available_variant.featured_media.id -%}
             <li
               id="Slide-{{ section.id }}-{{ media.id }}"
