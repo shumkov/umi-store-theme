@@ -105,6 +105,10 @@
       </script>
 
       {%- for media in product.media -%}
+        <script>
+          console.log('Media');
+        </script>
+
         {% if media_position >= limit
           or media_position >= 1
           and section.settings.hide_variants
