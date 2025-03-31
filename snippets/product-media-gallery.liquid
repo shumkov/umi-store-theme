@@ -98,6 +98,10 @@
         </script>
       {%- endfor -%}
 
+      {% assign additional_image_links = product.selected_or_first_available_variant.metafields.custom_image.additional_image_link.value
+        | json
+      %}
+
       {%- for media in product.media -%}
         {% if media_position >= limit
           or media_position >= 1
@@ -115,17 +119,13 @@
           console.log('{{ media | json }}');
         </script>
 
-        {%- if product.selected_or_first_available_variant.metafields.custom_image.additional_image_link.value
-            contains media.src
-        -%}
+        {%- if additional_image_links contains media.src -%}
           <script>
             console.log('contains media.src');
           </script>
         {%- endif -%}
 
-        {%- if product.selected_or_first_available_variant.metafields.custom_image.additional_image_link.value
-            contains media_image_url
-        -%}
+        {%- if additional_image_links contains media_image_url -%}
           <script>
             console.log('contains media_image_url');
           </script>
