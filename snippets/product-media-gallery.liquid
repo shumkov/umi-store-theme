@@ -52,7 +52,9 @@
   data-desktop-layout="{{ section.settings.gallery_layout }}"
 >
   <script>
-    console.log('{{ product.selected_or_first_available_variant.metafields.custom_image | json }}');
+    console.log(
+      '{{ product.selected_or_first_available_variant.metafields.custom_image.additional_image_link.value | json }}'
+    );
   </script>
   <div id="GalleryStatus-{{ section.id }}" class="visually-hidden" role="status"></div>
   <slider-component id="GalleryViewer-{{ section.id }}" class="slider-mobile-gutter">
