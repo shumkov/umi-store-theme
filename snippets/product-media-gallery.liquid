@@ -124,7 +124,7 @@
           console.log('{{ media_image_url }}');
           console.log('{{ media | json }}');
 
-          if ('{{ additional_image_links }}'.contains('{{ media_image_url }}')) {
+          if ('{{ additional_image_links }}'.includes('{{ media_image_url }}')) {
             console.log('YES');
           } else {
             console.log('NO');
