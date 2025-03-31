@@ -97,15 +97,17 @@
           {% continue %}
         {% endif %}
 
-        {% assign is_selected_variant_image = false %}
-        {% for link in selected_variant_images %}
-          {% if link == media.src %}
-            {% assign is_selected_variant_image = true %}
-            {% break %}
-          {% endif %}
-        {% endfor %}
+        {% if selected_variant_images.count > 0 %}
+          {% assign is_selected_variant_image = false %}
+          {% for link in selected_variant_images %}
+            {% if link == media.src %}
+              {% assign is_selected_variant_image = true %}
+              {% break %}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
 
-        {%- if selected_variant_images == empty or is_selected_variant_image -%}
+        {%- if selected_variant_images.count == 0 or is_selected_variant_image -%}
           {%- unless media.id == product.selected_or_first_available_variant.featured_media.id -%}
             <li
               id="Slide-{{ section.id }}-{{ media.id }}"
