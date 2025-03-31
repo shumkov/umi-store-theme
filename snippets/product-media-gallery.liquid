@@ -115,13 +115,11 @@
 
         {%- assign media_image_url = media.src | image_url -%}
 
-        {% comment %}
-          <script>
-            console.log('Media url:');
-            console.log('{{ media_image_url }}');
-            console.log('{{ media | json }}');
-          </script>
-        {% endcomment %}
+        <script>
+          console.log('Media url:');
+          console.log('{{ media_image_url }}');
+          console.log('{{ media | json }}');
+        </script>
 
         {%- if additional_image_links contains media.src -%}
           <script>
