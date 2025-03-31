@@ -90,6 +90,15 @@
           '{{ product.selected_or_first_available_variant.metafields.custom_image.additional_image_link.value | json }}'
         );
       </script>
+      {%- if product.selected_or_first_available_variant.metafields.custom_image.additional_image_link.value != null -%}
+        {%- for url product.selected_or_first_available_variant.metafields.custom_image.additional_image_link.value -%}
+          <script>
+            console.log('Variant url:');
+            console.log('{{ url }}');
+          </script>
+        {%- endfor -%}
+      {%- endif -%}
+
       {%- for media in product.media -%}
         {% if media_position >= limit
           or media_position >= 1
@@ -100,6 +109,14 @@
         {% endif %}
 
         {%- assign media_image_url = media.src | image_url -%}
+        {%- assign media_image_url = media.src | image_url -%}
+
+        <script>
+          console.log('Media url:');
+          console.log('{{ media_image_url }}');
+          console.log('{{ media | json }}');
+        </script>
+
         {%- if product.selected_or_first_available_variant.metafields.custom_image.additional_image_link.value == null
           or product.selected_or_first_available_variant.metafields.custom_image.additional_image_link.value
             contains media_image_url
