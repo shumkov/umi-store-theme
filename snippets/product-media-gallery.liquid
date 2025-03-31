@@ -95,9 +95,7 @@
         {%- endfor -%}
       {% endcomment %}
 
-      {% assign additional_image_links = product.selected_or_first_available_variant.metafields.custom_image.additional_image_link.value
-        | json
-      %}
+      {% assign additional_image_links = product.selected_or_first_available_variant.metafields.custom_image.additional_image_link.value %}
 
       <script>
         console.log('additional_image_links:');
@@ -130,8 +128,9 @@
         {% assign image_found = false %}
         {% for link in additional_image_links %}
           <script>
-            console.log('{{ link.id }}');
-            console.log('{{ link.src }}'');
+            console.log('{{ link }}');
+            console.log({{ link }});
+            console.log('{{ link.src }}');
             console.log('{{ media.src }}');
             console.log('{{ media_image_url }}');
           </script>
