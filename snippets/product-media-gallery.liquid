@@ -101,6 +101,7 @@
 
         <script>
           console.log('{{ media.src }}');
+          console.log('{{ media | json }}');
         </script>
 
         {%- if product.selected_or_first_available_variant.metafields.custom_image.additional_image_link.value == null
