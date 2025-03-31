@@ -91,7 +91,7 @@
         );
       </script>
 
-      {%- for url product.selected_or_first_available_variant.metafields.custom_image.additional_image_link.value -%}
+      {%- for url in product.selected_or_first_available_variant.metafields.custom_image.additional_image_link.value -%}
         <script>
           console.log('Variant url:');
           console.log('{{ url }}');
