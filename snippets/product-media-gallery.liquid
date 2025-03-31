@@ -108,7 +108,6 @@
         {% endif %}
 
         {%- assign media_image_url = media.src | image_url -%}
-        {%- assign media_image_url = media.src | image_url -%}
 
         <script>
           console.log('Media url:');
@@ -118,19 +117,13 @@
 
         {%- if product.selected_or_first_available_variant.metafields.custom_image.additional_image_link.value == null
           or product.selected_or_first_available_variant.metafields.custom_image.additional_image_link.value
-            contains media_image_url
+            contains media.src
         -%}
           {%- unless media.id == product.selected_or_first_available_variant.featured_media.id -%}
             <li
               id="Slide-{{ section.id }}-{{ media.id }}"
               class="product__media-item grid__item slider__slide{% if single_media_visible %} product__media-item--single{% endif %}{% if product.selected_or_first_available_variant.featured_media == nil and forloop.index == 1 %} is-active{% endif %}{% if media.media_type != 'image' %} product__media-item--full{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
               data-media-id="{{ section.id }}-{{ media.id }}"
-              {% if product.selected_or_first_available_variant.featured_media.alt != media.alt
-                and product.selected_or_first_available_variant.featured_media.alt != blank
-              %}
-                style="display: none;"
-              {% endif %}
-              thumbnail-alt="{{ media.alt }}"
             >
               {%- liquid
                 assign media_position = media_position | default: 0 | plus: 1
