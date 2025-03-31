@@ -41,7 +41,7 @@
     assign media_width = 0.45
   endif
 
-  assign additional_image_links = product.selected_or_first_available_variant.metafields.custom_image.additional_image_link.value
+  assign selected_variant_images = product.selected_or_first_available_variant.metafields.custom_image.additional_image_link.value
 -%}
 
 <media-gallery
@@ -97,15 +97,15 @@
           {% continue %}
         {% endif %}
 
-        {% assign image_found = false %}
-        {% for link in additional_image_links %}
+        {% assign is_selected_variant_image = false %}
+        {% for link in selected_variant_images %}
           {% if link == media.src %}
-            {% assign image_found = true %}
+            {% assign is_selected_variant_image = true %}
             {% break %}
           {% endif %}
         {% endfor %}
 
-        {%- if additional_image_links == empty or image_found -%}
+        {%- if selected_variant_images == empty or is_selected_variant_image -%}
           {%- unless media.id == product.selected_or_first_available_variant.featured_media.id -%}
             <li
               id="Slide-{{ section.id }}-{{ media.id }}"
