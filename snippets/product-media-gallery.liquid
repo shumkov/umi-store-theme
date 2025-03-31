@@ -85,6 +85,11 @@
           %}
         </li>
       {%- endif -%}
+      <script>
+        console.log(
+          '{{ product.selected_or_first_available_variant.metafields.custom_image.additional_image_link.value | json }}'
+        );
+      </script>
       {%- for media in product.media -%}
         {% if media_position >= limit
           or media_position >= 1
@@ -94,8 +99,8 @@
           {% continue %}
         {% endif %}
 
-        <script type="text/javascript">
-          console.log('{{ media | json }}');
+        <script>
+          console.log('{{ media.src }}');
         </script>
 
         {%- if product.selected_or_first_available_variant.metafields.custom_image.additional_image_link.value == null
