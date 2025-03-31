@@ -105,16 +105,6 @@
           {% endif %}
         {% endfor %}
 
-        {%- if image_found -%}
-          <script>
-            console.log('contains media_image_url');
-          </script>
-        {%- else -%}
-          <script>
-            console.log('NO contains media_image_url');
-          </script>
-        {%- endif -%}
-
         {%- if additional_image_links == empty or image_found -%}
           {%- unless media.id == product.selected_or_first_available_variant.featured_media.id -%}
             <li
