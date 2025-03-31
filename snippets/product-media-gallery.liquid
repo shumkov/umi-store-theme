@@ -131,6 +131,10 @@
           <script>
             console.log('contains media_image_url');
           </script>
+        {%- else -%}
+          <script>
+            console.log('NO contains media_image_url');
+          </script>
         {%- endif -%}
 
         {%- if product.selected_or_first_available_variant.metafields.custom_image.additional_image_link.value == null
