@@ -130,8 +130,8 @@
         {% assign image_found = false %}
         {% for link in additional_image_links %}
           <script>
-            console.log('{{ link }}');
-            console.log({{ link }});
+            console.log('{{ link.id }}');
+            console.log('{{ link.src }}'');
             console.log('{{ media.src }}');
             console.log('{{ media_image_url }}');
           </script>
