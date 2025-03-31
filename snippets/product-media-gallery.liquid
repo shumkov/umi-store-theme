@@ -127,11 +127,12 @@
           }
         </script>
 
+        {% assign image_found = false %}
         {% for link in additional_image_links %}
           <script>
             console.log('iterates');
           </script>
-          {% if link == media_image_url %}
+          {% if link == media.src %}
             {% assign image_found = true %}
             {% break %}
           {% endif %}
