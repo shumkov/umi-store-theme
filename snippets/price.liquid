@@ -128,8 +128,8 @@
         {{ 'products.product.on_sale' | t }}
       </span>
 
-      {%- assign is_coming_soon = false -%}
-      {%- for product_collection in card_product.collections -%}
+      {% assign is_coming_soon = false %}
+      {%- for product_collection in product.collections -%}
         {%- if product_collection.title == 'Coming soon' -%}
           {%- assign is_coming_soon = true -%}
         {%- endif -%}
@@ -138,7 +138,7 @@
         <span class="badge price__badge-sold-out color-{{ settings.sold_out_badge_color_scheme }}">Coming soon</span>
       {%- else -%}
         <span class="badge price__badge-sold-out color-{{ settings.sold_out_badge_color_scheme }}">
-          {{ 'products.product.sold_out' | t }}
+          {{- 'products.product.sold_out' | t -}}
         </span>
       {%- endif -%}
     {%- endif -%}
