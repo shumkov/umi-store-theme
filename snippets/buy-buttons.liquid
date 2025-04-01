@@ -83,18 +83,20 @@
             {% endif %}
           >
             <span>
-              {% assign is_coming_soon = false %}
-              {%- for product_collection in product.collections -%}
-                {%- if product_collection.title == 'Coming soon' -%}
-                  {%- assign is_coming_soon = true -%}
-                {%- endif -%}
-              {%- endfor -%}
-              {%- if is_coming_soon -%}
-                Coming soon
-              {%- elsif product.selected_or_first_available_variant == null -%}
+              {%- if product.selected_or_first_available_variant == null -%}
                 {{ 'products.product.unavailable' | t }}
               {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
-                {{ 'products.product.sold_out' | t }}
+                {% assign is_coming_soon = false %}
+                {%- for product_collection in product.collections -%}
+                  {%- if product_collection.title == 'Coming soon' -%}
+                    {%- assign is_coming_soon = true -%}
+                  {%- endif -%}
+                {%- endfor -%}
+                {%- if is_coming_soon -%}
+                  Coming soon
+                {%- else -%}
+                  {{ 'products.product.sold_out' | t }}
+                {%- endif -%}
               {%- else -%}
                 {{ 'products.product.add_to_cart' | t }}
               {%- endif -%}
@@ -116,7 +118,17 @@
           class="product-form__submit button button--full-width button--primary"
           disabled
         >
-          {{ 'products.product.sold_out' | t }}
+          {% assign is_coming_soon = false %}
+          {%- for product_collection in product.collections -%}
+            {%- if product_collection.title == 'Coming soon' -%}
+              {%- assign is_coming_soon = true -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if is_coming_soon -%}
+            Coming soon
+          {%- else -%}
+            {{ 'products.product.sold_out' | t }}
+          {%- endif -%}
         </button>
       </div>
     </div>

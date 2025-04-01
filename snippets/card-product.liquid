@@ -125,25 +125,22 @@
             </h3>
           </div>
           <div class="card__badge {{ settings.badge_position }}">
-            {%- assign is_coming_soon = false -%}
-            {%- for product_collection in card_product.collections -%}
-              {%- if product_collection.title == 'Coming soon' -%}
-                {%- assign is_coming_soon = true -%}
-              {%- endif -%}
-            {%- endfor -%}
-            {%- if is_coming_soon -%}
-              <span
-                id="Badge-{{ section_id }}-{{ card_product.id }}"
-                class="badge badge--bottom-left color-{{ settings.sold_out_badge_color_scheme }}"
-              >
-                Coming soon
-              </span>
-            {%- elsif card_product.available == false -%}
+            {%- if card_product.available == false -%}
               <span
                 id="NoMediaStandardBadge-{{ section_id }}-{{ card_product.id }}"
                 class="badge badge--bottom-left color-{{ settings.sold_out_badge_color_scheme }}"
               >
-                {{- 'products.product.sold_out' | t -}}
+                {%- assign is_coming_soon = false -%}
+                {%- for product_collection in card_product.collections -%}
+                  {%- if product_collection.title == 'Coming soon' -%}
+                    {%- assign is_coming_soon = true -%}
+                  {%- endif -%}
+                {%- endfor -%}
+                {% if is_coming_soon %}
+                  Coming soon
+                {% else %}
+                  {{- 'products.product.sold_out' | t -}}
+                {% endif %}
               </span>
             {%- elsif card_product.compare_at_price > card_product.price and card_product.available -%}
               <span
