@@ -37,6 +37,15 @@
     if value.available
       assign option_disabled = false
     endif
+
+    # Coming soon
+    if option_disabled
+      for product_collection in product.collections
+        if product_collection.title == 'Coming soon'
+          assign option_disabled = true
+        endif
+      endfor
+    endif
   -%}
 
   {%- capture input_id -%}
