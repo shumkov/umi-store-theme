@@ -196,9 +196,17 @@ if (!customElements.get('product-info')) {
           this.querySelector(`#Quantity-Rules-${this.dataset.section}`)?.classList.remove('hidden');
           this.querySelector(`#Volume-Note-${this.dataset.section}`)?.classList.remove('hidden');
 
+          const submitButton = html.getElementById(`ProductSubmitButton-${this.sectionId}`);
+
+          // Coming soon button
+          let submitButtonLabel = window.variantStrings.soldOut;
+          if (submitButton && submitButton.innerText.includes("Coming soon")) {
+            submitButtonLabel = "Coming soon";
+          }
+
           this.productForm?.toggleSubmitButton(
-            html.getElementById(`ProductSubmitButton-${this.sectionId}`)?.hasAttribute('disabled') ?? true,
-            window.variantStrings.soldOut
+            submitButton?.hasAttribute('disabled') ?? true,
+            submitButtonLabel
           );
 
           publish(PUB_SUB_EVENTS.variantChange, {
