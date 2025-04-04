@@ -37,6 +37,8 @@
           assign media = product.selected_or_first_available_variant.featured_media
           render 'product-media', media: media, loop: section.settings.enable_video_looping, variant_image: section.settings.hide_variants
         endif
+
+        assign selected_variant_images = product.selected_or_first_available_variant.metafields.custom_image.additional_image_link.value
       -%}
 
       {%- for media in product.media -%}
@@ -47,9 +49,22 @@
             assign variant_image = false
           endif
 
-          unless media.id == product.selected_or_first_available_variant.featured_media.id
-            render 'product-media', media: media, loop: section.settings.enable_video_looping, variant_image: variant_image
-          endunless
+          if selected_variant_images.count > 0
+            assign is_selected_variant_image = false
+
+            for link in selected_variant_images
+              if link == media.src
+                assign is_selected_variant_image = true
+                break
+              endif
+            endfor
+          endif
+
+          if selected_variant_images.count == 0 or is_selected_variant_image
+            unless media.id == product.selected_or_first_available_variant.featured_media.id
+              render 'product-media', media: media, loop: section.settings.enable_video_looping, variant_image: variant_image
+            endunless
+          endif
         -%}
       {%- endfor -%}
     </div>
