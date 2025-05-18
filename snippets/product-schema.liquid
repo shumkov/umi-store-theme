@@ -3,7 +3,7 @@
     "@context": "https://schema.org",
     "@type": "Product",
     "name": "{{ product.title }}",
-    "image": "{{ product.featured_image.src | image_url: '2048x2048' }}",
+    "image": "{{ product.featured_image.src | img_url: '2048x2048' }}",
     "description": "{{ product.body | strip_html }}",
     "brand": {
       "@type": "Brand",
@@ -12,7 +12,7 @@
     "offers": {
       "@type": "Offer",
       "priceCurrency": "{{  shop.currency }}",
-      "price": "{{ product.variants.first.price | money_without_trailing_zeros }}",
+      "price": "{{ product.variants.first.price | money_without_currency }}",
       "availability": "{% if product.available %}In Stock{% else %}Out of Stock{% endif %}",
       "hasMerchantReturnPolicy": {
         "value": true
