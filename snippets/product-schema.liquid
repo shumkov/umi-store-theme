@@ -1,0 +1,22 @@
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "{{ product.title }}",
+    "image": "{{ product.featured_image.src | image_url: '2048x2048' }}",
+    "description": "{{ product.body | strip_html }}",
+    "brand": {
+      "@type": "Brand",
+      "name": "{{ shop.name }}"
+    },
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "THB",
+      "price": "{{ product.variants.first.price | money_without_trailing_zeros }}",
+      "availability": "{{ product.available ? 'In Stock' : 'Out of Stock' }}",
+      "hasMerchantReturnPolicy": {
+        "value": true
+      }
+    }
+  }
+</script>
