@@ -11,9 +11,9 @@
     },
     "offers": {
       "@type": "Offer",
-      "priceCurrency": "THB",
+      "priceCurrency": "{{  shop.currency }}",
       "price": "{{ product.variants.first.price | money_without_trailing_zeros }}",
-      "availability": "{{ product.available ? 'In Stock' : 'Out of Stock' }}",
+      "availability": "{% if product.available %}In Stock{% else %}Out of Stock{% endif %}",
       "hasMerchantReturnPolicy": {
         "value": true
       }
