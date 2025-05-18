@@ -4,7 +4,7 @@
     "@type": "Product",
     "name": "{{ product.title }}",
     "image": "{{ product.featured_image.src | img_url: '2048x2048' }}",
-    "description": "{{ product.body | strip_html }}",
+    "description": "{{ product.description | strip_html | escape }}",
     "brand": {
       "@type": "Brand",
       "name": "{{ shop.name }}"
@@ -12,7 +12,7 @@
     "offers": {
       "@type": "Offer",
       "priceCurrency": "{{  shop.currency }}",
-      "price": "{{ product.variants.first.price | money_without_currency }}",
+      "price": "{{ product.variants.first.price }}",
       "availability": "{% if product.available %}In Stock{% else %}Out of Stock{% endif %}",
       "hasMerchantReturnPolicy": {
         "value": true
