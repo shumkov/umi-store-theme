@@ -28,13 +28,6 @@
           "type": "price",
           "settings": {}
         },
-        "klip_coupons_klip_app_section_product_xg9kBN": {
-          "type": "shopify://apps/klip-coupons/blocks/klip-app-section-product/df38e221-ede4-4ad4-b47d-56524361a5be",
-          "settings": {
-            "margin_top": 10,
-            "margin_bottom": 10
-          }
-        },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
@@ -90,7 +83,6 @@
         "vendor",
         "title",
         "price",
-        "klip_coupons_klip_app_section_product_xg9kBN",
         "variant_picker",
         "quantity_selector",
         "buy_buttons",
