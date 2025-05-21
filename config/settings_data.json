@@ -167,7 +167,7 @@
       },
       "14391867418331573003": {
         "type": "shopify://apps/goalify/blocks/progress-bar-embed/0834dd64-6591-4dfa-9cc4-bbb7ef032eed",
-        "disabled": true,
+        "disabled": false,
         "settings": {}
       }
     },
