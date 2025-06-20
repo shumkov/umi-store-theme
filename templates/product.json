@@ -86,7 +86,6 @@
         },
         "collapsible_tab_NiTfRR": {
           "type": "collapsible_tab",
-          "disabled": true,
           "settings": {
             "heading": "Composition, care guide",
             "icon": "shirt",
