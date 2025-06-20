@@ -100,6 +100,9 @@
         "description",
         "share"
       ],
+      "custom_css": [
+        ".ks-chart-modal-link ._ks_text {font-size: 14px;}"
+      ],
       "settings": {
         "enable_sticky_info": true,
         "color_scheme": "scheme-1",
