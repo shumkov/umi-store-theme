@@ -43,9 +43,13 @@
             "waitForElementDelay": 5
           }
         },
-        "quantity_selector": {
-          "type": "quantity_selector",
-          "settings": {}
+        "inventory_r6m98F": {
+          "type": "inventory",
+          "settings": {
+            "text_style": "body",
+            "inventory_threshold": 10,
+            "show_inventory_quantity": true
+          }
         },
         "buy_buttons": {
           "type": "buy_buttons",
@@ -93,7 +97,7 @@
         "price",
         "variant_picker",
         "kiwi_size_chart_recommender_kiwi_sizing_xWxDHV",
-        "quantity_selector",
+        "inventory_r6m98F",
         "buy_buttons",
         "collapsible_tab_KNWiQa",
         "complementary_rF8mf9",
