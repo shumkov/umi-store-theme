@@ -53,7 +53,7 @@
       ],
       "name": "t:sections.image-banner.presets.name",
       "settings": {
-        "image": "shopify://shop_images/IMG_1920.jpg",
+        "image": "shopify://shop_images/120.png",
         "image_overlay_opacity": 10,
         "image_height": "medium",
         "image_behavior": "none",
