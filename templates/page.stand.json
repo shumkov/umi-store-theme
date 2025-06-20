@@ -61,9 +61,9 @@
         "desktop_content_alignment": "center",
         "show_text_box": false,
         "color_scheme": "scheme-4",
-        "stack_images_on_mobile": true,
+        "stack_images_on_mobile": false,
         "mobile_content_alignment": "center",
-        "show_text_below": true
+        "show_text_below": false
       }
     },
     "collection_list_KyrqxJ": {
