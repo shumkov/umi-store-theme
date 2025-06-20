@@ -20,10 +20,17 @@
     "image_banner_VbCBKX": {
       "type": "image-banner",
       "blocks": {
+        "heading_J6UknH": {
+          "type": "heading",
+          "settings": {
+            "heading": "Get inspired",
+            "heading_size": "h1"
+          }
+        },
         "text_DrRApH": {
           "type": "text",
           "settings": {
-            "text": "<strong>Get inspired by the atmosphere of UMI</strong>",
+            "text": "stay close to catch every update",
             "text_style": "subtitle"
           }
         },
@@ -40,19 +47,20 @@
         }
       },
       "block_order": [
+        "heading_J6UknH",
         "text_DrRApH",
         "buttons_bEVqYz"
       ],
       "name": "t:sections.image-banner.presets.name",
       "settings": {
-        "image": "shopify://shop_images/63_ae8777b2-4fd4-459c-b7c9-e34653df4dec.jpg",
-        "image_overlay_opacity": 0,
+        "image": "shopify://shop_images/IMG_1920.jpg",
+        "image_overlay_opacity": 10,
         "image_height": "medium",
         "image_behavior": "none",
         "desktop_content_position": "middle-center",
         "desktop_content_alignment": "center",
         "show_text_box": false,
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-4",
         "stack_images_on_mobile": true,
         "mobile_content_alignment": "center",
         "show_text_below": true
@@ -64,26 +72,19 @@
         "featured_collection_D9g3nQ": {
           "type": "featured_collection",
           "settings": {
-            "collection": ""
+            "collection": "frontpage"
           }
         },
         "featured_collection_LNReJQ": {
           "type": "featured_collection",
           "settings": {
-            "collection": ""
-          }
-        },
-        "featured_collection_n4hnqa": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": ""
+            "collection": "coming-soon-2025"
           }
         }
       },
       "block_order": [
         "featured_collection_D9g3nQ",
-        "featured_collection_LNReJQ",
-        "featured_collection_n4hnqa"
+        "featured_collection_LNReJQ"
       ],
       "name": "t:sections.collection-list.presets.name",
       "settings": {
