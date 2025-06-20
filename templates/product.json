@@ -84,11 +84,13 @@
           "type": "description",
           "settings": {}
         },
-        "text_kcqJET": {
-          "type": "text",
+        "collapsible_tab_NiTfRR": {
+          "type": "collapsible_tab",
           "settings": {
-            "text": "{{ product.metafields.shopify.fabric | metafield_text: field: 'label' }}",
-            "text_style": "body"
+            "heading": "Composition, care guide",
+            "icon": "shirt",
+            "content": "{{ product.metafields.shopify.fabric | metafield_tag: field: 'label' }}",
+            "page": ""
           }
         },
         "share": {
@@ -109,7 +111,7 @@
         "collapsible_tab_KNWiQa",
         "complementary_rF8mf9",
         "description",
-        "text_kcqJET",
+        "collapsible_tab_NiTfRR",
         "share"
       ],
       "custom_css": [
