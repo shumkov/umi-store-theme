@@ -84,6 +84,13 @@
           "type": "description",
           "settings": {}
         },
+        "text_kcqJET": {
+          "type": "text",
+          "settings": {
+            "text": "{{ product.metafields.shopify.fabric | metafield_text: field: 'label' }}",
+            "text_style": "body"
+          }
+        },
         "share": {
           "type": "share",
           "settings": {
@@ -102,6 +109,7 @@
         "collapsible_tab_KNWiQa",
         "complementary_rF8mf9",
         "description",
+        "text_kcqJET",
         "share"
       ],
       "custom_css": [
