@@ -133,10 +133,30 @@
         "padding_top": 36,
         "padding_bottom": 28
       }
+    },
+    "1750396821401e0602": {
+      "type": "apps",
+      "blocks": {
+        "kiwi_size_chart_recommender_kiwi_sizing_XXtwqM": {
+          "type": "shopify://apps/kiwi-size-chart-recommender/blocks/kiwiSizing/b7369922-bf15-44ce-a121-a22a8fcbc4b0",
+          "settings": {
+            "product": "{{product}}",
+            "waitForElementSelector": "",
+            "waitForElementDelay": 5
+          }
+        }
+      },
+      "block_order": [
+        "kiwi_size_chart_recommender_kiwi_sizing_XXtwqM"
+      ],
+      "settings": {
+        "include_margins": true
+      }
     }
   },
   "order": [
     "main",
-    "related-products"
+    "related-products",
+    "1750396821401e0602"
   ]
 }
