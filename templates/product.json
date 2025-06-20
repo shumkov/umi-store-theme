@@ -35,6 +35,14 @@
             "swatch_shape": "circle"
           }
         },
+        "kiwi_size_chart_recommender_kiwi_sizing_aRyqgf": {
+          "type": "shopify://apps/kiwi-size-chart-recommender/blocks/kiwiSizing/b7369922-bf15-44ce-a121-a22a8fcbc4b0",
+          "settings": {
+            "product": "{{product}}",
+            "waitForElementSelector": "",
+            "waitForElementDelay": 5
+          }
+        },
         "quantity_selector": {
           "type": "quantity_selector",
           "settings": {}
@@ -84,6 +92,7 @@
         "title",
         "price",
         "variant_picker",
+        "kiwi_size_chart_recommender_kiwi_sizing_aRyqgf",
         "quantity_selector",
         "buy_buttons",
         "collapsible_tab_KNWiQa",
