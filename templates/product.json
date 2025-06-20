@@ -46,7 +46,7 @@
         "inventory_r6m98F": {
           "type": "inventory",
           "settings": {
-            "text_style": "uppercase",
+            "text_style": "body",
             "inventory_threshold": 5,
             "show_inventory_quantity": true
           }
