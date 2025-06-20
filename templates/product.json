@@ -86,11 +86,12 @@
         },
         "collapsible_tab_NiTfRR": {
           "type": "collapsible_tab",
+          "disabled": true,
           "settings": {
             "heading": "Composition, care guide",
             "icon": "shirt",
-            "content": "{{ product.metafields.shopify.fabric | metafield_tag: field: 'label' }}",
-            "page": ""
+            "content": "<p>{{ product.metafields.shopify.fabric | metafield_tag: field: 'label' }}</p>",
+            "page": "care-guide-short"
           }
         },
         "share": {
