@@ -117,7 +117,8 @@
         "share"
       ],
       "custom_css": [
-        ".ks-chart-modal-link ._ks_text {font-size: 14px;}"
+        ".ks-chart-modal-link ._ks_text {font-size: 14px;}",
+        ".accordion__content {font-size: 12px;}"
       ],
       "settings": {
         "enable_sticky_info": true,
