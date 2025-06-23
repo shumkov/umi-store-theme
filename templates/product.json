@@ -60,6 +60,7 @@
         },
         "collapsible_tab_KNWiQa": {
           "type": "collapsible_tab",
+          "name": "Delivery info",
           "settings": {
             "heading": "Delivery only in Thailand",
             "icon": "map_pin",
@@ -86,6 +87,7 @@
         },
         "collapsible_tab_NiTfRR": {
           "type": "collapsible_tab",
+          "name": "Composition",
           "settings": {
             "heading": "Composition, care guide",
             "icon": "shirt",
