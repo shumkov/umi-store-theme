@@ -85,6 +85,13 @@
           "type": "description",
           "settings": {}
         },
+        "popup_8VX96y": {
+          "type": "popup",
+          "settings": {
+            "text": "Something",
+            "page": "care-guide-short"
+          }
+        },
         "collapsible_tab_NiTfRR": {
           "type": "collapsible_tab",
           "name": "Composition",
@@ -113,6 +120,7 @@
         "collapsible_tab_KNWiQa",
         "complementary_rF8mf9",
         "description",
+        "popup_8VX96y",
         "collapsible_tab_NiTfRR",
         "share"
       ],
