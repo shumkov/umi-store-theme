@@ -169,6 +169,11 @@
         "type": "shopify://apps/goalify/blocks/progress-bar-embed/0834dd64-6591-4dfa-9cc4-bbb7ef032eed",
         "disabled": false,
         "settings": {}
+      },
+      "11175655759228028154": {
+        "type": "shopify://apps/essential-a-b-testing/blocks/ab-testing/0154ac6b-7b9c-4958-8219-ed5b06e6d463",
+        "disabled": false,
+        "settings": {}
       }
     },
     "color_schemes": {
