@@ -174,6 +174,11 @@
         "type": "shopify://apps/essential-a-b-testing/blocks/ab-testing/0154ac6b-7b9c-4958-8219-ed5b06e6d463",
         "disabled": false,
         "settings": {}
+      },
+      "11038922299930075240": {
+        "type": "shopify://apps/stok-back-in-stock-alert/blocks/app-embed/efd73fb9-4943-460f-9877-08a22c111961",
+        "disabled": false,
+        "settings": {}
       }
     },
     "color_schemes": {
