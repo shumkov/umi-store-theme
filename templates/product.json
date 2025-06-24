@@ -58,6 +58,10 @@
             "show_gift_card_recipient": true
           }
         },
+        "stok_back_in_stock_alert_app_block_jgYfGJ": {
+          "type": "shopify://apps/stok-back-in-stock-alert/blocks/app-block/efd73fb9-4943-460f-9877-08a22c111961",
+          "settings": {}
+        },
         "collapsible_tab_KNWiQa": {
           "type": "collapsible_tab",
           "name": "Delivery info",
@@ -110,6 +114,7 @@
         "kiwi_size_chart_recommender_kiwi_sizing_xWxDHV",
         "inventory_r6m98F",
         "buy_buttons",
+        "stok_back_in_stock_alert_app_block_jgYfGJ",
         "collapsible_tab_KNWiQa",
         "complementary_rF8mf9",
         "description",
