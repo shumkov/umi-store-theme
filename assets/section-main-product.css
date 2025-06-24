@@ -1503,15 +1503,11 @@ a.product__text {
 Composition and care guide
 */
 
-product-info .product__accordion ul:has(.structured-component-icon-list__item-icon) {
+product-info .product__accordion ul.care-guide-items {
   display: grid;
   gap: 10px;
   padding: 0;
   list-style: none;
-
-  img {
-    border: 0;
-  }
 
   li {
     display: grid;
@@ -1524,5 +1520,6 @@ product-info .product__accordion ul:has(.structured-component-icon-list__item-ic
 
   .structured-component-icon-list__item-icon {
     margin: 0;
+    border: 0;
   }
 }
