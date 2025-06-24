@@ -89,7 +89,7 @@
           "type": "collapsible_tab",
           "name": "Composition",
           "settings": {
-            "heading": "Composition, care guide",
+            "heading": "Composition and care",
             "icon": "shirt",
             "content": "{{ product.metafields.shopify.fabric | metafield_tag: field: 'label' }}",
             "page": "care-guide-short"
