@@ -96,7 +96,7 @@
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
-        "collection": "frontpage",
+        "collection": "2025",
         "products_to_show": 8,
         "title": "Collection '25",
         "heading_size": "h2",
@@ -128,7 +128,7 @@
           "type": "button",
           "settings": {
             "button_label": "View all",
-            "button_link": "shopify://collections/frontpage",
+            "button_link": "shopify://collections/2025",
             "button_style_secondary": false,
             "button_label_2": "",
             "button_link_2": "",
