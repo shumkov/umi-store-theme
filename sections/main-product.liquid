@@ -55,13 +55,14 @@
 
   <script>
     // UTM Parameter Check and Redirect Logic for Product Pages
-    (function() {
+    (function () {
       const urlParams = new URLSearchParams(window.location.search);
       const utmSource = urlParams.get('utm_source');
       const utmMedium = urlParams.get('utm_medium');
+      const bgRef = urlParams.get('bg_ref');
 
       // Check for specific UTM parameters
-      if (utmSource === 'offline' && utmMedium === 'treeoclock') {
+      if (utmSource === 'offline' && utmMedium === 'treeoclock' && !bgRef) {
         // Create new URL with bg_ref parameter instead of UTM parameters
         const currentUrl = new URL(window.location.href);
 
