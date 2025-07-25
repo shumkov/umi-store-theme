@@ -53,6 +53,27 @@
     <script src="{{ 'theme-editor.js' | asset_url }}" defer="defer"></script>
   {%- endif -%}
 
+  <script>
+    // UTM Parameter Check and Redirect Logic for Product Pages
+    (function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const utmSource = urlParams.get('utm_source');
+      const utmMedium = urlParams.get('utm_medium');
+
+      // Check for specific UTM parameters
+      if (utmSource === 'offline' && utmMedium === 'treeoclock') {
+        // Create new URL with bg_ref parameter instead of UTM parameters
+        const currentUrl = new URL(window.location.href);
+
+        // Add bg_ref parameter
+        currentUrl.searchParams.set('bg_ref', 'saqrpHUNb2');
+
+        // Redirect to new URL
+        window.location.replace(currentUrl.toString());
+      }
+    })();
+  </script>
+
   {%- assign first_3d_model = product.media | where: 'media_type', 'model' | first -%}
   {%- if first_3d_model -%}
     {{ 'component-product-model.css' | asset_url | stylesheet_tag }}
