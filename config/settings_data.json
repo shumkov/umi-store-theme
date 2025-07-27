@@ -170,11 +170,6 @@
         "disabled": false,
         "settings": {}
       },
-      "11175655759228028154": {
-        "type": "shopify://apps/essential-a-b-testing/blocks/ab-testing/0154ac6b-7b9c-4958-8219-ed5b06e6d463",
-        "disabled": false,
-        "settings": {}
-      },
       "11038922299930075240": {
         "type": "shopify://apps/stok-back-in-stock-alert/blocks/app-embed/efd73fb9-4943-460f-9877-08a22c111961",
         "disabled": false,
@@ -194,6 +189,23 @@
         "type": "shopify://apps/genie-store-pickup/blocks/app-embed/e00f106c-bb7f-4e25-b11d-baff1a328f6b",
         "disabled": false,
         "settings": {}
+      },
+      "11175655759228028154": {
+        "type": "shopify://apps/essential-a-b-testing/blocks/ab-testing/0154ac6b-7b9c-4958-8219-ed5b06e6d463",
+        "disabled": true,
+        "settings": {}
+      },
+      "7079518687644006178": {
+        "type": "shopify://apps/checkout-blocks/blocks/app-embed/b0024ca5-9de8-4bf0-a92f-cd0783877ae2",
+        "disabled": false,
+        "settings": {
+          "utm_id": true,
+          "utm_source": true,
+          "utm_medium": true,
+          "utm_campaign": true,
+          "utm_term": true,
+          "ref": true
+        }
       }
     },
     "color_schemes": {
