@@ -185,11 +185,6 @@
         "disabled": false,
         "settings": {}
       },
-      "17745481618859153576": {
-        "type": "shopify://apps/genie-store-pickup/blocks/app-embed/e00f106c-bb7f-4e25-b11d-baff1a328f6b",
-        "disabled": false,
-        "settings": {}
-      },
       "11175655759228028154": {
         "type": "shopify://apps/essential-a-b-testing/blocks/ab-testing/0154ac6b-7b9c-4958-8219-ed5b06e6d463",
         "disabled": true,
@@ -206,6 +201,11 @@
           "utm_term": true,
           "ref": true
         }
+      },
+      "6023461868751542726": {
+        "type": "shopify://apps/bsure-checkout-rules/blocks/embed/01dc9f18-0935-422b-a3f7-3d2458585368",
+        "disabled": false,
+        "settings": {}
       }
     },
     "color_schemes": {
