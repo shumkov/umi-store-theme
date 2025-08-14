@@ -168,7 +168,7 @@
         "view_all_style": "solid",
         "color_scheme": "scheme-2",
         "image_ratio": "portrait",
-        "image_shape": "blob",
+        "image_shape": "default",
         "show_secondary_image": true,
         "show_vendor": false,
         "show_rating": false,
