@@ -62,6 +62,10 @@
           "type": "shopify://apps/stok-back-in-stock-alert/blocks/app-block/efd73fb9-4943-460f-9877-08a22c111961",
           "settings": {}
         },
+        "vitals_ub_product_bundles_DN39Qk": {
+          "type": "shopify://apps/vitals/blocks/ub-product-bundles/aeb48102-2a5a-4f39-bdbd-d8d49f4e20b8",
+          "settings": {}
+        },
         "collapsible_tab_KNWiQa": {
           "type": "collapsible_tab",
           "name": "Delivery info",
@@ -115,6 +119,7 @@
         "inventory_r6m98F",
         "buy_buttons",
         "stok_back_in_stock_alert_app_block_jgYfGJ",
+        "vitals_ub_product_bundles_DN39Qk",
         "collapsible_tab_KNWiQa",
         "complementary_rF8mf9",
         "description",
