@@ -128,7 +128,9 @@
       ],
       "custom_css": [
         ".ks-chart-modal-link ._ks_text {font-size: 14px;}",
-        ".accordion__content {font-size: 12px;}"
+        ".accordion__content {font-size: 12px;}",
+        ".vtl-ub-bundle-box {text-align: left;}",
+        ".vtl-ub-bundle-box h2 {font-size: 20px;}"
       ],
       "settings": {
         "enable_sticky_info": true,

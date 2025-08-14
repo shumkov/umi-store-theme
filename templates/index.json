@@ -181,6 +181,7 @@
     },
     "featured_collection_ayiUfV": {
       "type": "featured-collection",
+      "custom_css": [],
       "settings": {
         "collection": "coming-soon-2025",
         "products_to_show": 8,
