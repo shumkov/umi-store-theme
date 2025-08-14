@@ -95,6 +95,7 @@
     },
     "featured_collection": {
       "type": "featured-collection",
+      "custom_css": [],
       "settings": {
         "collection": "2025",
         "products_to_show": 8,
@@ -146,7 +147,36 @@
         "color_scheme": "",
         "full_width": true,
         "padding_top": 0,
-        "padding_bottom": 0
+        "padding_bottom": 16
+      }
+    },
+    "featured_collection_xynGwg": {
+      "type": "featured-collection",
+      "name": "t:sections.featured-collection.presets.name",
+      "settings": {
+        "collection": "underwear",
+        "products_to_show": 4,
+        "title": "Underwear",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 4,
+        "enable_desktop_slider": false,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "color_scheme": "scheme-2",
+        "image_ratio": "portrait",
+        "image_shape": "blob",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "none",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
       }
     },
     "featured_collection_ayiUfV": {
@@ -183,6 +213,7 @@
     "rich_text_ngkJ6U",
     "featured_collection",
     "rich_text_F4ANyE",
+    "featured_collection_xynGwg",
     "featured_collection_ayiUfV"
   ]
 }
