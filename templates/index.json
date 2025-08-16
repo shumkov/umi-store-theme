@@ -14,17 +14,15 @@
       "blocks": {
         "heading": {
           "type": "heading",
-          "disabled": true,
           "settings": {
-            "heading": "elegance for a hot climate",
+            "heading": "Confidence is the new sexy",
             "heading_size": "h1"
           }
         },
         "text_fJKc3i": {
           "type": "text",
-          "disabled": true,
           "settings": {
-            "text": "Natural fabric wear made in Phuket, Thailand.",
+            "text": "natural fabric wear",
             "text_style": "body"
           }
         },
@@ -45,6 +43,9 @@
         "heading",
         "text_fJKc3i",
         "button"
+      ],
+      "custom_css": [
+        "h2 {text-transform: uppercase; font-size: 36px;}"
       ],
       "settings": {
         "image": "shopify://shop_images/066_9760ad94-5bfb-4a7b-816d-7b36ebb2f935.jpg",
@@ -81,6 +82,7 @@
         "heading_Y7b936",
         "text_g7XxCt"
       ],
+      "disabled": true,
       "custom_css": [
         "h2 {text-transform: uppercase; font-size: 32px;}"
       ],
