@@ -84,8 +84,9 @@
         "text_g7XxCt"
       ],
       "custom_css": [
+        ".section-template--18362733396015__rich_text_ngkJ6U-padding {display: none;}",
         "h2 {text-transform: uppercase; font-size: 32px;}",
-        "@media (max-width: 768px) {h2 {display: none; } .banner__text {display: none; }}"
+        "@media (max-width: 768px) {.section-template--18362733396015__rich_text_ngkJ6U-padding {display: block;}}"
       ],
       "settings": {
         "desktop_content_position": "center",
