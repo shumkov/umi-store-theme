@@ -83,9 +83,9 @@
         "heading_Y7b936",
         "text_g7XxCt"
       ],
-      "disabled": true,
       "custom_css": [
-        "h2 {text-transform: uppercase; font-size: 32px;}"
+        "h2 {text-transform: uppercase; font-size: 32px;}",
+        "@media (max-width: 768px) {h2 {display: none; } .banner__text {display: none; }}"
       ],
       "settings": {
         "desktop_content_position": "center",
