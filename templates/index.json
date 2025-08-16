@@ -45,7 +45,8 @@
         "button"
       ],
       "custom_css": [
-        "h2 {text-transform: uppercase; font-size: 36px;}"
+        "h2 {text-transform: uppercase; font-size: 36px;}",
+        "@media (max-width: 768px) {h2 {display: none; }}"
       ],
       "settings": {
         "image": "shopify://shop_images/066_9760ad94-5bfb-4a7b-816d-7b36ebb2f935.jpg",
