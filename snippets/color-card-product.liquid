@@ -87,12 +87,12 @@
                   assign secondary_image = blank
                   for media in card_product.media
                     if media.src == variant_sel.metafields.additional_image_link.value[0]
-                      assign featured_position = media.position
+                      assign secondary_image = media.position
                       break
                     endif
+                  endfor
                 %}
 
-                
                 {%- if secondary_image != blank -%}
                   <img
                     srcset="
