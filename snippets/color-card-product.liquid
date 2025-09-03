@@ -120,6 +120,7 @@
                 aria-labelledby="StandardCardNoMediaLink-{{ section_id }}-{{ card_product.id }} NoMediaStandardBadge-{{ section_id }}-{{ card_product.id }}"
               >
                 {{ card_product.title | escape }}
+                {{ product_variant.name | escape }}
               </a>
             </h3>
           </div>
@@ -170,7 +171,6 @@
               aria-labelledby="CardLink-{{ section_id }}-{{ card_product.id }} Badge-{{ section_id }}-{{ card_product.id }}"
             >
               {{ card_product.title | escape }}
-              {{ product_variant.name | escape }}
             </a>
           </h3>
           <div class="card-information">
