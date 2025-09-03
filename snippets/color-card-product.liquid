@@ -84,13 +84,17 @@
 
               {%- assign variant_images = variant_sel.metafields.custom_image.additional_image_link.value -%}
               {%- if variant_images.count > 0 and show_secondary_image -%}
-                {%- for media in card_product.media -%}
-                  {{ media.src }} == {{ variant_images[0] }},
-                {%- endfor -%}
                 {%- liquid
                   assign secondary_image = blank
+                  assign first_variant_link = blank
+
+                  # There is not other way to get the first image link from the metafield type list
+                  for image_link in variant_images
+                    assign first_variant_link = image_link
+                    break
+                  endfor
                   for media in card_product.media
-                    if media.src == variant_images[0]
+                    if media.src == first_variant_link
                       assign secondary_image = media
                       break
                     endif
