@@ -58,10 +58,6 @@
             "show_gift_card_recipient": true
           }
         },
-        "stok_back_in_stock_alert_app_block_jgYfGJ": {
-          "type": "shopify://apps/stok-back-in-stock-alert/blocks/app-block/efd73fb9-4943-460f-9877-08a22c111961",
-          "settings": {}
-        },
         "collapsible_tab_KNWiQa": {
           "type": "collapsible_tab",
           "name": "Delivery info",
@@ -83,7 +79,7 @@
             "make_collapsible_row": false,
             "icon": "price_tag",
             "product_list_limit": 10,
-            "products_per_page": 3,
+            "products_per_page": 4,
             "pagination_style": "counter",
             "image_ratio": "square",
             "enable_quick_add": true
@@ -118,7 +114,6 @@
         "kiwi_size_chart_recommender_kiwi_sizing_xWxDHV",
         "inventory_r6m98F",
         "buy_buttons",
-        "stok_back_in_stock_alert_app_block_jgYfGJ",
         "collapsible_tab_KNWiQa",
         "vitals_ub_product_bundles_DN39Qk",
         "complementary_rF8mf9",
@@ -153,7 +148,7 @@
       "settings": {
         "heading": "You may also like",
         "heading_size": "h2",
-        "products_to_show": 4,
+        "products_to_show": 8,
         "columns_desktop": 4,
         "columns_mobile": "2",
         "color_scheme": "scheme-1",
