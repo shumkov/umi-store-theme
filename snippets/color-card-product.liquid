@@ -83,9 +83,10 @@
               {% comment %}theme-check-enable ImgLazyLoading{% endcomment %}
 
               {%- assign variant_images = variant_sel.metafields.custom_image.additional_image_link.value -%}
-
-              {{ variant_images.count }}
               {%- if variant_images.count > 0 and show_secondary_image -%}
+                {%- for media in card_product.media -%}
+                  {{ media.src }} == {{ variant_images[0] }}
+                {%- endfor -%}
                 {%- liquid
                   assign secondary_image = blank
                   for media in card_product.media
