@@ -74,23 +74,23 @@
           </div>
 
           <div class="product-count-vertical light" role="status">
-              <h2 class="product-count__text text-body">
-                <span id="ProductCountDesktop">
-                  {%- if collection.results_count -%}
-                    {{
-                      'templates.search.results_with_count'
-                      | t: terms: collection.terms, count: collection.results_count
-                    }}
-                  {%- elsif collection.products_count == collection.all_products_count -%}
-                    {{ 'products.facets.product_count_simple' | t: count: collection.products_count }}
-                  {%- else -%}
-                    {{
-                      'products.facets.product_count'
-                      | t: product_count: collection.products_count, count: collection.all_products_count
-                    }}
-                  {%- endif -%}
-                </span>
-              </h2>
+            <h2 class="product-count__text text-body">
+              <span id="ProductCountDesktop">
+                {%- if collection.results_count -%}
+                  {{
+                    'templates.search.results_with_count'
+                    | t: terms: collection.terms, count: collection.results_count
+                  }}
+                {%- elsif collection.products_count == collection.all_products_count -%}
+                  {{ 'products.facets.product_count_simple' | t: count: collection.products_count }}
+                {%- else -%}
+                  {{
+                    'products.facets.product_count'
+                    | t: product_count: collection.products_count, count: collection.all_products_count
+                  }}
+                {%- endif -%}
+              </span>
+            </h2>
             {%- render 'loading-spinner' -%}
           </div>
         </form>
@@ -158,18 +158,26 @@
                 {%- if forloop.index > 2 -%}
                   {%- assign lazy_load = true -%}
                 {%- endif -%}
-                {% render 'color-variant',
-                  card_product: product,
-                  media_aspect_ratio: section.settings.image_ratio,
-                  image_shape: section.settings.image_shape,
-                  show_secondary_image: section.settings.show_secondary_image,
-                  show_vendor: section.settings.show_vendor,
-                  show_rating: section.settings.show_rating,
-                  lazy_load: lazy_load,
-                  skip_styles: skip_card_product_styles,
-                  quick_add: section.settings.quick_add,
-                  section_id: section.id
-                %}
+                <li
+                  class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                  {% if settings.animations_reveal_on_scroll %}
+                    data-cascade
+                    style="--animation-order: {{ forloop.index }};"
+                  {% endif %}
+                >
+                  {% render 'card-product',
+                    card_product: product,
+                    media_aspect_ratio: section.settings.image_ratio,
+                    image_shape: section.settings.image_shape,
+                    show_secondary_image: section.settings.show_secondary_image,
+                    show_vendor: section.settings.show_vendor,
+                    show_rating: section.settings.show_rating,
+                    lazy_load: lazy_load,
+                    skip_styles: skip_card_product_styles,
+                    quick_add: section.settings.quick_add,
+                    section_id: section.id
+                  %}
+                </li>
                 {%- assign skip_card_product_styles = true -%}
               {%- endfor -%}
             </ul>
