@@ -75,6 +75,12 @@
             "collection": "2025"
           }
         },
+        "featured_collection_PFHhjE": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "underwear"
+          }
+        },
         "featured_collection_LNReJQ": {
           "type": "featured_collection",
           "settings": {
@@ -84,6 +90,7 @@
       },
       "block_order": [
         "featured_collection_D9g3nQ",
+        "featured_collection_PFHhjE",
         "featured_collection_LNReJQ"
       ],
       "name": "t:sections.collection-list.presets.name",
