@@ -85,7 +85,7 @@
               {%- assign variant_images = variant_sel.metafields.custom_image.additional_image_link.value -%}
               {%- if variant_images.count > 0 and show_secondary_image -%}
                 {%- for media in card_product.media -%}
-                  {{ media.src }} == {{ variant_images[0] }}
+                  {{ media.src }} == {{ variant_images[0] }},
                 {%- endfor -%}
                 {%- liquid
                   assign secondary_image = blank
