@@ -82,12 +82,13 @@
               >
               {% comment %}theme-check-enable ImgLazyLoading{% endcomment %}
 
-              {%- if variant_sel.metafields.additional_image_link.value.count > 0 and show_secondary_image -%}
+              {%- assign variant_images = variant_sel.metafields.custom_image.additional_image_link.value -%}
+              {%- if variant_images.count > 0 and show_secondary_image -%}
                 {%- liquid
                   assign secondary_image = blank
                   for media in card_product.media
-                    if media.src == variant_sel.metafields.additional_image_link.value[0]
-                      assign secondary_image = media.position
+                    if media.src == variant_images[0]
+                      assign secondary_image = media
                       break
                     endif
                   endfor
