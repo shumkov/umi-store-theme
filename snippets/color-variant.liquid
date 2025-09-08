@@ -4,7 +4,7 @@
     {% assign color_active = true %}
   {% endif %}
 {% endfor %}
-{% if card_product.variants.size > 1 and color_active == true %}
+{% if card_product.variants.size > 1 and color_active == true and color_filter_param.size == 0 %}
   {% for option in card_product.options %}
     {% if option == 'Color' or option == 'Colour' %}
       {% assign index = forloop.index0 %}
