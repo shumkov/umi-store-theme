@@ -160,7 +160,8 @@
                 {%- endif -%}
                 {%- assign color_filter_params = collection.filters | where "param_name", "filter.v.t.shopify.color-pattern" -%}
                 <script>
-                  console.log({{ color_filter_param | json }});
+                  // yayaya
+                  console.log('{{ color_filter_param | json }}');
                 </script>
                 {% render 'color-variant',
                   card_product: product,
