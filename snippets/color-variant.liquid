@@ -57,12 +57,11 @@
       style="--animation-order: {{ forloop.index }};"
     {% endif %}
   >
-    {%
-      render 'card-product',
+    {% render 'card-product',
       card_product: card_product,
       media_aspect_ratio: media_aspect_ratio,
       image_shape: image_shape,
-      show_secondary_image: color_filter_params.size == 0 and show_secondary_image,
+      show_secondary_image: false,
       show_vendor: show_vendor,
       show_rating: show_rating,
       lazy_load: lazy_load,
