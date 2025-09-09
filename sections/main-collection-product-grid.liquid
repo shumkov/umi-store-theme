@@ -158,11 +158,23 @@
                 {%- if forloop.index > 2 -%}
                   {%- assign lazy_load = true -%}
                 {%- endif -%}
-                {%- assign color_filter_params = collection.filters | where "param_name", "filter.v.t.shopify.color-pattern" -%}
-                <script>
-                  // yayaya
-                  console.log('{{ color_filter_param | json }}');
-                </script>
+                {%- comment -%}
+                  Iterate over collection.filters, and for each filter that has the param name
+                  "filter.v.t.shopify.color-pattern" and at least one active value,
+                  append its JSON representation to a string, using "||" as a delimiter.
+                {%- endcomment -%}
+                {%- assign color_filter_params_str = '' -%}
+                {%- for filter in collection.filters -%}
+                  {%- if filter.param_name == 'filter.v.t.shopify.color-pattern' and filter.active_values.size > 0 -%}
+                    {%- assign color_filter_params_str = color_filter_params_str
+                      | append: filter
+                      | json
+                      | append: '||'
+                    -%}
+                  {%- endif -%}
+                {%- endfor -%}
+                {%- assign color_filter_params = color_filter_params_str | split: '||' -%}
+                <pre>DEBUG: {{ color_filter_params_str }}</pre>
                 {% render 'color-variant',
                   card_product: product,
                   media_aspect_ratio: section.settings.image_ratio,
