@@ -5,7 +5,7 @@
     {% break %}
   {% endif %}
 {% endfor %}
-{% if card_product.variants.size > 1 and color_active == true %}
+{% if card_product.variants.size > 1 and color_active == true and color_filter_param.size == 0 %}
   {% for option in card_product.options %}
     {% if option == 'Color' or option == 'Colour' %}
       {% assign index = forloop.index0 %}
@@ -61,7 +61,7 @@
       card_product: card_product,
       media_aspect_ratio: media_aspect_ratio,
       image_shape: image_shape,
-      show_secondary_image: show_secondary_image,
+      show_secondary_image: false,
       show_vendor: show_vendor,
       show_rating: show_rating,
       lazy_load: lazy_load,
