@@ -158,7 +158,10 @@
                 {%- if forloop.index > 2 -%}
                   {%- assign lazy_load = true -%}
                 {%- endif -%}
-                {%- assign color_filter_param = collection.filters | where "param_name", "filter.v.t.shopify.color-pattern" -%}
+                {%- assign color_filter_params = collection.filters | where "param_name", "filter.v.t.shopify.color-pattern" -%}
+                <script>
+                  console.log({{ color_filter_param | json }});
+                </script>
                 {% render 'color-variant',
                   card_product: product,
                   media_aspect_ratio: section.settings.image_ratio,
@@ -170,7 +173,7 @@
                   skip_styles: skip_card_product_styles,
                   quick_add: section.settings.quick_add,
                   section_id: section.id,
-                  color_filter_param: color_filter_param
+                  color_filter_params: color_filter_params
                 %}
                 {%- assign skip_card_product_styles = true -%}
               {%- endfor -%}
