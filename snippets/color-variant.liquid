@@ -5,6 +5,8 @@
     {% break %}
   {% endif %}
 {% endfor %}
+{{ color_filter_params | json }}
+{{ color_filter_params.size }}
 {% if card_product.variants.size > 1 and color_active == true and color_filter_param.size == 0 %}
   {% for option in card_product.options %}
     {% if option == 'Color' or option == 'Colour' %}
