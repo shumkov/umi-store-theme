@@ -27,6 +27,7 @@
   {{ 'component-price.css' | asset_url | stylesheet_tag }}
   {{ 'quick-order-list.css' | asset_url | stylesheet_tag }}
   {{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
+  {{ 'component-swatch.css' | asset_url | stylesheet_tag }}
 {%- endunless -%}
 {%- if card_product and card_product != empty -%}
   {%- liquid
@@ -167,7 +168,38 @@
               class="full-unstyled-link"
               aria-labelledby="CardLink-{{ section_id }}-{{ card_product.id }} Badge-{{ section_id }}-{{ card_product.id }}"
             >
-              {{ card_product.title | escape }}
+              {{- card_product.title | escape -}}
+              {%- liquid
+                assign color_option = null
+                # Prefer an option that actually has swatches configured
+                for option in card_product.options_with_values
+                  assign swatch_count = option.values | map: 'swatch' | compact | size
+                  if swatch_count > 0
+                    assign color_option = option
+                    break
+                  endif
+                endfor
+                # Fallback: detect a color option by name
+                if color_option == null
+                  for option in card_product.options_with_values
+                    assign name_downcase = option.name | downcase
+                    if name_downcase contains 'color' or name_downcase contains 'colour'
+                      assign color_option = option
+                      break
+                    endif
+                  endfor
+                endif
+              -%}
+              {%- if color_option -%}
+                <span
+                  class="card__swatches"
+                  style="--swatch-input--size: 12px; display: inline-flex; gap: 4px; margin-left: 8px; vertical-align: middle;"
+                >
+                  {%- for value in color_option.values -%}
+                    {% render 'swatch', swatch: value.swatch, shape: 'square' %}
+                  {%- endfor -%}
+                </span>
+              {%- endif -%}
             </a>
           </h3>
           <div class="card-information">
