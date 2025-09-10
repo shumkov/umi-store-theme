@@ -26,6 +26,7 @@
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 {{ 'quick-order-list.css' | asset_url | stylesheet_tag }}
 {{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
+{{ 'component-swatch.css' | asset_url | stylesheet_tag }}
 
 {%- if card_product and card_product != empty -%}
   {%- liquid
@@ -189,8 +190,49 @@
               class="full-unstyled-link"
               aria-labelledby="CardLink-{{ section_id }}-{{ card_product.id }} Badge-{{ section_id }}-{{ card_product.id }}"
             >
-              {{ card_product.title | escape }}
-              <span style="color: #666">{{ variant_sel.option1 | escape }}</span>
+              {{- card_product.title | escape -}}
+              {%- liquid
+                assign variant_color_swatch = null
+                assign selected_value = null
+                assign color_option = null
+                # Find the color option with swatches
+                for opt in card_product.options_with_values
+                  assign swatch_count = opt.values | map: 'swatch' | compact | size
+                  if swatch_count > 0
+                    assign color_option = opt
+                    break
+                  endif
+                endfor
+                # Select current option
+                if color_option
+                  assign pos = color_option.position
+                  case pos
+                    when 1
+                      assign selected_value = variant_sel.option1
+                    when 2
+                      assign selected_value = variant_sel.option2
+                    when 3
+                      assign selected_value = variant_sel.option3
+                  endcase
+                  assign selected_value_down = selected_value | strip | downcase
+                  for value in color_option.values
+                    assign candidate = value.value | default: value
+                    assign candidate_down = candidate | strip | downcase
+                    if candidate_down == selected_value_down
+                      assign variant_color_swatch = value.swatch
+                      break
+                    endif
+                  endfor
+                endif
+              -%}
+              {%- if variant_color_swatch -%}
+                <span
+                  class="card__swatch"
+                  style="--swatch-input--size: 12px; margin-left: 8px; display: inline-flex; vertical-align: middle;"
+                >
+                  {% render 'swatch', swatch: variant_color_swatch, shape: 'square' %}
+                </span>
+              {%- endif -%}
             </a>
           </h3>
           <div class="card-information">

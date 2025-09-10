@@ -179,16 +179,6 @@
                     break
                   endif
                 endfor
-                # Fallback: detect a color option by name
-                if color_option == null
-                  for option in card_product.options_with_values
-                    assign name_downcase = option.name | downcase
-                    if name_downcase contains 'color' or name_downcase contains 'colour'
-                      assign color_option = option
-                      break
-                    endif
-                  endfor
-                endif
               -%}
               {%- if color_option -%}
                 <span
