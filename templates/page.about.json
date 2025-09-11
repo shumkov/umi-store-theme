@@ -355,21 +355,11 @@
             "link_label": "",
             "link": ""
           }
-        },
-        "column_ePJCKX": {
-          "type": "column",
-          "settings": {
-            "title": "",
-            "text": "<p>Every fabric at UMI is chosen with care and precision — not only to meet the highest standards of quality, but also to embody the brand’s philosophy: comfort, lightness, and respect for nature.</p>",
-            "link_label": "",
-            "link": ""
-          }
         }
       },
       "block_order": [
         "column_4WBQct",
-        "column_x6CUUJ",
-        "column_ePJCKX"
+        "column_x6CUUJ"
       ],
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
@@ -388,6 +378,60 @@
         "padding_top": 80,
         "padding_bottom": 64
       }
+    },
+    "multicolumn_zTmLTe": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_zn6fdE": {
+          "type": "column",
+          "settings": {
+            "title": "Column",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_9birRM": {
+          "type": "column",
+          "settings": {
+            "title": "Column",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_BXnNXB": {
+          "type": "column",
+          "settings": {
+            "title": "Column",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_zn6fdE",
+        "column_9birRM",
+        "column_BXnNXB"
+      ],
+      "name": "t:sections.multicolumn.presets.name",
+      "settings": {
+        "title": "Multicolumn",
+        "heading_size": "h1",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "button_label": "Button label",
+        "button_link": "",
+        "columns_desktop": 3,
+        "column_alignment": "left",
+        "background_style": "primary",
+        "color_scheme": "",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
     }
   },
   "order": [
@@ -401,6 +445,7 @@
     "image_banner_ggeQyU",
     "multicolumn_x9eMcw",
     "image_banner_6XbekR",
-    "multicolumn_MY8aCU"
+    "multicolumn_MY8aCU",
+    "multicolumn_zTmLTe"
   ]
 }
