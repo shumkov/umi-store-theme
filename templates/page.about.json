@@ -228,7 +228,6 @@
       "name": "t:sections.image-banner.presets.name",
       "settings": {
         "image": "shopify://shop_images/068_24bdfe47-dee4-4b59-aa0c-24e6845b1d9f.jpg",
-        "image_2": "shopify://shop_images/063.jpg",
         "image_overlay_opacity": 0,
         "image_height": "adapt",
         "image_behavior": "none",
