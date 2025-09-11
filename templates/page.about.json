@@ -240,7 +240,7 @@
       "name": "t:sections.image-banner.presets.name",
       "settings": {
         "image": "shopify://shop_images/068_24bdfe47-dee4-4b59-aa0c-24e6845b1d9f.jpg",
-        "image_overlay_opacity": 0,
+        "image_overlay_opacity": 10,
         "image_height": "adapt",
         "image_behavior": "none",
         "desktop_content_position": "middle-center",
