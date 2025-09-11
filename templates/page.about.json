@@ -196,7 +196,7 @@
           "type": "column",
           "settings": {
             "title": "",
-            "text": "<p>UMI is dedicated to the modern woman — <strong>confident, sensual, and free</strong>.</p><h2>Our philosophy is rooted in the  belief that confidence is the new sexy</h2><p>—true allure comes not from excess, but from presence, ease,  and self-assurance.</p><p>Every piece is created to support this feeling—light on the body, refined in detail, and versatile in style.</p><p>UMI celebrates femininity in its  softest and strongest forms, offering women clothing that feels natural, empowering, and enduring.</p>",
+            "text": "<p>UMI is dedicated to the modern woman — <strong>confident, sensual, and free</strong>.</p><h2>Our philosophy is rooted in the  belief that confidence is the new sexy</h2><p>—true allure comes not from excess, but from presence, ease,  and self-assurance.</p><p>Every piece is created to support this feeling—light on the body, refined in detail, and versatile in style.</p>",
             "link_label": "",
             "link": ""
           }
@@ -225,6 +225,18 @@
     },
     "image_banner_ggeQyU": {
       "type": "image-banner",
+      "blocks": {
+        "heading_YDRBPP": {
+          "type": "heading",
+          "settings": {
+            "heading": "<strong>UMI celebrates femininity in its  softest and strongest forms, offering women clothing that feels natural, empowering, and enduring.</strong>",
+            "heading_size": "h2"
+          }
+        }
+      },
+      "block_order": [
+        "heading_YDRBPP"
+      ],
       "name": "t:sections.image-banner.presets.name",
       "settings": {
         "image": "shopify://shop_images/068_24bdfe47-dee4-4b59-aa0c-24e6845b1d9f.jpg",
@@ -234,7 +246,7 @@
         "desktop_content_position": "middle-center",
         "desktop_content_alignment": "center",
         "show_text_box": false,
-        "color_scheme": "",
+        "color_scheme": "scheme-3",
         "stack_images_on_mobile": false,
         "mobile_content_alignment": "center",
         "show_text_below": false
