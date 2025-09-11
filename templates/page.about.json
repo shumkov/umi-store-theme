@@ -65,7 +65,6 @@
       "block_order": [
         "text_x9cpV6"
       ],
-      "disabled": true,
       "name": "t:sections.image-with-text.presets.name",
       "settings": {
         "image": "shopify://shop_images/217.jpg",
@@ -110,6 +109,7 @@
         "column_waAmT4",
         "column_mBFi3P"
       ],
+      "disabled": true,
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
         "title": "",
