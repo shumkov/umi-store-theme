@@ -244,6 +244,15 @@
     "multicolumn_x9eMcw": {
       "type": "multicolumn",
       "blocks": {
+        "column_dCLELN": {
+          "type": "column",
+          "settings": {
+            "title": "",
+            "text": "<h2>All production takes place in Thailand in small batches, supporting local artisans and ensuring meticulous quality control at every stage.</h2><p>Each piece is created with care to highlight inner confidence while remaining in harmony with the world around us.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
         "column_XCGccm": {
           "type": "column",
           "settings": {
@@ -253,20 +262,11 @@
             "link_label": "",
             "link": ""
           }
-        },
-        "column_dCLELN": {
-          "type": "column",
-          "settings": {
-            "title": "",
-            "text": "<h2>All production takes place in Thailand in small batches, supporting local artisans and ensuring meticulous quality control at every stage.</h2><p>Each piece is created with care to highlight inner confidence while remaining in harmony with the world around us.</p>",
-            "link_label": "",
-            "link": ""
-          }
         }
       },
       "block_order": [
-        "column_XCGccm",
-        "column_dCLELN"
+        "column_dCLELN",
+        "column_XCGccm"
       ],
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
