@@ -383,7 +383,7 @@
         "column_alignment": "left",
         "background_style": "none",
         "color_scheme": "",
-        "columns_mobile": "1",
+        "columns_mobile": "2",
         "swipe_on_mobile": false,
         "padding_top": 80,
         "padding_bottom": 64
