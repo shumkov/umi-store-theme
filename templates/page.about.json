@@ -65,6 +65,7 @@
       "block_order": [
         "text_x9cpV6"
       ],
+      "disabled": true,
       "name": "t:sections.image-with-text.presets.name",
       "settings": {
         "image": "shopify://shop_images/217.jpg",
@@ -78,6 +79,51 @@
         "mobile_content_alignment": "left",
         "section_color_scheme": "",
         "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "multicolumn_hYjrTj": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_waAmT4": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/217.jpg",
+            "title": "",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_mBFi3P": {
+          "type": "column",
+          "settings": {
+            "title": "",
+            "text": "<p><strong>Founded</strong> by Dina Shumkova<strong> in 2024 in Phuket,</strong> the brand debuted with a knitwear collection that  introduced a new interpretation of the summer wardrobe. Each piece was designed to complement the others, remaining  versatile and enduring. </p><p><strong>Linen, Tencel, and Japanese cotton </strong>define the uniqueness of UMI’s fabrics</p><h3>— <strong>breathable, lightweight, and made for hot climates.</strong></h3>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_waAmT4",
+        "column_mBFi3P"
+      ],
+      "name": "t:sections.multicolumn.presets.name",
+      "settings": {
+        "title": "",
+        "heading_size": "h1",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 2,
+        "column_alignment": "left",
+        "background_style": "none",
+        "color_scheme": "",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
         "padding_top": 36,
         "padding_bottom": 36
       }
@@ -336,6 +382,7 @@
     "main",
     "multicolumn_dTJMT8",
     "image_with_text_dwcYBj",
+    "multicolumn_hYjrTj",
     "multicolumn_YUEPQx",
     "image_banner_FEQANY",
     "multicolumn_rrCjMi",
