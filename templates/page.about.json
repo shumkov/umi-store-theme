@@ -379,41 +379,6 @@
         "padding_bottom": 64
       }
     },
-    "multicolumn_zTmLTe": {
-      "type": "multicolumn",
-      "blocks": {
-        "column_zn6fdE": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/002_e4242629-84e9-4a24-abb3-b9621f43a231.jpg",
-            "title": "",
-            "text": "<p>Every fabric at UMI is chosen with care and precision — not only to meet the highest standards of quality, but also to embody the brand’s philosophy: comfort, lightness, and respect for nature.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "column_zn6fdE"
-      ],
-      "name": "t:sections.multicolumn.presets.name",
-      "settings": {
-        "title": "",
-        "heading_size": "h1",
-        "image_width": "full",
-        "image_ratio": "adapt",
-        "button_label": "",
-        "button_link": "",
-        "columns_desktop": 3,
-        "column_alignment": "left",
-        "background_style": "none",
-        "color_scheme": "",
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
     "image_with_text_8BFMxJ": {
       "type": "image-with-text",
       "blocks": {
@@ -475,7 +440,6 @@
     "multicolumn_x9eMcw",
     "image_banner_6XbekR",
     "multicolumn_MY8aCU",
-    "multicolumn_zTmLTe",
     "image_with_text_8BFMxJ"
   ]
 }
