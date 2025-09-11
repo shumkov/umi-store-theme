@@ -196,7 +196,7 @@
           "type": "column",
           "settings": {
             "title": "",
-            "text": "<p>UMI is dedicated to the modern woman — <strong>confident, sensual, and free</strong>.</p><h2>Our philosophy is rooted in the  belief that confidence is the new sexy</h2><p>—true allure comes not from excess, but from presence, ease,  and self-assurance.</p><p>Every piece is created to support this feeling—light on the body, refined in detail, and versatile in style.</p>",
+            "text": "<p>UMI is dedicated to the modern woman — <strong>confident, sensual, and free</strong>.</p><h2>Our philosophy is rooted in the  belief that confidence is the new sexy</h2><p>—true allure comes not from excess, but from presence, ease,  and self-assurance.</p><p>Every piece is created to support this feeling—light on the body, refined in detail, and versatile in style.</p><p>UMI celebrates femininity in its  softest and strongest forms, offering women clothing that feels natural, empowering, and enduring.</p>",
             "link_label": "",
             "link": ""
           }
@@ -228,8 +228,9 @@
       "blocks": {
         "heading_YDRBPP": {
           "type": "heading",
+          "disabled": true,
           "settings": {
-            "heading": "<strong>UMI celebrates femininity in its  softest and strongest forms, offering women clothing that feels natural, empowering, and enduring.</strong>",
+            "heading": "UMI celebrates femininity in its  softest and strongest forms, offering women clothing that feels natural, empowering, and enduring.",
             "heading_size": "h2"
           }
         }
