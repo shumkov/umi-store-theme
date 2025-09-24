@@ -36,15 +36,7 @@
   }
 {%- endstyle -%}
 
-{%- assign selected_collection = section.settings.collection -%}
-{%- assign target_collection = blank -%}
-{%- if selected_collection != blank -%}
-  {%- if selected_collection.handle and collections[selected_collection.handle] != blank -%}
-    {%- assign target_collection = collections[selected_collection.handle] -%}
-  {%- else -%}
-    {%- assign target_collection = selected_collection -%}
-  {%- endif -%}
-{%- endif -%}
+{%- assign target_collection = section.settings.collection -%}
 {%- assign is_editor = request.design_mode -%}
 {%- assign show_filters_ui = false -%}
 {%- if is_editor and target_collection != blank -%}
