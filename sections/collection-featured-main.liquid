@@ -37,15 +37,20 @@
 {%- endstyle -%}
 
 {%- assign target_collection = section.settings.collection -%}
+{%- if target_collection and target_collection.handle -%}
+  {%- assign target_collection = collections[target_collection.handle] -%}
+{%- endif -%}
 {%- assign show_filters_ui = false -%}
 {%- if request.design_mode and target_collection != blank -%}
   {%- assign show_filters_ui = true -%}
 {%- endif -%}
-{%- assign filter_controls_enabled = 'false' -%}
-{%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
-  {%- assign filter_controls_enabled = 'true' -%}
+{%- assign filters_visible = 'false' -%}
+{%- if show_filters_ui -%}
+  {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
+    {%- assign filters_visible = 'true' -%}
+  {%- endif -%}
 {%- endif -%}
-{%- if show_filters_ui and filter_controls_enabled == 'true' -%}
+{%- if filters_visible == 'true' -%}
   {{ 'component-facets.css' | asset_url | stylesheet_tag }}
   <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
 {%- endif -%}
@@ -85,19 +90,20 @@
       </ul>
     </div>
   {% else %}
-    {% if show_filters_ui and filter_controls_enabled == 'true' %}
+    {% if filters_visible == 'true' %}
         <div class="page-width">
           <p class="rte"><em>Filters are visible here only while editing. They stay hidden on your storefront.</em></p>
         </div>
     {% endif %}
 
-    {%- assign add_page_width_class = 'true' -%}
-    {%- if show_filters_ui and section.settings.filter_type == 'vertical' -%}
-      {%- assign add_page_width_class = 'false' -%}
-    {%- endif -%}
-    <div{% if show_filters_ui and section.settings.filter_type == 'vertical' %} class="facets-vertical page-width"{% endif %}>
-      {%- if show_filters_ui and filter_controls_enabled == 'true' -%}
-        {%- assign pseudo_paginate = nil -%}
+    {%- paginate target_collection.products by section.settings.products_per_page -%}
+      {%- assign add_page_width_class = 'true' -%}
+      {%- if filters_visible == 'true' and section.settings.filter_type == 'vertical' -%}
+        {%- assign add_page_width_class = 'false' -%}
+      {%- endif -%}
+
+      <div{% if filters_visible == 'true' and section.settings.filter_type == 'vertical' %} class="facets-vertical page-width"{% endif %}>
+        {%- if filters_visible == 'true' -%}
           <aside
             aria-labelledby="verticalTitle"
             class="facets-wrapper{% unless section.settings.enable_filtering %} facets-wrapper--no-filters{% endunless %}{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
@@ -109,83 +115,88 @@
               enable_filtering: section.settings.enable_filtering,
               enable_sorting: section.settings.enable_sorting,
               filter_type: section.settings.filter_type,
-              paginate: pseudo_paginate
+              paginate: paginate
             %}
           </aside>
-      {%- endif -%}
-
-      <div
-        class="product-grid-container{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-        id="ProductGridContainer"
-        {% if settings.animations_reveal_on_scroll %}
-          data-cascade
-        {% endif %}
-      >
-        {%- if target_collection.products_count == 0 -%}
-          <div class="collection collection--empty page-width" id="product-grid" data-id="{{ section.id }}">
-            <div class="loading-overlay gradient"></div>
-            <div class="title-wrapper center">
-              <h2 class="title title--primary">
-                {{ 'sections.collection_template.empty' | t -}}
-                <br>
-                {{
-                  'sections.collection_template.use_fewer_filters_html'
-                  | t: link: target_collection.url, class: 'underlined-link link'
-                }}
-              </h2>
-            </div>
-          </div>
-        {%- else -%}
-          <div class="collection{% if add_page_width_class == 'true' %} page-width{% endif %}">
-            <div class="loading-overlay gradient"></div>
-            <ul
-              id="product-grid"
-              data-id="{{ section.id }}"
-              class="
-                grid product-grid grid--{{ section.settings.columns_mobile }}-col-tablet-down
-                grid--{{ section.settings.columns_desktop }}-col-desktop
-                {% if section.settings.quick_add == 'bulk' %} collection-quick-add-bulk{% endif %}
-              "
-            >
-              {% assign skip_card_product_styles = false %}
-              {%- for product in target_collection.products limit: section.settings.products_per_page -%}
-                {% assign lazy_load = false %}
-                {%- if forloop.index > 2 -%}
-                  {%- assign lazy_load = true -%}
-                {%- endif -%}
-                {%- assign color_filter_params_str = '' -%}
-                {%- if section.settings.enable_filtering and target_collection.filters -%}
-                  {%- for filter in target_collection.filters -%}
-                    {%- if filter.param_name == 'filter.v.t.shopify.color-pattern' and filter.active_values.size > 0 -%}
-                      {%- assign color_filter_params_str = color_filter_params_str
-                        | append: filter
-                        | json
-                        | append: '||'
-                      -%}
-                    {%- endif -%}
-                  {%- endfor -%}
-                {%- endif -%}
-                {%- assign color_filter_params = color_filter_params_str | split: '||' -%}
-                {% render 'color-variant',
-                  card_product: product,
-                  media_aspect_ratio: section.settings.image_ratio,
-                  image_shape: section.settings.image_shape,
-                  show_secondary_image: section.settings.show_secondary_image,
-                  show_vendor: section.settings.show_vendor,
-                  show_rating: section.settings.show_rating,
-                  lazy_load: lazy_load,
-                  skip_styles: skip_card_product_styles,
-                  quick_add: section.settings.quick_add,
-                  section_id: section.id,
-                  color_filter_params: color_filter_params
-                %}
-                {%- assign skip_card_product_styles = true -%}
-              {%- endfor -%}
-            </ul>
-          </div>
         {%- endif -%}
+
+        <div
+          class="product-grid-container{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          id="ProductGridContainer"
+          {% if settings.animations_reveal_on_scroll %}
+            data-cascade
+          {% endif %}
+        >
+          {%- if paginate.items_count == 0 -%}
+            <div class="collection collection--empty page-width" id="product-grid" data-id="{{ section.id }}">
+              <div class="loading-overlay gradient"></div>
+              <div class="title-wrapper center">
+                <h2 class="title title--primary">
+                  {{ 'sections.collection_template.empty' | t -}}
+                  <br>
+                  {{
+                    'sections.collection_template.use_fewer_filters_html'
+                    | t: link: target_collection.url, class: 'underlined-link link'
+                  }}
+                </h2>
+              </div>
+            </div>
+          {%- else -%}
+            <div class="collection{% if add_page_width_class == 'true' %} page-width{% endif %}">
+              <div class="loading-overlay gradient"></div>
+              <ul
+                id="product-grid"
+                data-id="{{ section.id }}"
+                class="
+                  grid product-grid grid--{{ section.settings.columns_mobile }}-col-tablet-down
+                  grid--{{ section.settings.columns_desktop }}-col-desktop
+                  {% if section.settings.quick_add == 'bulk' %} collection-quick-add-bulk{% endif %}
+                "
+              >
+                {% assign skip_card_product_styles = false %}
+                {%- for product in paginate.items -%}
+                  {% assign lazy_load = false %}
+                  {%- if forloop.index > 2 -%}
+                    {%- assign lazy_load = true -%}
+                  {%- endif -%}
+                  {%- assign color_filter_params_str = '' -%}
+                  {%- if section.settings.enable_filtering and target_collection.filters -%}
+                    {%- for filter in target_collection.filters -%}
+                      {%- if filter.param_name == 'filter.v.t.shopify.color-pattern' and filter.active_values.size > 0 -%}
+                        {%- assign color_filter_params_str = color_filter_params_str
+                          | append: filter
+                          | json
+                          | append: '||'
+                        -%}
+                      {%- endif -%}
+                    {%- endfor -%}
+                  {%- endif -%}
+                  {%- assign color_filter_params = color_filter_params_str | split: '||' -%}
+                  {% render 'color-variant',
+                    card_product: product,
+                    media_aspect_ratio: section.settings.image_ratio,
+                    image_shape: section.settings.image_shape,
+                    show_secondary_image: section.settings.show_secondary_image,
+                    show_vendor: section.settings.show_vendor,
+                    show_rating: section.settings.show_rating,
+                    lazy_load: lazy_load,
+                    skip_styles: skip_card_product_styles,
+                    quick_add: section.settings.quick_add,
+                    section_id: section.id,
+                    color_filter_params: color_filter_params
+                  %}
+                  {%- assign skip_card_product_styles = true -%}
+                {%- endfor -%}
+              </ul>
+
+              {%- if paginate.pages > 1 -%}
+                {% render 'pagination', paginate: paginate, anchor: '' %}
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
       </div>
-    </div>
+    {%- endpaginate -%}
   {% endif %}
   {% if section.settings.image_shape == 'arch' %}
     {{ 'mask-arch.svg' | inline_asset_content }}
