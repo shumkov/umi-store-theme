@@ -41,7 +41,11 @@
 {%- if request.design_mode and target_collection != blank -%}
   {%- assign show_filters_ui = true -%}
 {%- endif -%}
-{%- if show_filters_ui and (section.settings.enable_filtering or section.settings.enable_sorting) -%}
+{%- assign filter_controls_enabled = blank -%}
+{%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
+  {%- assign filter_controls_enabled = 'true' -%}
+{%- endif -%}
+{%- if show_filters_ui and filter_controls_enabled -%}
   {{ 'component-facets.css' | asset_url | stylesheet_tag }}
   <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
 {%- endif -%}
@@ -82,14 +86,14 @@
     </div>
   {% else %}
     {%- paginate target_collection.products by section.settings.products_per_page -%}
-      {% if show_filters_ui and (section.settings.enable_filtering or section.settings.enable_sorting) %}
+      {% if show_filters_ui and filter_controls_enabled %}
         <div class="page-width">
           <p class="rte"><em>Filters are visible here only while editing. They stay hidden on your storefront.</em></p>
         </div>
       {% endif %}
 
       <div{% if show_filters_ui and section.settings.filter_type == 'vertical' %} class="facets-vertical page-width"{% endif %}>
-        {%- if show_filters_ui and (section.settings.enable_filtering or section.settings.enable_sorting) -%}
+        {%- if show_filters_ui and filter_controls_enabled -%}
           <aside
             aria-labelledby="verticalTitle"
             class="facets-wrapper{% unless section.settings.enable_filtering %} facets-wrapper--no-filters{% endunless %}{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
