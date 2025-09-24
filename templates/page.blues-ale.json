@@ -11,13 +11,138 @@
   "sections": {
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {
         "padding_top": 28,
         "padding_bottom": 28
       }
+    },
+    "featured_product_HBYE7n": {
+      "type": "featured-product",
+      "blocks": {
+        "text_dwDzPg": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "{{ section.settings.product.vendor }}",
+            "text_style": "uppercase"
+          }
+        },
+        "title_MdNfNA": {
+          "type": "title",
+          "settings": {
+            "heading_size": "h1"
+          }
+        },
+        "price_HBEbVm": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant_picker_jpqtwk": {
+          "type": "variant_picker",
+          "repeater": "{{ section.settings.product.metafields.shopify.size.value }}",
+          "settings": {}
+        },
+        "quantity_selector_PperWT": {
+          "type": "quantity_selector",
+          "disabled": true,
+          "settings": {}
+        },
+        "buy_buttons_mbhTME": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "share_aKaJgc": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
+        }
+      },
+      "block_order": [
+        "text_dwDzPg",
+        "title_MdNfNA",
+        "price_HBEbVm",
+        "variant_picker_jpqtwk",
+        "quantity_selector_PperWT",
+        "buy_buttons_mbhTME",
+        "share_aKaJgc"
+      ],
+      "name": "t:sections.featured-product.presets.name",
+      "settings": {
+        "product": "long-skirt-hush",
+        "color_scheme": "",
+        "secondary_background": false,
+        "media_size": "medium",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": false,
+        "enable_video_looping": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "17587129071371aa66": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_31f9fa1_pLQbPm": {
+          "type": "ai_gen_block_31f9fa1",
+          "settings": {
+            "featured_product": "long-skirt-hush",
+            "selected_variant": "43654764298287",
+            "layout": "row",
+            "max_width": 800,
+            "padding": 30,
+            "content_gap": 30,
+            "show_description": true,
+            "add_button_text": "Add to cart",
+            "buy_button_text": "Buy it now",
+            "title_size": 24,
+            "price_size": 20,
+            "description_size": 14,
+            "button_text_size": 16,
+            "background_color": "#ffffff",
+            "text_color": "#000000",
+            "price_color": "#000000",
+            "sale_price_color": "#d82c0d",
+            "link_color": "#000000",
+            "link_hover_color": "#666666",
+            "add_button_bg_color": "#ffffff",
+            "add_button_text_color": "#000000",
+            "add_button_border_color": "#000000",
+            "add_button_hover_bg_color": "#f5f5f5",
+            "add_button_hover_text_color": "#000000",
+            "buy_button_bg_color": "#000000",
+            "buy_button_text_color": "#ffffff",
+            "buy_button_hover_bg_color": "#333333",
+            "variant_bg_color": "#ffffff",
+            "variant_border_color": "#cccccc",
+            "variant_hover_bg_color": "#f5f5f5",
+            "variant_selected_bg_color": "#000000",
+            "variant_selected_border_color": "#000000",
+            "variant_selected_text_color": "#ffffff",
+            "border_radius": 8,
+            "image_border_radius": 6,
+            "button_border_radius": 4,
+            "variant_border_radius": 4
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_31f9fa1_pLQbPm"
+      ],
+      "settings": {}
     }
   },
   "order": [
-    "main"
+    "main",
+    "featured_product_HBYE7n",
+    "17587129071371aa66"
   ]
 }
