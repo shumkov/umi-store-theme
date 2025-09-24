@@ -36,9 +36,17 @@
   }
 {%- endstyle -%}
 
+{%- assign original_collection = collection -%}
 {%- assign target_collection = section.settings.collection -%}
-{%- if target_collection and target_collection.handle -%}
-  {%- assign target_collection = collections[target_collection.handle] -%}
+{%- if target_collection != blank -%}
+  {%- assign collection = target_collection -%}
+{%- endif -%}
+{%- assign filters_collection = target_collection -%}
+{%- if filters_collection and filters_collection.handle -%}
+  {%- assign filters_collection_candidate = collections[filters_collection.handle] -%}
+  {%- if filters_collection_candidate != blank -%}
+    {%- assign filters_collection = filters_collection_candidate -%}
+  {%- endif -%}
 {%- endif -%}
 {%- assign show_filters_ui = false -%}
 {%- if request.design_mode and target_collection != blank -%}
@@ -96,7 +104,7 @@
         </div>
     {% endif %}
 
-    {%- paginate target_collection.products by section.settings.products_per_page -%}
+    {%- paginate collection.products by section.settings.products_per_page -%}
       {%- assign add_page_width_class = 'true' -%}
       {%- if filters_visible == 'true' and section.settings.filter_type == 'vertical' -%}
         {%- assign add_page_width_class = 'false' -%}
@@ -111,7 +119,7 @@
             data-id="{{ section.id }}"
           >
             {% render 'facets',
-              results: target_collection,
+              results: filters_collection,
               enable_filtering: section.settings.enable_filtering,
               enable_sorting: section.settings.enable_sorting,
               filter_type: section.settings.filter_type,
@@ -136,7 +144,7 @@
                   <br>
                   {{
                     'sections.collection_template.use_fewer_filters_html'
-                    | t: link: target_collection.url, class: 'underlined-link link'
+                    | t: link: collection.url, class: 'underlined-link link'
                   }}
                 </h2>
               </div>
@@ -160,8 +168,8 @@
                     {%- assign lazy_load = true -%}
                   {%- endif -%}
                   {%- assign color_filter_params_str = '' -%}
-                  {%- if section.settings.enable_filtering and target_collection.filters -%}
-                    {%- for filter in target_collection.filters -%}
+                  {%- if section.settings.enable_filtering and filters_collection and filters_collection.filters -%}
+                    {%- for filter in filters_collection.filters -%}
                       {%- if filter.param_name == 'filter.v.t.shopify.color-pattern' and filter.active_values.size > 0 -%}
                         {%- assign color_filter_params_str = color_filter_params_str
                           | append: filter
@@ -202,6 +210,10 @@
     {{ 'mask-arch.svg' | inline_asset_content }}
   {%- endif -%}
 </div>
+
+{%- if target_collection != blank -%}
+  {%- assign collection = original_collection -%}
+{%- endif -%}
 
 {% schema %}
 {
