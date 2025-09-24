@@ -92,6 +92,10 @@
         </div>
       {% endif %}
 
+      {%- assign add_page_width_class = 'true' -%}
+      {%- if show_filters_ui and section.settings.filter_type == 'vertical' -%}
+        {%- assign add_page_width_class = blank -%}
+      {%- endif -%}
       <div{% if show_filters_ui and section.settings.filter_type == 'vertical' %} class="facets-vertical page-width"{% endif %}>
         {%- if show_filters_ui and filter_controls_enabled -%}
           <aside
@@ -132,7 +136,7 @@
               </div>
             </div>
           {%- else -%}
-            <div class="collection{% if not show_filters_ui or section.settings.filter_type != 'vertical' %} page-width{% endif %}">
+            <div class="collection{% if add_page_width_class %} page-width{% endif %}">
               <div class="loading-overlay gradient"></div>
               <ul
                 id="product-grid"
