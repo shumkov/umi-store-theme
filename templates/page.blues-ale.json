@@ -23,7 +23,7 @@
         "heading_tWUf9f": {
           "type": "heading",
           "settings": {
-            "heading": "Blue Skirt and Shorts",
+            "heading": "20% Off the Blue Skirt and Shorts",
             "heading_size": "h1"
           }
         },
@@ -32,23 +32,11 @@
           "settings": {
             "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>"
           }
-        },
-        "button_NcA6Jg": {
-          "type": "button",
-          "settings": {
-            "button_label": "Button label",
-            "button_link": "",
-            "button_style_secondary": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
         }
       },
       "block_order": [
         "heading_tWUf9f",
-        "text_tWeycP",
-        "button_NcA6Jg"
+        "text_tWeycP"
       ],
       "name": "t:sections.rich-text.presets.name",
       "settings": {
@@ -207,12 +195,42 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "featured_collection_xka3BP": {
+      "type": "featured-collection",
+      "name": "t:sections.featured-collection.presets.name",
+      "settings": {
+        "collection": "",
+        "products_to_show": 4,
+        "title": "Other blue items",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 4,
+        "enable_desktop_slider": false,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "color_scheme": "",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "none",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
     }
   },
   "order": [
     "main",
     "rich_text_A6i3Ud",
     "featured_product_HBYE7n",
-    "featured_product_FbCxRU"
+    "featured_product_FbCxRU",
+    "featured_collection_xka3BP"
   ]
 }
