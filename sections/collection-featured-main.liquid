@@ -145,6 +145,33 @@
                 document.head.appendChild(script);
               }
             }
+
+            var parser = new DOMParser();
+            var parsed = parser.parseFromString(html, 'text/html');
+            parsed.querySelectorAll('script').forEach(function (script) {
+              var newScript = document.createElement('script');
+              if (script.type) newScript.type = script.type;
+              if (script.src) {
+                var src = script.src;
+                if (src.indexOf('preview_theme_id=') === -1 && previewParams) {
+                  var joiner = src.indexOf('?') === -1 ? '?' : '&';
+                  src += joiner + previewParams.replace(/^&/, '');
+                }
+                newScript.src = src;
+                newScript.defer = script.defer;
+                newScript.async = script.async;
+                newScript.crossOrigin = script.crossOrigin;
+              } else {
+                newScript.textContent = script.textContent;
+              }
+              container.appendChild(newScript);
+            });
+
+            document.dispatchEvent(new CustomEvent('shopify:section:load', {
+              detail: {
+                sectionId: 'collection-featured-preview-{{ section.id }}'
+              }
+            }));
           })
           .catch(function () {
             container.innerHTML = '<p class="rte">Unable to load the collection preview. Filters remain hidden on the storefront.</p>';
