@@ -166,8 +166,8 @@
           data-cascade
         {% endif %}
       >
-        {%- assign products = target_collection.products | slice: 0, section.settings.products_per_page -%}
-        {%- if products.size == 0 -%}
+        {%- assign products_to_render = target_collection.products -%}
+        {%- if products_to_render == blank or products_to_render.size == 0 -%}
           <div class="collection collection--empty page-width" id="product-grid" data-id="{{ section.id }}">
             <div class="loading-overlay gradient"></div>
             <div class="title-wrapper center">
@@ -194,7 +194,7 @@
               "
             >
               {% assign skip_card_product_styles = false %}
-              {%- for product in products -%}
+              {%- for product in products_to_render limit: section.settings.products_per_page -%}
                 {% assign lazy_load = false %}
                 {%- if forloop.index > 2 -%}
                   {%- assign lazy_load = true -%}
