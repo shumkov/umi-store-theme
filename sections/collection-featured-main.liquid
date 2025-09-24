@@ -36,7 +36,21 @@
   }
 {%- endstyle -%}
 
-{%- assign target_collection = section.settings.collection -%}
+{%- assign collection_setting = section.settings.collection -%}
+{%- assign target_collection = blank -%}
+{%- assign collection_handle = '' -%}
+{%- if collection_setting != blank -%}
+  {%- if collection_setting.handle -%}
+    {%- assign collection_handle = collection_setting.handle -%}
+  {%- else -%}
+    {%- assign collection_handle = collection_setting -%}
+  {%- endif -%}
+  {%- if collection_handle != '' and collections[collection_handle] != blank -%}
+    {%- assign target_collection = collections[collection_handle] -%}
+  {%- else -%}
+    {%- assign target_collection = collection_setting -%}
+  {%- endif -%}
+{%- endif -%}
 {%- assign is_editor = request.design_mode -%}
 {%- assign show_filters_ui = false -%}
 {%- if is_editor and target_collection != blank -%}
