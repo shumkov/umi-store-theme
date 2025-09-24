@@ -196,14 +196,14 @@
         "padding_bottom": 36
       }
     },
-    "featured_collection_xka3BP": {
+    "featured_collection_YdG8QM": {
       "type": "featured-collection",
       "name": "t:sections.featured-collection.presets.name",
       "settings": {
         "collection": "",
         "products_to_show": 4,
-        "title": "Other blue items",
-        "heading_size": "h2",
+        "title": "Featured collection",
+        "heading_size": "h1",
         "description": "",
         "show_description": false,
         "description_style": "body",
@@ -231,6 +231,6 @@
     "rich_text_A6i3Ud",
     "featured_product_HBYE7n",
     "featured_product_FbCxRU",
-    "featured_collection_xka3BP"
+    "featured_collection_YdG8QM"
   ]
 }
