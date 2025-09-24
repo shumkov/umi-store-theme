@@ -117,7 +117,17 @@
             return response.text();
           })
           .then(function (html) {
-            container.innerHTML = html;
+            var parser = new DOMParser();
+            var doc = parser.parseFromString(html, 'text/html');
+            var sectionEl = doc.querySelector('[data-section-id]');
+            if (!sectionEl) {
+              container.innerHTML = '<p class="rte">Unable to load the collection preview. Filters remain hidden on the storefront.</p>';
+              return;
+            }
+
+            container.innerHTML = sectionEl.outerHTML;
+            var sectionId = sectionEl.getAttribute('data-section-id') || sectionEl.id || 'collection-featured-preview-{{ section.id }}';
+
             if (!window.__collectionPreviewAssetsLoaded) {
               window.__collectionPreviewAssetsLoaded = true;
               var cssLinks = [
@@ -146,9 +156,7 @@
               }
             }
 
-            var parser = new DOMParser();
-            var parsed = parser.parseFromString(html, 'text/html');
-            parsed.querySelectorAll('script').forEach(function (script) {
+            sectionEl.querySelectorAll('script').forEach(function (script) {
               var newScript = document.createElement('script');
               if (script.type) newScript.type = script.type;
               if (script.src) {
@@ -169,7 +177,7 @@
 
             document.dispatchEvent(new CustomEvent('shopify:section:load', {
               detail: {
-                sectionId: 'collection-featured-preview-{{ section.id }}'
+                sectionId: sectionId
               }
             }));
           })
