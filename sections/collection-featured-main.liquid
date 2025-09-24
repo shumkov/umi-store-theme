@@ -87,108 +87,130 @@
         {%- endfor -%}
       </ul>
     </div>
-  {% elsif is_editor %}
-    <div class="collection collection--preview page-width" id="CollectionPreview-{{ section.id }}">
-      <div class="loading-overlay gradient"></div>
-    </div>
-    <script>
-      (function () {
-        const container = document.getElementById('CollectionPreview-{{ section.id }}');
-        if (!container || container.dataset.loaded === 'true') return;
-        container.dataset.loaded = 'true';
-        const collectionUrl = {{ target_collection.url | json }};
-        if (!collectionUrl) {
-          container.innerHTML = '<p class="rte">Select a collection to preview filters.</p>';
-          return;
-        }
-        let previewParams = '';
-        try {
-          const search = window.location.search;
-          if (search && search.indexOf('preview_theme_id=') !== -1) {
-            previewParams = '&' + search.replace(/^\?/, '');
-          }
-        } catch (error) {
-          previewParams = '';
-        }
-        const requestUrl = collectionUrl + '?section_id=main-collection-product-grid' + previewParams;
-        fetch(requestUrl, { credentials: 'include' })
-          .then(function (response) {
-            if (!response.ok) throw response;
-            return response.text();
-          })
-          .then(function (html) {
-            var parser = new DOMParser();
-            var doc = parser.parseFromString(html, 'text/html');
-            var sectionEl = doc.querySelector('[data-section-id]');
-            if (!sectionEl) {
-              container.innerHTML = '<p class="rte">Unable to load the collection preview. Filters remain hidden on the storefront.</p>';
-              return;
-            }
-
-            container.innerHTML = sectionEl.outerHTML;
-            var sectionId = sectionEl.getAttribute('data-section-id') || sectionEl.id || 'collection-featured-preview-{{ section.id }}';
-
-            if (!window.__collectionPreviewAssetsLoaded) {
-              window.__collectionPreviewAssetsLoaded = true;
-              var cssLinks = [
-                {{ 'component-facets.css' | asset_url | json }},
-                {{ 'component-show-more.css' | asset_url | json }},
-                {{ 'component-swatch.css' | asset_url | json }},
-                {{ 'component-swatch-input.css' | asset_url | json }},
-                {{ 'component-card.css' | asset_url | json }},
-                {{ 'component-price.css' | asset_url | json }},
-                {{ 'template-collection.css' | asset_url | json }}
-              ];
-              cssLinks.forEach(function (href) {
-                if (!document.querySelector('link[href="' + href + '"]')) {
-                  var link = document.createElement('link');
-                  link.rel = 'stylesheet';
-                  link.href = href;
-                  document.head.appendChild(link);
-                }
-              });
-              var scriptSrc = {{ 'facets.js' | asset_url | json }};
-              if (!document.querySelector('script[src="' + scriptSrc + '"]')) {
-                var script = document.createElement('script');
-                script.src = scriptSrc;
-                script.defer = true;
-                document.head.appendChild(script);
-              }
-            }
-
-            sectionEl.querySelectorAll('script').forEach(function (script) {
-              var newScript = document.createElement('script');
-              if (script.type) newScript.type = script.type;
-              if (script.src) {
-                var src = script.src;
-                if (src.indexOf('preview_theme_id=') === -1 && previewParams) {
-                  var joiner = src.indexOf('?') === -1 ? '?' : '&';
-                  src += joiner + previewParams.replace(/^&/, '');
-                }
-                newScript.src = src;
-                newScript.defer = script.defer;
-                newScript.async = script.async;
-                newScript.crossOrigin = script.crossOrigin;
-              } else {
-                newScript.textContent = script.textContent;
-              }
-              container.appendChild(newScript);
-            });
-
-            document.dispatchEvent(new CustomEvent('shopify:section:load', {
-              detail: {
-                sectionId: sectionId
-              }
-            }));
-          })
-          .catch(function () {
-            container.innerHTML = '<p class="rte">Unable to load the collection preview. Filters remain hidden on the storefront.</p>';
-          });
-      })();
-    </script>
   {% else %}
-    {%- assign products_to_render = target_collection.products | slice: 0, section.settings.products_per_page -%}
-    {% if products_to_render == blank or products_to_render.size == 0 %}
+    {%- assign raw_color_filters = section.settings.filter_color_values | split: ',' -%}
+    {%- assign color_filters_string = '' -%}
+    {%- assign color_filters_display = '' -%}
+    {%- for color in raw_color_filters -%}
+      {%- assign cleaned_color = color | strip -%}
+      {%- if cleaned_color != '' -%}
+        {%- assign color_filters_display = color_filters_display | append: cleaned_color | append: ', ' -%}
+        {%- assign color_filters_string = color_filters_string | append: '||' | append: cleaned_color | downcase | append: '||' -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if color_filters_display != '' -%}
+      {%- assign color_filters_display = color_filters_display | slice: 0, color_filters_display.size | minus: 2 -%}
+    {%- endif -%}
+    {%- assign color_filter_enabled = color_filters_string != '' -%}
+
+    {%- assign price_min_enabled = false -%}
+    {%- assign price_max_enabled = false -%}
+    {%- assign price_min_cents = 0 -%}
+    {%- assign price_max_cents = 0 -%}
+    {%- if section.settings.filter_price_min != blank -%}
+      {%- assign price_min_cents = section.settings.filter_price_min | times: 100 | round: 0 -%}
+      {%- assign price_min_enabled = true -%}
+    {%- endif -%}
+    {%- if section.settings.filter_price_max != blank -%}
+      {%- assign price_max_cents = section.settings.filter_price_max | times: 100 | round: 0 -%}
+      {%- assign price_max_enabled = true -%}
+    {%- endif -%}
+
+    {%- assign rendered_count = 0 -%}
+    {%- assign filtered_count = 0 -%}
+
+    {% capture product_grid %}
+      <ul
+        id="product-grid"
+        data-id="{{ section.id }}"
+        class="
+          grid product-grid grid--{{ section.settings.columns_mobile }}-col-tablet-down
+          grid--{{ section.settings.columns_desktop }}-col-desktop
+          {% if section.settings.quick_add == 'bulk' %} collection-quick-add-bulk{% endif %}
+        "
+      >
+        {% assign skip_card_product_styles = false %}
+        {%- for product in target_collection.products -%}
+          {%- assign include_product = true -%}
+
+          {%- if color_filter_enabled -%}
+            {%- assign include_product = false -%}
+            {%- for option in product.options_with_values -%}
+              {%- assign option_name = option.name | downcase -%}
+              {%- if option_name == 'color' or option_name == 'colour' -%}
+                {%- for option_value in option.values -%}
+                  {%- assign option_value_down = option_value | strip | downcase -%}
+                  {%- assign lookup_token = '||' | append: option_value_down | append: '||' -%}
+                  {%- if color_filters_string contains lookup_token -%}
+                    {%- assign include_product = true -%}
+                    {%- break -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
+              {%- if include_product -%}
+                {%- break -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+
+          {%- if include_product and price_min_enabled and product.price < price_min_cents -%}
+            {%- assign include_product = false -%}
+          {%- endif -%}
+          {%- if include_product and price_max_enabled and product.price > price_max_cents -%}
+            {%- assign include_product = false -%}
+          {%- endif -%}
+
+          {%- if include_product -%}
+            {%- assign filtered_count = filtered_count | plus: 1 -%}
+            {%- if rendered_count < section.settings.products_per_page -%}
+              {% assign lazy_load = false %}
+              {%- if rendered_count > 1 -%}
+                {%- assign lazy_load = true -%}
+              {%- endif -%}
+              {% render 'card-product',
+                card_product: product,
+                media_aspect_ratio: section.settings.image_ratio,
+                image_shape: section.settings.image_shape,
+                show_secondary_image: section.settings.show_secondary_image,
+                show_vendor: section.settings.show_vendor,
+                show_rating: section.settings.show_rating,
+                lazy_load: lazy_load,
+                skip_styles: skip_card_product_styles,
+                quick_add: section.settings.quick_add,
+                section_id: section.id
+              %}
+              {%- assign skip_card_product_styles = true -%}
+              {%- assign rendered_count = rendered_count | plus: 1 -%}
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    {% endcapture %}
+
+    {% if is_editor %}
+      <div class="page-width">
+        <div class="rte">
+          <p><strong>Filter preview</strong></p>
+          <ul>
+            {% if color_filter_enabled %}
+              <li>Color: {{ color_filters_display }}</li>
+            {% endif %}
+            {% if price_min_enabled %}
+              <li>Min price: {{ price_min_cents | money_with_currency }}</li>
+            {% endif %}
+            {% if price_max_enabled %}
+              <li>Max price: {{ price_max_cents | money_with_currency }}</li>
+            {% endif %}
+            {% unless color_filter_enabled or price_min_enabled or price_max_enabled %}
+              <li>No filters applied.</li>
+            {% endunless %}
+            <li>Matching products: {{ filtered_count }}</li>
+          </ul>
+        </div>
+      </div>
+    {% endif %}
+
+    {% if filtered_count == 0 %}
       <div class="collection collection--empty page-width" id="product-grid" data-id="{{ section.id }}">
         <div class="loading-overlay gradient"></div>
         <div class="title-wrapper center">
@@ -205,38 +227,8 @@
     {% else %}
       <div class="collection page-width">
         <div class="loading-overlay gradient"></div>
-        <ul
-          id="product-grid"
-          data-id="{{ section.id }}"
-          class="
-            grid product-grid grid--{{ section.settings.columns_mobile }}-col-tablet-down
-            grid--{{ section.settings.columns_desktop }}-col-desktop
-            {% if section.settings.quick_add == 'bulk' %} collection-quick-add-bulk{% endif %}
-          "
-        >
-          {% assign skip_card_product_styles = false %}
-          {%- for product in products_to_render -%}
-            {% assign lazy_load = false %}
-            {%- if forloop.index > 2 -%}
-              {%- assign lazy_load = true -%}
-            {%- endif -%}
-            {% render 'card-product',
-              card_product: product,
-              media_aspect_ratio: section.settings.image_ratio,
-              image_shape: section.settings.image_shape,
-              show_secondary_image: section.settings.show_secondary_image,
-              show_vendor: section.settings.show_vendor,
-              show_rating: section.settings.show_rating,
-              lazy_load: lazy_load,
-              skip_styles: skip_card_product_styles,
-              quick_add: section.settings.quick_add,
-              section_id: section.id
-            %}
-            {%- assign skip_card_product_styles = true -%}
-          {%- endfor -%}
-        </ul>
-
-        {%- if target_collection.products_count > section.settings.products_per_page -%}
+        {{ product_grid }}
+        {% if filtered_count > section.settings.products_per_page %}
           <div class="collection__view-all center">
             <a
               href="{{ target_collection.url }}"
@@ -245,7 +237,7 @@
               {{ 'sections.featured_collection.view_all' | t }}
             </a>
           </div>
-        {%- endif -%}
+        {% endif %}
       </div>
     {% endif %}
   {% endif %}
@@ -445,6 +437,29 @@
       "id": "enable_sorting",
       "default": true,
       "label": "t:sections.main-collection-product-grid.settings.enable_sorting.label"
+    },
+    {
+      "type": "header",
+      "content": "Filter defaults"
+    },
+    {
+      "type": "text",
+      "id": "filter_color_values",
+      "label": "Colors (comma separated)",
+      "info": "Matches product option named \"Color\" or \"Colour\".",
+      "default": ""
+    },
+    {
+      "type": "number",
+      "id": "filter_price_min",
+      "label": "Minimum price",
+      "unit": "currency"
+    },
+    {
+      "type": "number",
+      "id": "filter_price_max",
+      "label": "Maximum price",
+      "unit": "currency"
     },
     {
       "type": "header",
