@@ -56,7 +56,6 @@
 {%- endif -%}
 {%- if filters_visible == 'true' -%}
   {{ 'component-facets.css' | asset_url | stylesheet_tag }}
-  <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
 {%- endif -%}
 
 <div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}">
@@ -128,15 +127,25 @@
                 const container = document.getElementById('main-collection-filters-{{ section.id }}');
                 if (!container || container.dataset.loaded === 'true') return;
                 container.dataset.loaded = 'true';
-                fetch('{{ filters_collection.url }}?section_id=main-collection-product-grid')
+                var previewParams = '';
+                try {
+                  var search = window.location.search;
+                  if (search && search.indexOf('preview_theme_id') !== -1) {
+                    previewParams = '&' + search.replace(/^\?/, '');
+                  }
+                } catch (error) {
+                  previewParams = '';
+                }
+                var requestUrl = '{{ filters_collection.url }}?section_id=main-collection-product-grid' + previewParams;
+                fetch(requestUrl, { credentials: 'include' })
                   .then(function (response) {
                     if (!response.ok) throw new Error('Failed to load collection filters');
                     return response.text();
                   })
                   .then(function (html) {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-                    const fetched = doc.getElementById('main-collection-filters');
+                    var parser = new DOMParser();
+                    var doc = parser.parseFromString(html, 'text/html');
+                    var fetched = doc.getElementById('main-collection-filters');
                     if (fetched) {
                       container.innerHTML = fetched.innerHTML;
                     }
