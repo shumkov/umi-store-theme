@@ -41,7 +41,10 @@
         "variant_picker_jpqtwk": {
           "type": "variant_picker",
           "repeater": "{{ section.settings.product.metafields.shopify.size.value }}",
-          "settings": {}
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
         },
         "quantity_selector_PperWT": {
           "type": "quantity_selector",
@@ -74,6 +77,7 @@
       "name": "t:sections.featured-product.presets.name",
       "settings": {
         "product": "long-skirt-hush",
+        "preselected_variant": "43654764298287",
         "color_scheme": "",
         "secondary_background": false,
         "media_size": "medium",
