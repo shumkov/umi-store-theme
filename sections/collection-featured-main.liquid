@@ -118,6 +118,33 @@
           })
           .then(function (html) {
             container.innerHTML = html;
+            if (!window.__collectionPreviewAssetsLoaded) {
+              window.__collectionPreviewAssetsLoaded = true;
+              var cssLinks = [
+                {{ 'component-facets.css' | asset_url | json }},
+                {{ 'component-show-more.css' | asset_url | json }},
+                {{ 'component-swatch.css' | asset_url | json }},
+                {{ 'component-swatch-input.css' | asset_url | json }},
+                {{ 'component-card.css' | asset_url | json }},
+                {{ 'component-price.css' | asset_url | json }},
+                {{ 'template-collection.css' | asset_url | json }}
+              ];
+              cssLinks.forEach(function (href) {
+                if (!document.querySelector('link[href="' + href + '"]')) {
+                  var link = document.createElement('link');
+                  link.rel = 'stylesheet';
+                  link.href = href;
+                  document.head.appendChild(link);
+                }
+              });
+              var scriptSrc = {{ 'facets.js' | asset_url | json }};
+              if (!document.querySelector('script[src="' + scriptSrc + '"]')) {
+                var script = document.createElement('script');
+                script.src = scriptSrc;
+                script.defer = true;
+                document.head.appendChild(script);
+              }
+            }
           })
           .catch(function () {
             container.innerHTML = '<p class="rte">Unable to load the collection preview. Filters remain hidden on the storefront.</p>';
