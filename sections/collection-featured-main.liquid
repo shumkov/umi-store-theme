@@ -36,11 +36,7 @@
   }
 {%- endstyle -%}
 
-{%- assign original_collection = collection -%}
 {%- assign target_collection = section.settings.collection -%}
-{%- if target_collection != blank -%}
-  {%- assign collection = target_collection -%}
-{%- endif -%}
 {%- assign filters_collection = target_collection -%}
 {%- if filters_collection and filters_collection.handle -%}
   {%- assign filters_collection_candidate = collections[filters_collection.handle] -%}
@@ -104,7 +100,7 @@
         </div>
     {% endif %}
 
-    {%- paginate collection.products by section.settings.products_per_page -%}
+    {%- paginate target_collection.products by section.settings.products_per_page -%}
       {%- assign add_page_width_class = 'true' -%}
       {%- if filters_visible == 'true' and section.settings.filter_type == 'vertical' -%}
         {%- assign add_page_width_class = 'false' -%}
@@ -115,7 +111,7 @@
           <aside
             aria-labelledby="verticalTitle"
             class="facets-wrapper{% unless section.settings.enable_filtering %} facets-wrapper--no-filters{% endunless %}{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
-            id="main-collection-filters"
+            id="main-collection-filters-{{ section.id }}"
             data-id="{{ section.id }}"
           >
             {% render 'facets',
@@ -126,6 +122,31 @@
               paginate: paginate
             %}
           </aside>
+          {% if request.design_mode and filters_collection and filters_collection.url %}
+            <script>
+              (function () {
+                const container = document.getElementById('main-collection-filters-{{ section.id }}');
+                if (!container || container.dataset.loaded === 'true') return;
+                container.dataset.loaded = 'true';
+                fetch('{{ filters_collection.url }}?section_id=main-collection-product-grid')
+                  .then(function (response) {
+                    if (!response.ok) throw new Error('Failed to load collection filters');
+                    return response.text();
+                  })
+                  .then(function (html) {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const fetched = doc.getElementById('main-collection-filters');
+                    if (fetched) {
+                      container.innerHTML = fetched.innerHTML;
+                    }
+                  })
+                  .catch(function () {
+                    container.classList.add('facets-wrapper--no-filters');
+                  });
+              })();
+            </script>
+          {% endif %}
         {%- endif -%}
 
         <div
@@ -144,7 +165,7 @@
                   <br>
                   {{
                     'sections.collection_template.use_fewer_filters_html'
-                    | t: link: collection.url, class: 'underlined-link link'
+                    | t: link: target_collection.url, class: 'underlined-link link'
                   }}
                 </h2>
               </div>
@@ -210,10 +231,6 @@
     {{ 'mask-arch.svg' | inline_asset_content }}
   {%- endif -%}
 </div>
-
-{%- if target_collection != blank -%}
-  {%- assign collection = original_collection -%}
-{%- endif -%}
 
 {% schema %}
 {
