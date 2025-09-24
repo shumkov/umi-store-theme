@@ -18,6 +18,12 @@
 {% endcomment %}
 {%- liquid
   assign product_form_id = 'product-form-' | append: section.id
+  assign selected_variant = selected_variant | default: product.selected_or_first_available_variant
+  assign option_index = option.position | minus: 1
+  assign selected_option_value = nil
+  if selected_variant and option_index >= 0
+    assign selected_option_value = selected_variant.options[option_index]
+  endif
 -%}
 
 {%- for value in option.values -%}
@@ -45,6 +51,12 @@
           assign option_disabled = false
         endif
       endfor
+    endif
+
+    assign value_label = value.value | default: value
+    assign is_selected = value.selected
+    if selected_option_value != blank and value_label == selected_option_value
+      assign is_selected = true
     endif
   -%}
 
@@ -79,7 +91,7 @@
       value: value | escape,
       swatch: value.swatch,
       product_form_id: product_form_id,
-      checked: value.selected,
+      checked: is_selected,
       visually_disabled: option_disabled,
       shape: block.settings.swatch_shape,
       help_text: help_text,
@@ -92,7 +104,7 @@
       name="{{ input_name | escape }}"
       value="{{ value | escape }}"
       form="{{ product_form_id }}"
-      {% if value.selected %}
+      {% if is_selected %}
         checked
       {% endif %}
       {% if option_disabled %}
@@ -108,7 +120,7 @@
     <option
       id="{{ input_id }}"
       value="{{ value | escape }}"
-      {% if value.selected %}
+      {% if is_selected %}
         selected="selected"
       {% endif %}
       {% if swatch_value and picker_type == 'swatch_dropdown' %}

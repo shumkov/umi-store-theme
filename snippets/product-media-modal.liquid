@@ -33,12 +33,17 @@
       tabindex="0"
     >
       {%- liquid
-        if product.selected_or_first_available_variant.featured_media != null
-          assign media = product.selected_or_first_available_variant.featured_media
+        assign selected_variant = selected_variant | default: product.selected_or_first_available_variant
+
+        if selected_variant and selected_variant.featured_media != null
+          assign media = selected_variant.featured_media
           render 'product-media', media: media, loop: section.settings.enable_video_looping, variant_image: section.settings.hide_variants
         endif
 
-        assign selected_variant_images = product.selected_or_first_available_variant.metafields.custom_image.additional_image_link.value
+        assign selected_variant_images = ''
+        if selected_variant
+          assign selected_variant_images = selected_variant.metafields.custom_image.additional_image_link.value | default: ""
+        endif
       -%}
 
       {%- for media in product.media -%}
@@ -61,7 +66,7 @@
           endif
 
           if selected_variant_images.count == 0 or is_selected_variant_image
-            unless media.id == product.selected_or_first_available_variant.featured_media.id
+            unless media.id == selected_variant.featured_media.id
               render 'product-media', media: media, loop: section.settings.enable_video_looping, variant_image: variant_image
             endunless
           endif
