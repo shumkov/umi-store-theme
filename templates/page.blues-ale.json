@@ -17,6 +17,49 @@
         "padding_bottom": 28
       }
     },
+    "rich_text_A6i3Ud": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_tWUf9f": {
+          "type": "heading",
+          "settings": {
+            "heading": "Blue Skirt and Shorts",
+            "heading_size": "h1"
+          }
+        },
+        "text_tWeycP": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>"
+          }
+        },
+        "button_NcA6Jg": {
+          "type": "button",
+          "settings": {
+            "button_label": "Button label",
+            "button_link": "",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_tWUf9f",
+        "text_tWeycP",
+        "button_NcA6Jg"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "desktop_content_position": "left",
+        "content_alignment": "left",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
     "featured_product_HBYE7n": {
       "type": "featured-product",
       "blocks": {
@@ -168,6 +211,7 @@
   },
   "order": [
     "main",
+    "rich_text_A6i3Ud",
     "featured_product_HBYE7n",
     "featured_product_FbCxRU"
   ]
