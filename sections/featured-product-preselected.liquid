@@ -8,6 +8,48 @@
 
   if product and product != blank
     assign current_variant = product.selected_or_first_available_variant
+
+    assign variant_param = request.params['variant']
+    assign option_values_param = request.params['option_values']
+
+    if section.settings.preselected_variant != blank and variant_param == blank and option_values_param == blank
+      assign matched_variant = nil
+      assign preselected_input = section.settings.preselected_variant | strip
+      assign preselected_variant_id = preselected_input | plus: 0
+
+      if preselected_variant_id > 0
+        assign matched_variant = product.variants | where: 'id', preselected_variant_id | first
+      endif
+
+      if matched_variant == nil and preselected_input != ''
+        assign preselected_input_downcase = preselected_input | downcase
+
+        for variant in product.variants
+          if variant.sku and variant.sku != ''
+            assign variant_sku_normalized = variant.sku | strip
+            assign variant_sku_downcase = variant_sku_normalized | downcase
+            if variant_sku_normalized == preselected_input or variant_sku_downcase == preselected_input_downcase
+              assign matched_variant = variant
+              break
+            endif
+          endif
+
+          assign variant_title_downcase = variant.title | strip | downcase
+          if variant_title_downcase == preselected_input_downcase
+            assign matched_variant = variant
+            break
+          endif
+        endfor
+      endif
+
+      if matched_variant
+        assign current_variant = matched_variant
+      endif
+    endif
+  endif
+
+  if current_variant == nil and product and product != blank
+    assign current_variant = product.selected_or_first_available_variant
   endif
 -%}
 
@@ -37,6 +79,11 @@
     .section-{{ section.id }}-padding {
       padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
       padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    }
+
+    #ProductInfo-{{ section.id }} variant-selects [data-option-name="color"],
+    #ProductInfo-{{ section.id }} variant-selects [data-option-name="colour"] {
+      display: none !important;
     }
 
     @media screen and (min-width: 750px) {
@@ -500,7 +547,7 @@
 
 {% schema %}
 {
-  "name": "t:sections.featured-product.name",
+  "name": "Featured product (preselected)",
   "tag": "section",
   "class": "section section-featured-product",
   "disabled_on": {
@@ -1338,6 +1385,12 @@
       "label": "t:sections.featured-product.settings.product.label"
     },
     {
+      "type": "text",
+      "id": "preselected_variant",
+      "label": "Preselected variant",
+      "info": "Enter a variant ID, SKU, or full option title to preselect when this section loads."
+    },
+    {
       "type": "color_scheme",
       "id": "color_scheme",
       "label": "t:sections.all.colors.label",
@@ -1470,7 +1523,7 @@
   ],
   "presets": [
     {
-      "name": "t:sections.featured-product.presets.name",
+      "name": "Featured product (preselected)",
       "blocks": [
         {
           "type": "text",
