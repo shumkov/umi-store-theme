@@ -251,7 +251,7 @@
         "show_vendor": false,
         "show_rating": false,
         "show_inventory": true,
-        "inventory_threshold": 10,
+        "inventory_threshold": 16,
         "quick_add": "none",
         "enable_filtering": false,
         "filter_type": "horizontal",
