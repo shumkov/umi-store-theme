@@ -126,6 +126,7 @@
       "blocks": {
         "text_gqiHLm": {
           "type": "text",
+          "disabled": true,
           "settings": {
             "text": "{{ section.settings.product.vendor }}",
             "text_style": "uppercase"
@@ -150,6 +151,7 @@
         },
         "quantity_selector_nmFbyh": {
           "type": "quantity_selector",
+          "disabled": true,
           "settings": {}
         },
         "buy_buttons_cDXJA7": {
