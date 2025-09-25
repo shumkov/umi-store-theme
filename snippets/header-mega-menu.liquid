@@ -8,19 +8,37 @@
 <nav class="header__inline-menu">
   <ul class="list-menu list-menu--inline" role="list">
     {%- for link in section.settings.menu.links -%}
+      {%- liquid
+        assign sale_link = false
+        assign sale_target = routes.root_url | append: 'pages/blue-20-off'
+        assign link_title_downcase = link.title | strip | downcase
+        if link_title_downcase == 'sale'
+          assign sale_link = true
+        endif
+        if link.url == sale_target or link.url contains '/pages/blue-20-off'
+          assign sale_link = true
+        endif
+
+        assign item_classes = 'header__menu-item list-menu__item link focus-inset'
+        assign label_classes = ''
+        if link.child_active
+          assign label_classes = label_classes | append: ' header__active-menu-item'
+        endif
+        if sale_link
+          assign item_classes = item_classes | append: ' header__menu-item--sale'
+          assign label_classes = label_classes | append: ' header__menu-item--sale-label'
+        endif
+        assign label_classes = label_classes | strip
+      -%}
       <li>
         {%- if link.links != blank -%}
           <header-menu>
             <details id="Details-HeaderMenu-{{ forloop.index }}" class="mega-menu">
               <summary
                 id="HeaderMenu-{{ link.handle }}"
-                class="header__menu-item list-menu__item link focus-inset"
+                class="{{ item_classes }}"
               >
-                <span
-                  {%- if link.child_active %}
-                    class="header__active-menu-item"
-                  {% endif %}
-                >
+                <span{% if label_classes != '' %} class="{{ label_classes }}"{% endif %}>
                   {{- link.title | escape -}}
                 </span>
                 {{- 'icon-caret.svg' | inline_asset_content -}}
@@ -74,16 +92,22 @@
           <a
             id="HeaderMenu-{{ link.handle }}"
             href="{{ link.url }}"
-            class="header__menu-item list-menu__item link link--text focus-inset"
+            class="header__menu-item list-menu__item link link--text focus-inset{% if sale_link %} header__menu-item--sale{% endif %}"
             {% if link.current %}
               aria-current="page"
             {% endif %}
           >
-            <span
-              {%- if link.current %}
-                class="header__active-menu-item"
-              {% endif %}
-            >
+            {%- liquid
+              assign label_classes = ''
+              if link.current
+                assign label_classes = label_classes | append: ' header__active-menu-item'
+              endif
+              if sale_link
+                assign label_classes = label_classes | append: ' header__menu-item--sale-label'
+              endif
+              assign label_classes = label_classes | strip
+            -%}
+            <span{% if label_classes != '' %} class="{{ label_classes }}"{% endif %}>
               {{- link.title | escape -}}
             </span>
           </a>
