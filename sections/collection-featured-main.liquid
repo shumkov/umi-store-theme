@@ -170,7 +170,8 @@
               {%- if rendered_count > 1 -%}
                 {%- assign lazy_load = true -%}
               {%- endif -%}
-              {% render 'card-product',
+              {% assign empty_params = '' | split: '||' %}
+              {% render 'color-variant',
                 card_product: product,
                 media_aspect_ratio: section.settings.image_ratio,
                 image_shape: section.settings.image_shape,
@@ -180,7 +181,8 @@
                 lazy_load: lazy_load,
                 skip_styles: skip_card_product_styles,
                 quick_add: section.settings.quick_add,
-                section_id: section.id
+                section_id: section.id,
+                color_filter_params: empty_params
               %}
               {%- assign skip_card_product_styles = true -%}
               {%- assign rendered_count = rendered_count | plus: 1 -%}
@@ -449,8 +451,7 @@
       "type": "text",
       "id": "filter_color_values",
       "label": "Colors (comma separated)",
-      "info": "Matches product option named \"Color\" or \"Colour\".",
-      "default": ""
+      "info": "Matches product option named \"Color\" or \"Colour\"."
     },
     {
       "type": "number",
