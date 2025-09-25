@@ -108,7 +108,6 @@
       "name": "t:sections.featured-product.presets.name",
       "settings": {
         "product": "long-skirt-hush",
-        "preselected_variant": "43654764298287",
         "color_scheme": "",
         "secondary_background": false,
         "media_size": "medium",
@@ -182,7 +181,6 @@
       "name": "t:sections.featured-product.presets.name",
       "settings": {
         "product": "shorts-flare",
-        "preselected_variant": "43654789791791",
         "color_scheme": "",
         "secondary_background": false,
         "media_size": "medium",
@@ -234,7 +232,7 @@
         "show_secondary_image": true,
         "show_vendor": false,
         "show_rating": false,
-        "quick_add": "standard",
+        "quick_add": "none",
         "enable_filtering": false,
         "filter_type": "horizontal",
         "enable_sorting": false,
