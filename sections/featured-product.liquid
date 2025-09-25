@@ -9,7 +9,10 @@
   if product and product != blank
     assign current_variant = product.selected_or_first_available_variant
 
-    if section.settings.preselected_variant != blank
+    assign variant_param = request.params['variant']
+    assign option_values_param = request.params['option_values']
+
+    if section.settings.preselected_variant != blank and variant_param == blank and option_values_param == blank
       assign matched_variant = nil
       assign preselected_input = section.settings.preselected_variant | strip
       assign preselected_variant_id = preselected_input | plus: 0
