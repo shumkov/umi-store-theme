@@ -252,7 +252,7 @@
       ],
       "name": "t:sections.featured-product.presets.name",
       "settings": {
-        "product": "bandeau-top",
+        "product": "long-sleeve-haze",
         "preselected_variant": "",
         "color_scheme": "",
         "secondary_background": false,
