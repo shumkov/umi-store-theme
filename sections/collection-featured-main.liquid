@@ -89,22 +89,26 @@
     </div>
   {% else %}
     {%- assign raw_color_filters = section.settings.filter_color_values | split: ',' -%}
-    {%- assign color_filters_string = '' -%}
     {%- assign color_filters_display = '' -%}
+    {%- assign color_filters_concat = '' -%}
     {%- for color in raw_color_filters -%}
       {%- assign cleaned_color = color | strip -%}
       {%- if cleaned_color != '' -%}
         {%- assign color_filters_display = color_filters_display | append: cleaned_color | append: ', ' -%}
-        {%- assign color_filters_string = color_filters_string | append: '||' | append: cleaned_color | downcase | append: '||' -%}
+        {%- assign color_filters_concat = color_filters_concat | append: cleaned_color | append: '||' -%}
       {%- endif -%}
     {%- endfor -%}
+    {%- assign color_filters_array = color_filters_concat | split: '||' -%}
     {%- if color_filters_display != '' -%}
       {%- assign color_filters_display = color_filters_display | slice: 0, color_filters_display.size | minus: 2 -%}
     {%- endif -%}
     {%- assign color_filter_enabled = false -%}
-    {%- if color_filters_string != '' -%}
-      {%- assign color_filter_enabled = true -%}
-    {%- endif -%}
+    {%- for color_filter_value in color_filters_array -%}
+      {%- if color_filter_value != '' -%}
+        {%- assign color_filter_enabled = true -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
 
     {%- assign price_min_enabled = false -%}
     {%- assign price_max_enabled = false -%}
@@ -122,6 +126,7 @@
     {%- assign rendered_count = 0 -%}
     {%- assign filtered_count = 0 -%}
 
+    {%- assign empty_params_array = '' | split: '||' -%}
     {% capture product_grid %}
       <ul
         id="product-grid"
@@ -135,55 +140,91 @@
         {% assign skip_card_product_styles = false %}
         {%- for product in target_collection.products -%}
           {%- assign include_product = true -%}
+          {%- assign selected_variant = product.selected_or_first_available_variant -%}
+          {%- assign price_reference = selected_variant.price -%}
 
           {%- if color_filter_enabled -%}
-            {%- assign include_product = false -%}
+            {%- assign selected_variant = nil -%}
+            {%- assign price_reference = 0 -%}
+            {%- assign color_option_index = -1 -%}
             {%- for option in product.options_with_values -%}
               {%- assign option_name = option.name | downcase -%}
               {%- if option_name == 'color' or option_name == 'colour' -%}
-                {%- for option_value in option.values -%}
-                  {%- assign option_value_down = option_value | strip | downcase -%}
-                  {%- assign lookup_token = '||' | append: option_value_down | append: '||' -%}
-                  {%- if color_filters_string contains lookup_token -%}
-                    {%- assign include_product = true -%}
-                    {%- break -%}
-                  {%- endif -%}
-                {%- endfor -%}
-              {%- endif -%}
-              {%- if include_product -%}
+                {%- assign color_option_index = forloop.index0 -%}
                 {%- break -%}
               {%- endif -%}
             {%- endfor -%}
+            {%- if color_option_index == -1 -%}
+              {%- assign include_product = false -%}
+            {%- else -%}
+              {%- assign matched_variant = nil -%}
+              {%- for filter_color in color_filters_array -%}
+                {%- assign filter_clean = filter_color | strip -%}
+                {%- if filter_clean != '' -%}
+                  {%- assign filter_down = filter_clean | downcase -%}
+                  {%- for variant in product.variants -%}
+                    {%- assign variant_color = variant.options[color_option_index] | strip | downcase -%}
+                    {%- if variant_color == filter_down -%}
+                      {%- assign matched_variant = variant -%}
+                      {%- break -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                  {%- if matched_variant -%}
+                    {%- break -%}
+                  {%- endif -%}
+                {%- endif -%}
+              {%- endfor -%}
+              {%- if matched_variant -%}
+                {%- assign selected_variant = matched_variant -%}
+                {%- assign price_reference = matched_variant.price -%}
+              {%- else -%}
+                {%- assign include_product = false -%}
+              {%- endif -%}
+            {%- endif -%}
           {%- endif -%}
 
-          {%- if include_product and price_min_enabled and product.price < price_min_cents -%}
+          {%- if include_product and price_min_enabled and price_reference < price_min_cents -%}
             {%- assign include_product = false -%}
           {%- endif -%}
-          {%- if include_product and price_max_enabled and product.price > price_max_cents -%}
+          {%- if include_product and price_max_enabled and price_reference > price_max_cents -%}
             {%- assign include_product = false -%}
           {%- endif -%}
 
           {%- if include_product -%}
             {%- assign filtered_count = filtered_count | plus: 1 -%}
             {%- if rendered_count < section.settings.products_per_page -%}
-              {% assign lazy_load = false %}
+              {%- assign lazy_load = false -%}
               {%- if rendered_count > 1 -%}
                 {%- assign lazy_load = true -%}
               {%- endif -%}
-              {% assign empty_params = '' | split: '||' %}
-              {% render 'color-variant',
-                card_product: product,
-                media_aspect_ratio: section.settings.image_ratio,
-                image_shape: section.settings.image_shape,
-                show_secondary_image: section.settings.show_secondary_image,
-                show_vendor: section.settings.show_vendor,
-                show_rating: section.settings.show_rating,
-                lazy_load: lazy_load,
-                skip_styles: skip_card_product_styles,
-                quick_add: section.settings.quick_add,
-                section_id: section.id,
-                color_filter_params: empty_params
-              %}
+              {%- if color_filter_enabled and selected_variant -%}
+                {% render 'color-card-product',
+                  card_product: product,
+                  variant_sel: selected_variant,
+                  media_aspect_ratio: section.settings.image_ratio,
+                  image_shape: section.settings.image_shape,
+                  show_secondary_image: section.settings.show_secondary_image,
+                  show_vendor: section.settings.show_vendor,
+                  show_rating: section.settings.show_rating,
+                  lazy_load: lazy_load,
+                  quick_add: section.settings.quick_add,
+                  section_id: section.id
+                %}
+              {%- else -%}
+                {% render 'color-variant',
+                  card_product: product,
+                  media_aspect_ratio: section.settings.image_ratio,
+                  image_shape: section.settings.image_shape,
+                  show_secondary_image: section.settings.show_secondary_image,
+                  show_vendor: section.settings.show_vendor,
+                  show_rating: section.settings.show_rating,
+                  lazy_load: lazy_load,
+                  skip_styles: skip_card_product_styles,
+                  quick_add: section.settings.quick_add,
+                  section_id: section.id,
+                  color_filter_params: empty_params_array
+                %}
+              {%- endif -%}
               {%- assign skip_card_product_styles = true -%}
               {%- assign rendered_count = rendered_count | plus: 1 -%}
             {%- endif -%}
