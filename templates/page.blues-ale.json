@@ -48,48 +48,45 @@
         "padding_bottom": 52
       }
     },
-    "featured_product_HBYE7n": {
-      "type": "featured-product",
+    "featured_product_preselected_f9eFzc": {
+      "type": "featured-product-preselected",
       "blocks": {
-        "text_dwDzPg": {
+        "text_MTcBkX": {
           "type": "text",
-          "disabled": true,
           "settings": {
             "text": "{{ section.settings.product.vendor }}",
             "text_style": "uppercase"
           }
         },
-        "title_MdNfNA": {
+        "title_kcXHGT": {
           "type": "title",
           "settings": {
             "heading_size": "h1"
           }
         },
-        "price_HBEbVm": {
+        "price_dxkHY4": {
           "type": "price",
           "settings": {}
         },
-        "variant_picker_jpqtwk": {
+        "variant_picker_miALXt": {
           "type": "variant_picker",
-          "repeater": "{{ section.settings.product.metafields.shopify.size.value }}",
           "settings": {
             "picker_type": "button",
             "swatch_shape": "circle"
           }
         },
-        "quantity_selector_PperWT": {
+        "quantity_selector_8HHKpV": {
           "type": "quantity_selector",
-          "disabled": true,
           "settings": {}
         },
-        "buy_buttons_mbhTME": {
+        "buy_buttons_Ni8axk": {
           "type": "buy_buttons",
           "settings": {
             "show_dynamic_checkout": true,
             "show_gift_card_recipient": true
           }
         },
-        "share_aKaJgc": {
+        "share_jCRwYg": {
           "type": "share",
           "settings": {
             "share_label": "Share"
@@ -97,17 +94,18 @@
         }
       },
       "block_order": [
-        "text_dwDzPg",
-        "title_MdNfNA",
-        "price_HBEbVm",
-        "variant_picker_jpqtwk",
-        "quantity_selector_PperWT",
-        "buy_buttons_mbhTME",
-        "share_aKaJgc"
+        "text_MTcBkX",
+        "title_kcXHGT",
+        "price_dxkHY4",
+        "variant_picker_miALXt",
+        "quantity_selector_8HHKpV",
+        "buy_buttons_Ni8axk",
+        "share_jCRwYg"
       ],
-      "name": "t:sections.featured-product.presets.name",
+      "name": "Featured product preset",
       "settings": {
         "product": "long-skirt-hush",
+        "preselected_variant": "43654764298287",
         "color_scheme": "",
         "secondary_background": false,
         "media_size": "medium",
@@ -121,48 +119,45 @@
         "padding_bottom": 36
       }
     },
-    "featured_product_FbCxRU": {
-      "type": "featured-product",
+    "featured_product_preselected_hqbhMf": {
+      "type": "featured-product-preselected",
       "blocks": {
-        "text_Ji3DH7": {
+        "text_gqiHLm": {
           "type": "text",
-          "disabled": true,
           "settings": {
             "text": "{{ section.settings.product.vendor }}",
             "text_style": "uppercase"
           }
         },
-        "title_bkHfPP": {
+        "title_wchkfg": {
           "type": "title",
           "settings": {
             "heading_size": "h1"
           }
         },
-        "price_p9496Q": {
+        "price_hmQQGi": {
           "type": "price",
           "settings": {}
         },
-        "variant_picker_8PnAA4": {
+        "variant_picker_Vm4Af6": {
           "type": "variant_picker",
-          "repeater": "{{ section.settings.product.metafields.shopify.size.value }}",
           "settings": {
             "picker_type": "button",
             "swatch_shape": "circle"
           }
         },
-        "quantity_selector_34ATQD": {
+        "quantity_selector_nmFbyh": {
           "type": "quantity_selector",
-          "disabled": true,
           "settings": {}
         },
-        "buy_buttons_hj3x7t": {
+        "buy_buttons_cDXJA7": {
           "type": "buy_buttons",
           "settings": {
             "show_dynamic_checkout": true,
             "show_gift_card_recipient": true
           }
         },
-        "share_qrafYL": {
+        "share_6DHmeD": {
           "type": "share",
           "settings": {
             "share_label": "Share"
@@ -170,17 +165,18 @@
         }
       },
       "block_order": [
-        "text_Ji3DH7",
-        "title_bkHfPP",
-        "price_p9496Q",
-        "variant_picker_8PnAA4",
-        "quantity_selector_34ATQD",
-        "buy_buttons_hj3x7t",
-        "share_qrafYL"
+        "text_gqiHLm",
+        "title_wchkfg",
+        "price_hmQQGi",
+        "variant_picker_Vm4Af6",
+        "quantity_selector_nmFbyh",
+        "buy_buttons_cDXJA7",
+        "share_6DHmeD"
       ],
-      "name": "t:sections.featured-product.presets.name",
+      "name": "Featured product preset",
       "settings": {
         "product": "shorts-flare",
+        "preselected_variant": "43654789791791",
         "color_scheme": "",
         "secondary_background": false,
         "media_size": "medium",
@@ -245,8 +241,8 @@
   "order": [
     "main",
     "rich_text_A6i3Ud",
-    "featured_product_HBYE7n",
-    "featured_product_FbCxRU",
+    "featured_product_preselected_f9eFzc",
+    "featured_product_preselected_hqbhMf",
     "rich_text_zC9xM7",
     "collection_featured_main_g6W3XU"
   ]
