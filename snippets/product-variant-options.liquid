@@ -64,9 +64,7 @@
     {{ section.id }}-{{ option.position }}-{{ forloop.index0 -}}
   {%- endcapture -%}
 
-  {%- capture input_name -%}
-    {{ option.name }}-{{ option.position }}
-  {%- endcapture -%}
+  {%- assign input_name = option.name | strip | append: '-' | append: option.position -%}
 
   {%- capture input_dataset -%}
     data-product-url="{{ value.product_url }}"
