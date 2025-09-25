@@ -53,6 +53,7 @@
       "blocks": {
         "text_MTcBkX": {
           "type": "text",
+          "disabled": true,
           "settings": {
             "text": "{{ section.settings.product.vendor }}",
             "text_style": "uppercase"
@@ -77,6 +78,7 @@
         },
         "quantity_selector_8HHKpV": {
           "type": "quantity_selector",
+          "disabled": true,
           "settings": {}
         },
         "buy_buttons_Ni8axk": {
@@ -228,6 +230,8 @@
         "show_secondary_image": true,
         "show_vendor": false,
         "show_rating": false,
+        "show_inventory": false,
+        "inventory_threshold": 10,
         "quick_add": "none",
         "enable_filtering": false,
         "filter_type": "horizontal",
