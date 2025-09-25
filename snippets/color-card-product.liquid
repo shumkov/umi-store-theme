@@ -285,13 +285,23 @@
               {%- if color_card_variant == blank -%}
                 {%- assign color_card_variant = card_product.selected_or_first_available_variant -%}
               {%- endif -%}
+              {%- assign can_show_inventory = false -%}
               {%- if color_card_variant and color_card_variant.inventory_management == 'shopify' -%}
+                {%- assign can_show_inventory = true -%}
+              {%- elsif inventory_management_override == 'shopify' -%}
+                {%- assign can_show_inventory = true -%}
+              {%- endif -%}
+              {%- if can_show_inventory -%}
                 <p class="card__inventory caption" role="status">
                   {% render 'inventory-status',
                     variant: color_card_variant,
                     inventory_threshold: inventory_threshold,
                     show_inventory_quantity: true,
-                    root_class: 'inventory-status__value inventory-status__value--card'
+                    root_class: 'inventory-status__value inventory-status__value--card',
+                    inventory_quantity_override: inventory_quantity_override,
+                    inventory_policy_override: inventory_policy_override,
+                    inventory_management_override: inventory_management_override,
+                    available_override: available_override
                   %}
                 </p>
               {%- endif -%}

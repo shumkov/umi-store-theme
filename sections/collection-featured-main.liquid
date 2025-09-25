@@ -141,6 +141,10 @@
           {%- assign include_product = true -%}
           {%- assign selected_variant = product.selected_or_first_available_variant -%}
           {%- assign price_reference = selected_variant.price -%}
+          {%- assign card_inventory_quantity_override = blank -%}
+          {%- assign card_inventory_policy_override = blank -%}
+          {%- assign card_inventory_management_override = blank -%}
+          {%- assign card_inventory_available_override = blank -%}
           {% assign animation_index = rendered_count | plus: 1 %}
 
           {%- if color_filter_enabled -%}
@@ -177,6 +181,36 @@
               {%- if matched_variant -%}
                 {%- assign selected_variant = matched_variant -%}
                 {%- assign price_reference = matched_variant.price -%}
+                {%- assign matched_color_key = matched_variant.options[color_option_index] | strip | downcase -%}
+                {%- assign color_inventory_quantity_sum = 0 -%}
+                {%- assign color_inventory_policy_continue = false -%}
+                {%- assign color_inventory_any_managed = false -%}
+                {%- assign color_inventory_any_available = false -%}
+                {%- for variant in product.variants -%}
+                  {%- assign variant_color_value = variant.options[color_option_index] | strip | downcase -%}
+                  {%- if variant_color_value == matched_color_key -%}
+                    {%- if variant.inventory_management == 'shopify' -%}
+                      {%- assign color_inventory_any_managed = true -%}
+                      {%- assign color_inventory_quantity_sum = color_inventory_quantity_sum | plus: variant.inventory_quantity -%}
+                    {%- endif -%}
+                    {%- if variant.available -%}
+                      {%- assign color_inventory_any_available = true -%}
+                    {%- endif -%}
+                    {%- if variant.inventory_policy == 'continue' -%}
+                      {%- assign color_inventory_policy_continue = true -%}
+                    {%- endif -%}
+                  {%- endif -%}
+                {%- endfor -%}
+                {%- if color_inventory_any_managed -%}
+                  {%- assign card_inventory_management_override = 'shopify' -%}
+                  {%- assign card_inventory_quantity_override = color_inventory_quantity_sum -%}
+                  {%- if color_inventory_policy_continue -%}
+                    {%- assign card_inventory_policy_override = 'continue' -%}
+                  {%- else -%}
+                    {%- assign card_inventory_policy_override = 'deny' -%}
+                  {%- endif -%}
+                  {%- assign card_inventory_available_override = color_inventory_any_available -%}
+                {%- endif -%}
               {%- else -%}
                 {%- assign include_product = false -%}
               {%- endif -%}
@@ -221,7 +255,11 @@
                     quick_add: section.settings.quick_add,
                     section_id: section.id,
                     show_inventory: section.settings.show_inventory,
-                    inventory_threshold: section.settings.inventory_threshold
+                    inventory_threshold: section.settings.inventory_threshold,
+                    inventory_quantity_override: card_inventory_quantity_override,
+                    inventory_policy_override: card_inventory_policy_override,
+                    inventory_management_override: card_inventory_management_override,
+                    available_override: card_inventory_available_override
                   %}
                 {%- else -%}
                   {% render 'card-product',
@@ -236,7 +274,11 @@
                     quick_add: section.settings.quick_add,
                     section_id: section.id,
                     show_inventory: section.settings.show_inventory,
-                    inventory_threshold: section.settings.inventory_threshold
+                    inventory_threshold: section.settings.inventory_threshold,
+                    inventory_quantity_override: card_inventory_quantity_override,
+                    inventory_policy_override: card_inventory_policy_override,
+                    inventory_management_override: card_inventory_management_override,
+                    available_override: card_inventory_available_override
                   %}
                 {%- endif -%}
               </li>

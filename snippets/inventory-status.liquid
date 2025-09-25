@@ -33,15 +33,40 @@
   if root_class == blank
     assign root_class = 'inventory-status__value'
   endif
+
+  assign inventory_management_value = inventory_management_override
+  if inventory_management_value == blank and inventory_variant
+    assign inventory_management_value = inventory_variant.inventory_management
+  endif
+  assign inventory_quantity_value = inventory_quantity_override
+  if inventory_quantity_value == blank
+    if inventory_variant
+      assign inventory_quantity_value = inventory_variant.inventory_quantity
+    else
+      assign inventory_quantity_value = 0
+    endif
+  endif
+  assign inventory_policy_value = inventory_policy_override
+  if inventory_policy_value == blank and inventory_variant
+    assign inventory_policy_value = inventory_variant.inventory_policy
+  endif
+  assign inventory_available_value = available_override
+  if inventory_available_value == blank
+    if inventory_variant
+      assign inventory_available_value = inventory_variant.available
+    else
+      assign inventory_available_value = false
+    endif
+  endif
 -%}
-{%- if inventory_variant -%}
-  {%- if inventory_variant.inventory_management == 'shopify' -%}
-    {%- if inventory_variant.inventory_quantity > 0 -%}
-      {%- if inventory_variant.inventory_quantity <= inventory_threshold_value -%}
+{%- if inventory_variant or inventory_management_value != blank -%}
+  {%- if inventory_management_value == 'shopify' -%}
+    {%- if inventory_quantity_value > 0 -%}
+      {%- if inventory_quantity_value <= inventory_threshold_value -%}
         {%- assign status_color = 'rgb(238, 148, 65)' -%}
         {%- if inventory_show_quantity -%}
           {%- assign status_text = 'products.product.inventory_low_stock_show_count'
-            | t: quantity: inventory_variant.inventory_quantity
+            | t: quantity: inventory_quantity_value
           -%}
         {%- else -%}
           {%- assign status_text = 'products.product.inventory_low_stock' | t -%}
@@ -50,14 +75,14 @@
         {%- assign status_color = 'rgb(62, 214, 96)' -%}
         {%- if inventory_show_quantity -%}
           {%- assign status_text = 'products.product.inventory_in_stock_show_count'
-            | t: quantity: inventory_variant.inventory_quantity
+            | t: quantity: inventory_quantity_value
           -%}
         {%- else -%}
           {%- assign status_text = 'products.product.inventory_in_stock' | t -%}
         {%- endif -%}
       {%- endif -%}
     {%- else -%}
-      {%- if inventory_variant.inventory_policy == 'continue' -%}
+      {%- if inventory_policy_value == 'continue' -%}
         {%- assign status_color = 'rgb(62, 214, 96)' -%}
         {%- assign status_text = 'products.product.inventory_out_of_stock_continue_selling' | t -%}
       {%- else -%}
@@ -65,11 +90,11 @@
         {%- assign status_text = 'products.product.inventory_out_of_stock' | t -%}
       {%- endif -%}
     {%- endif -%}
-  {%- elsif inventory_show_unmanaged and inventory_variant.available -%}
+  {%- elsif inventory_show_unmanaged and inventory_available_value -%}
     {%- assign status_color = 'rgb(62, 214, 96)' -%}
-    {%- if inventory_show_quantity and inventory_variant.inventory_quantity -%}
+    {%- if inventory_show_quantity and inventory_quantity_value -%}
       {%- assign status_text = 'products.product.inventory_in_stock_show_count'
-        | t: quantity: inventory_variant.inventory_quantity
+        | t: quantity: inventory_quantity_value
       -%}
     {%- else -%}
       {%- assign status_text = 'products.product.inventory_in_stock' | t -%}
