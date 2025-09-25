@@ -81,6 +81,14 @@
           "disabled": true,
           "settings": {}
         },
+        "inventory_fgBVBE": {
+          "type": "inventory",
+          "settings": {
+            "text_style": "body",
+            "inventory_threshold": 10,
+            "show_inventory_quantity": true
+          }
+        },
         "buy_buttons_Ni8axk": {
           "type": "buy_buttons",
           "settings": {
@@ -101,6 +109,7 @@
         "price_dxkHY4",
         "variant_picker_miALXt",
         "quantity_selector_8HHKpV",
+        "inventory_fgBVBE",
         "buy_buttons_Ni8axk",
         "share_jCRwYg"
       ],
@@ -154,6 +163,14 @@
           "disabled": true,
           "settings": {}
         },
+        "inventory_cmpeVn": {
+          "type": "inventory",
+          "settings": {
+            "text_style": "body",
+            "inventory_threshold": 10,
+            "show_inventory_quantity": true
+          }
+        },
         "buy_buttons_cDXJA7": {
           "type": "buy_buttons",
           "settings": {
@@ -174,6 +191,7 @@
         "price_hmQQGi",
         "variant_picker_Vm4Af6",
         "quantity_selector_nmFbyh",
+        "inventory_cmpeVn",
         "buy_buttons_cDXJA7",
         "share_6DHmeD"
       ],
@@ -232,7 +250,7 @@
         "show_secondary_image": true,
         "show_vendor": false,
         "show_rating": false,
-        "show_inventory": false,
+        "show_inventory": true,
         "inventory_threshold": 10,
         "quick_add": "none",
         "enable_filtering": false,
