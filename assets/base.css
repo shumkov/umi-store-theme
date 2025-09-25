@@ -160,6 +160,29 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
   margin-top: 5rem;
 }
 
+.inventory-status__value {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  line-height: 1.5;
+}
+
+.inventory-status__value .svg-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4em;
+  height: 1.4em;
+  flex-shrink: 0;
+}
+
+.inventory-status__value .svg-wrapper svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+
 @media screen and (min-width: 750px) {
   .element-margin {
     margin-top: calc(5rem + var(--page-width-margin));
