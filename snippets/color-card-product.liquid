@@ -280,6 +280,22 @@
             {%- endif -%}
 
             {% render 'price', product: variant_sel, price_class: '', show_compare_at_price: true %}
+            {%- if show_inventory -%}
+              {%- assign color_card_variant = variant_sel -%}
+              {%- if color_card_variant == blank -%}
+                {%- assign color_card_variant = card_product.selected_or_first_available_variant -%}
+              {%- endif -%}
+              {%- if color_card_variant and color_card_variant.inventory_management == 'shopify' -%}
+                <p class="card__inventory caption" role="status">
+                  {% render 'inventory-status',
+                    variant: color_card_variant,
+                    inventory_threshold: inventory_threshold,
+                    show_inventory_quantity: true,
+                    root_class: 'inventory-status__value inventory-status__value--card'
+                  %}
+                </p>
+              {%- endif -%}
+            {%- endif -%}
             {%- if card_product.quantity_price_breaks_configured? -%}
               {% if card_product.variants.size == 1 and quick_add == 'bulk' %}
                 {% liquid

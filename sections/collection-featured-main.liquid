@@ -219,7 +219,9 @@
                     show_rating: section.settings.show_rating,
                     lazy_load: lazy_load,
                     quick_add: section.settings.quick_add,
-                    section_id: section.id
+                    section_id: section.id,
+                    show_inventory: section.settings.show_inventory,
+                    inventory_threshold: section.settings.inventory_threshold
                   %}
                 {%- else -%}
                   {% render 'card-product',
@@ -232,7 +234,9 @@
                     lazy_load: lazy_load,
                     skip_styles: skip_card_product_styles,
                     quick_add: section.settings.quick_add,
-                    section_id: section.id
+                    section_id: section.id,
+                    show_inventory: section.settings.show_inventory,
+                    inventory_threshold: section.settings.inventory_threshold
                   %}
                 {%- endif -%}
               </li>
@@ -437,6 +441,21 @@
       "default": false,
       "label": "t:sections.main-collection-product-grid.settings.show_rating.label",
       "info": "t:sections.main-collection-product-grid.settings.show_rating.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_inventory",
+      "default": false,
+      "label": "Show inventory status"
+    },
+    {
+      "type": "range",
+      "id": "inventory_threshold",
+      "label": "t:sections.main-product.blocks.inventory.settings.inventory_threshold.label",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 10
     },
     {
       "type": "select",
