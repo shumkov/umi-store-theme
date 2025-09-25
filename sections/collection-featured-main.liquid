@@ -101,7 +101,10 @@
     {%- if color_filters_display != '' -%}
       {%- assign color_filters_display = color_filters_display | slice: 0, color_filters_display.size | minus: 2 -%}
     {%- endif -%}
-    {%- assign color_filter_enabled = color_filters_string != '' -%}
+    {%- assign color_filter_enabled = false -%}
+    {%- if color_filters_string != '' -%}
+      {%- assign color_filter_enabled = true -%}
+    {%- endif -%}
 
     {%- assign price_min_enabled = false -%}
     {%- assign price_max_enabled = false -%}
