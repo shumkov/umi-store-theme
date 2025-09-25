@@ -196,6 +196,30 @@
         "padding_bottom": 36
       }
     },
+    "rich_text_zC9xM7": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_rHFRDx": {
+          "type": "heading",
+          "settings": {
+            "heading": "Put Together Your Blue Look",
+            "heading_size": "h2"
+          }
+        }
+      },
+      "block_order": [
+        "heading_rHFRDx"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "desktop_content_position": "left",
+        "content_alignment": "left",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
     "collection_featured_main_g6W3XU": {
       "type": "collection-featured-main",
       "name": "Collection grid hidden",
@@ -210,7 +234,7 @@
         "show_secondary_image": true,
         "show_vendor": false,
         "show_rating": false,
-        "quick_add": "none",
+        "quick_add": "standard",
         "enable_filtering": false,
         "filter_type": "horizontal",
         "enable_sorting": false,
@@ -225,6 +249,7 @@
     "rich_text_A6i3Ud",
     "featured_product_HBYE7n",
     "featured_product_FbCxRU",
+    "rich_text_zC9xM7",
     "collection_featured_main_g6W3XU"
   ]
 }
