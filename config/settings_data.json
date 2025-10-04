@@ -207,10 +207,12 @@
         "disabled": false,
         "settings": {}
       },
-      "3782161271425840822": {
-        "type": "shopify://apps/ns-color-swatch-variant-images/blocks/nestscale_product_variant/53eb5ed4-3892-414c-808b-3ea84516b10d",
+      "18228966181090706294": {
+        "type": "shopify://apps/selleasy/blocks/app-embed/790c1a03-a71f-4bc1-9869-00dad526d3c2",
         "disabled": false,
-        "settings": {}
+        "settings": {
+          "storefrontAccessToken": ""
+        }
       }
     },
     "color_schemes": {
