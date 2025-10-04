@@ -209,13 +209,13 @@
           "storefrontAccessToken": ""
         }
       },
-      "8774941748004189772": {
-        "type": "shopify://apps/reconvert/blocks/cart-drawer/72c64c30-2f7c-4a71-ae4c-efd1d5d1d2e2",
+      "144831480468751239": {
+        "type": "shopify://apps/essential-upsell/blocks/app-embed/50627fd9-24fd-4250-8614-accc12826d80",
         "disabled": false,
         "settings": {}
       },
-      "144831480468751239": {
-        "type": "shopify://apps/essential-upsell/blocks/app-embed/50627fd9-24fd-4250-8614-accc12826d80",
+      "8774941748004189772": {
+        "type": "shopify://apps/reconvert/blocks/cart-drawer/72c64c30-2f7c-4a71-ae4c-efd1d5d1d2e2",
         "disabled": true,
         "settings": {}
       }
