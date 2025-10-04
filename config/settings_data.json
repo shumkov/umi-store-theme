@@ -216,7 +216,7 @@
       },
       "8774941748004189772": {
         "type": "shopify://apps/reconvert/blocks/cart-drawer/72c64c30-2f7c-4a71-ae4c-efd1d5d1d2e2",
-        "disabled": false,
+        "disabled": true,
         "settings": {}
       }
     },
