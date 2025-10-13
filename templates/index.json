@@ -50,6 +50,7 @@
       ],
       "settings": {
         "image": "shopify://shop_images/IMG_2966.heic",
+        "image_2": "shopify://shop_images/IMG_2953.heic",
         "image_overlay_opacity": 10,
         "image_height": "adapt",
         "image_behavior": "none",
@@ -57,7 +58,7 @@
         "desktop_content_alignment": "center",
         "show_text_box": false,
         "color_scheme": "scheme-3",
-        "stack_images_on_mobile": false,
+        "stack_images_on_mobile": true,
         "mobile_content_alignment": "center",
         "show_text_below": false
       }
