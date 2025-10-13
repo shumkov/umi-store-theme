@@ -49,8 +49,7 @@
         "@media (max-width: 768px) {h2 {display: none; } .banner__text {display: none; }}"
       ],
       "settings": {
-        "image": "shopify://shop_images/IMG_2966.heic",
-        "image_2": "shopify://shop_images/IMG_2953.heic",
+        "image": "shopify://shop_images/082_f0e633b9-6c3a-4aff-af3a-3f3842b7e3ec.jpg",
         "image_overlay_opacity": 10,
         "image_height": "adapt",
         "image_behavior": "none",
