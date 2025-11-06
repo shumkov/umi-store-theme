@@ -44,6 +44,7 @@
         "text_fJKc3i",
         "button"
       ],
+      "disabled": true,
       "custom_css": [
         "h2 {text-transform: uppercase; font-size: 36px;}",
         "@media (max-width: 768px) {h2 {display: none; } .banner__text {display: none; }}"
@@ -96,6 +97,54 @@
         "full_width": true,
         "padding_top": 40,
         "padding_bottom": 4
+      }
+    },
+    "image_with_text_tKffFV": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_gxhVdp": {
+          "type": "heading",
+          "settings": {
+            "heading": "<strong>11.11</strong>",
+            "heading_size": "h0"
+          }
+        },
+        "text_Y4qcXA": {
+          "type": "text",
+          "settings": {
+            "text": "<h2><strong>Enjoy 15–20% off all pieces from 8 to 11 of November</strong></h2><p>Spend <strong>5,000 ฿</strong> — receive <strong>15% OFF<br/></strong>Spend <strong>7,000 ฿ </strong>— receive <strong>20% OFF</strong></p><p>Your discount appears automatically in the cart.</p><p></p>",
+            "text_style": "body"
+          }
+        },
+        "button_wANc9U": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop now",
+            "button_link": "shopify://collections/2025",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_gxhVdp",
+        "text_Y4qcXA",
+        "button_wANc9U"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/100.jpg",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "",
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
       }
     },
     "featured_collection": {
@@ -189,6 +238,7 @@
   "order": [
     "image_banner",
     "rich_text_ngkJ6U",
+    "image_with_text_tKffFV",
     "featured_collection",
     "featured_collection_xynGwg",
     "featured_collection_ayiUfV"
