@@ -118,6 +118,7 @@
         },
         "button_wANc9U": {
           "type": "button",
+          "disabled": true,
           "settings": {
             "button_label": "Shop now",
             "button_link": "shopify://collections/2025",
