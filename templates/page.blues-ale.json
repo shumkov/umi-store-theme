@@ -17,6 +17,54 @@
         "padding_bottom": 28
       }
     },
+    "image_with_text_tG7zUz": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_xApPJN": {
+          "type": "heading",
+          "settings": {
+            "heading": "<strong>11.11</strong>",
+            "heading_size": "h0"
+          }
+        },
+        "text_yzREwg": {
+          "type": "text",
+          "settings": {
+            "text": "<h2><strong>Enjoy 15–20% off all pieces</strong></h2><p>Spend <strong>5,000 ฿</strong> — receive <strong>15% OFF<br/></strong>Spend <strong>7,000 ฿ </strong>— receive <strong>20% OFF</strong></p><p>Your discount appears automatically in the cart form 8 to 11th of November.</p><p>F<strong>ree delivery within 2–4 days</strong>— and let your new pieces find their way to you.</p>",
+            "text_style": "body"
+          }
+        },
+        "button_jRd7dy": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop now",
+            "button_link": "shopify://collections/2025",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_xApPJN",
+        "text_yzREwg",
+        "button_jRd7dy"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/100.jpg",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "",
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "rich_text_A6i3Ud": {
       "type": "rich-text",
       "blocks": {
@@ -264,6 +312,7 @@
   },
   "order": [
     "main",
+    "image_with_text_tG7zUz",
     "rich_text_A6i3Ud",
     "featured_product_preselected_f9eFzc",
     "featured_product_preselected_hqbhMf",
