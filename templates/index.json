@@ -44,7 +44,6 @@
         "text_fJKc3i",
         "button"
       ],
-      "disabled": true,
       "custom_css": [
         "h2 {text-transform: uppercase; font-size: 36px;}",
         "@media (max-width: 768px) {h2 {display: none; } .banner__text {display: none; }}"
@@ -131,6 +130,7 @@
         "text_Y4qcXA",
         "button_wANc9U"
       ],
+      "disabled": true,
       "name": "t:sections.image-with-text.presets.name",
       "settings": {
         "image": "shopify://shop_images/100.jpg",
