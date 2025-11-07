@@ -12,5 +12,26 @@
   "context": {
     "market": "tryon"
   },
-  "sections": {}
+  "sections": {
+    "main": {
+      "settings": {},
+      "blocks": {},
+      "block_order": [
+        "vendor",
+        "title",
+        "price",
+        "variant_picker",
+        "kiwi_size_chart_recommender_kiwi_sizing_xWxDHV",
+        "inventory_r6m98F",
+        "buy_buttons",
+        "goalify_progress_bar_block_product_AVmRFz",
+        "collapsible_tab_KNWiQa",
+        "vitals_ub_product_bundles_DN39Qk",
+        "complementary_rF8mf9",
+        "description",
+        "collapsible_tab_NiTfRR",
+        "share"
+      ]
+    }
+  }
 }
