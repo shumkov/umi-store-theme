@@ -12,5 +12,15 @@
   "context": {
     "market": "tryon"
   },
-  "sections": {}
+  "sections": {
+    "main": {
+      "settings": {},
+      "blocks": {
+        "goalify_progress_bar_block_product_AVmRFz": {
+          "disabled": true,
+          "settings": {}
+        }
+      }
+    }
+  }
 }
