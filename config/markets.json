@@ -9,9 +9,6 @@
  */
 {
   "markets": {
-    "tryon": {
-      "parent": "@default"
-    },
     "th": {
       "parent": "@default"
     }
