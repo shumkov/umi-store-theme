@@ -12,5 +12,11 @@
   "context": {
     "market": "tryon"
   },
-  "sections": {}
+  "sections": {
+    "announcement-bar": {
+      "disabled": true,
+      "settings": {},
+      "blocks": {}
+    }
+  }
 }

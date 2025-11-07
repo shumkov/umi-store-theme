@@ -11,6 +11,9 @@
   "markets": {
     "th": {
       "parent": "@default"
+    },
+    "tryon": {
+      "parent": "@default"
     }
   }
 }
