@@ -15,7 +15,12 @@
   "sections": {
     "main": {
       "settings": {},
-      "blocks": {},
+      "blocks": {
+        "goalify_progress_bar_block_product_AVmRFz": {
+          "disabled": true,
+          "settings": {}
+        }
+      },
       "block_order": [
         "vendor",
         "title",
