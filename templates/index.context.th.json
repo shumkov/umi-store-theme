@@ -8,9 +8,9 @@
  * ------------------------------------------------------------
  */
 {
-  "markets": {
-    "tryon": {
-      "parent": "@default"
-    }
-  }
+  "parent": "index.json",
+  "context": {
+    "market": "th"
+  },
+  "sections": {}
 }

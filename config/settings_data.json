@@ -160,11 +160,6 @@
         "disabled": false,
         "settings": {}
       },
-      "14391867418331573003": {
-        "type": "shopify://apps/goalify/blocks/progress-bar-embed/0834dd64-6591-4dfa-9cc4-bbb7ef032eed",
-        "disabled": false,
-        "settings": {}
-      },
       "1592368672439559791": {
         "type": "shopify://apps/bixgrow-affiliate/blocks/toolbar/b4f8e2e0-5ee6-49dd-b333-2e5542feb60a",
         "disabled": false,
@@ -202,22 +197,18 @@
         "disabled": false,
         "settings": {}
       },
-      "8774941748004189772": {
-        "type": "shopify://apps/reconvert/blocks/cart-drawer/72c64c30-2f7c-4a71-ae4c-efd1d5d1d2e2",
-        "disabled": true,
-        "settings": {}
-      },
-      "18228966181090706294": {
-        "type": "shopify://apps/selleasy/blocks/app-embed/790c1a03-a71f-4bc1-9869-00dad526d3c2",
-        "disabled": true,
-        "settings": {
-          "storefrontAccessToken": ""
-        }
-      },
       "144831480468751239": {
         "type": "shopify://apps/essential-upsell/blocks/app-embed/50627fd9-24fd-4250-8614-accc12826d80",
         "disabled": false,
         "settings": {}
+      },
+      "14391867418331573003": {
+        "type": "shopify://apps/goalify/blocks/progress-bar-embed/0834dd64-6591-4dfa-9cc4-bbb7ef032eed",
+        "disabled": true,
+        "settings": {
+          "n99gb_embed_css": "/* CSS Rules */",
+          "n99gb_embed_js": "/* JS Code */"
+        }
       }
     },
     "color_schemes": {
