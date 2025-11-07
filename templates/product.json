@@ -28,6 +28,13 @@
           "type": "price",
           "settings": {}
         },
+        "goalify_progress_bar_block_product_AVmRFz": {
+          "type": "shopify://apps/goalify/blocks/progress-bar-blockProduct/0834dd64-6591-4dfa-9cc4-bbb7ef032eed",
+          "settings": {
+            "n99gb_product_css": "/* CSS Rules */",
+            "n99gb_product_js": "/* JS Code */"
+          }
+        },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
@@ -110,6 +117,7 @@
         "vendor",
         "title",
         "price",
+        "goalify_progress_bar_block_product_AVmRFz",
         "variant_picker",
         "kiwi_size_chart_recommender_kiwi_sizing_xWxDHV",
         "inventory_r6m98F",
