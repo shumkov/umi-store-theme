@@ -12,5 +12,11 @@
   "context": {
     "market": "tryon"
   },
-  "sections": {}
+  "sections": {
+    "image_with_text_tG7zUz": {
+      "disabled": true,
+      "settings": {},
+      "blocks": {}
+    }
+  }
 }
