@@ -48,6 +48,7 @@
         "text_yzREwg",
         "button_jRd7dy"
       ],
+      "disabled": true,
       "name": "t:sections.image-with-text.presets.name",
       "settings": {
         "image": "shopify://shop_images/100.jpg",
