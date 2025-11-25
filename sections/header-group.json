@@ -17,7 +17,7 @@
         "announcement-bar-0": {
           "type": "announcement",
           "settings": {
-            "text": "November 8 - 11. Enjoy 15–20% off all pieces",
+            "text": "28 November - 1 December. 30% Off All Knitwear",
             "link": ""
           }
         }
@@ -25,7 +25,6 @@
       "block_order": [
         "announcement-bar-0"
       ],
-      "disabled": true,
       "settings": {
         "auto_rotate": false,
         "change_slides_speed": 5,

@@ -44,6 +44,7 @@
         "text_fJKc3i",
         "button"
       ],
+      "disabled": true,
       "custom_css": [
         "h2 {text-transform: uppercase; font-size: 36px;}",
         "@media (max-width: 768px) {h2 {display: none; } .banner__text {display: none; }}"
@@ -60,6 +61,95 @@
         "stack_images_on_mobile": false,
         "mobile_content_alignment": "center",
         "show_text_below": false
+      }
+    },
+    "vitals_dc22295c_dJp6w6": {
+      "type": "vitals-dc22295c",
+      "blocks": {
+        "caption_jNUD3a": {
+          "type": "caption",
+          "settings": {
+            "caption": "Black Friday is Coming. 28 Nov-1 Dec",
+            "caption_size": "16",
+            "caption_weight": "400",
+            "caption_color": "#ffffff",
+            "caption_alternative_font": false,
+            "caption_font": "sans_serif_n4"
+          }
+        },
+        "heading_6ExRy8": {
+          "type": "heading",
+          "settings": {
+            "heading": "30% Off All Knitwear",
+            "heading_size": "48",
+            "heading_style": "bold",
+            "heading_color": "#ffffff",
+            "heading_alternative_font": false,
+            "heading_font": "sans_serif_n4"
+          }
+        },
+        "timer_jYzniU": {
+          "type": "timer",
+          "settings": {
+            "end_date": "11-28-2025",
+            "end_time": "1am",
+            "show_numbers": false,
+            "numbers_style": "regular",
+            "countdown_size": "medium",
+            "numbers_color": "#ffffff",
+            "text_color": "#ffffff"
+          }
+        },
+        "text_8mNRhw": {
+          "type": "text",
+          "settings": {
+            "description": "<p><em>explore the collection, add your favorite pieces to the cart, and set a reminder to return once the offer goes live</em></p>",
+            "description_size": "12",
+            "description_color": "#ffffff",
+            "description_alternative_font": false,
+            "description_font": "sans_serif_n4"
+          }
+        },
+        "button_9VzX7H": {
+          "type": "button",
+          "settings": {
+            "primary_button_label": "",
+            "primary_button_link": "",
+            "primary_button_style": "solid",
+            "primary_text_color": "#ffffff",
+            "primary_background_color": "#222222",
+            "primary_border_color": "#222222",
+            "primary_button_corner": 0,
+            "primary_new_tab": false
+          }
+        }
+      },
+      "block_order": [
+        "caption_jNUD3a",
+        "heading_6ExRy8",
+        "timer_jYzniU",
+        "text_8mNRhw",
+        "button_9VzX7H"
+      ],
+      "name": "🧡 Vitals: Countdown Timer Banner",
+      "settings": {
+        "desktop_content_position": "center-center",
+        "mobile_content_position": "center",
+        "desktop_banner_height": "large",
+        "mobile_banner_height": "large",
+        "hide_section": false,
+        "completed_message": "",
+        "completed_message_color": "#ffffff",
+        "image_desktop": "shopify://shop_images/066_9760ad94-5bfb-4a7b-816d-7b36ebb2f935.jpg",
+        "section_width": 100,
+        "section_max_width": "",
+        "vertical_padding": 0,
+        "vertical_margin": 0,
+        "vertical_padding_mobile": 0,
+        "vertical_margin_mobile": 0,
+        "section_background": "",
+        "overlay_color": "#222222",
+        "overlay_opacity": 20
       }
     },
     "rich_text_ngkJ6U": {
@@ -238,6 +328,7 @@
   },
   "order": [
     "image_banner",
+    "vitals_dc22295c_dJp6w6",
     "rich_text_ngkJ6U",
     "image_with_text_tKffFV",
     "featured_collection",
