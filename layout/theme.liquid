@@ -44,6 +44,23 @@
       assign current_market_handle = current_market_handle | downcase
     -%}
 
+    <script>
+      (function () {
+        var marketHandle = '{{ current_market_handle }}';
+        if (marketHandle === 'tryon') return;
+
+        var params = new URLSearchParams(window.location.search);
+        if (!params.get('bg_ref')) return;
+
+        var targetHost = 'tryon.umi.store';
+        var url = new URL(window.location.href);
+        if (url.hostname === targetHost) return;
+
+        url.hostname = targetHost;
+        window.location.replace(url.toString());
+      })();
+    </script>
+
     {{ content_for_header }}
 
     <script>
@@ -346,8 +363,10 @@
         onload="this.media='all'"
       >
     {%- endif -%}
-
-    {{ 'custom.css' | asset_url | stylesheet_tag }}
+    {%- if current_market_handle == 'tryon' -%}
+      {{ 'tryon-affiliate.css' | asset_url | stylesheet_tag }}
+      <script src="{{ 'tryon-affiliate.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
 
     <script>
       if (Shopify.designMode) {
