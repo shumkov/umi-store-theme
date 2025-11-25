@@ -63,57 +63,6 @@
 
     {{ content_for_header }}
 
-    <script>
-      (function () {
-        let blockedFragment = '019a535f-3eae-72b8-a511-9f3864a5ad71';
-        function isGoalifyScript(node) {
-          return (
-            node &&
-            node.tagName === 'SCRIPT' &&
-            typeof node.src === 'string' &&
-            node.src.indexOf(blockedFragment) !== -1
-          );
-        }
-        function purgeScripts(context) {
-          let removed = false;
-
-          context.querySelectorAll('script[src*="' + blockedFragment + '"]').forEach(function (el) {
-            removed = true;
-            el.parentNode && el.parentNode.removeChild(el);
-          });
-
-          return removed;
-        }
-        function handleNode(node) {
-          if (!node || node.nodeType !== 1) return false;
-
-          if (isGoalifyScript(node)) {
-            node.parentNode && node.parentNode.removeChild(node);
-            return true;
-          }
-
-          return purgeScripts(node);
-        }
-        let observer;
-        observer = new MutationObserver(function (mutations) {
-          var removed = false;
-          mutations.forEach(function (mutation) {
-            mutation.addedNodes.forEach(function (node) {
-              removed = handleNode(node) || removed;
-            });
-          });
-          if (removed) {
-            observer.disconnect();
-            observer = null;
-          }
-        });
-        observer.observe(document.documentElement, {
-          childList: !0,
-          subtree: !0,
-        });
-      })();
-    </script>
-
     {%- liquid
       assign body_font_bold = settings.type_body_font | font_modify: 'weight', 'bold'
       assign body_font_italic = settings.type_body_font | font_modify: 'style', 'italic'

@@ -1,5 +1,9 @@
 (function () {
-  var BLOCKED_FRAGMENTS = ['bixgrow'];
+  var BLOCKED_FRAGMENTS = [
+    'bixgrow',
+    '019a535f-3eae-72b8-a511-9f3864a5ad71',
+    '019ab839-581c-7fea-b87f-c97453c5f02d/goalify-955/assets/app-embed.js',
+  ];
   var ATTRIBUTE_KEY = 'affiliate_referral';
   var ATTRIBUTE_VALUE = 'true';
   var SESSION_FLAG = 'bgAffiliateAttributeSet';
@@ -57,7 +61,6 @@
 
   function setCartAttribute() {
     if (!hasAffiliateReferral()) return;
-    if (sessionStorage.getItem(SESSION_FLAG)) return;
 
     fetch('/cart/update.js', {
       method: 'POST',
