@@ -12,7 +12,7 @@
         assign sale_link = false
         assign sale_target = routes.root_url | append: 'pages/blue-20-off'
         assign link_title_downcase = link.title | strip | downcase
-        if link_title_downcase == 'sale'
+        if link_title_downcase == 'sale' or link_title_downcase == 'blue sale'
           assign sale_link = true
         endif
         if link.url == sale_target or link.url contains '/pages/blue-20-off'
