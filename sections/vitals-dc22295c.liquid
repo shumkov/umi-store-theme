@@ -1,0 +1,1429 @@
+<!-- --VERSION-23-- -->
+
+{% style %}
+:root {
+--vtl-neutral-70: #5e5e5e;
+--vtl-neutral-01: #fff;
+--vtl-size-1: 1px;
+--vtl-size-2: 2px;
+--vtl-size-4: 4px;
+--vtl-size-6: 6px;
+--vtl-size-8: 8px;
+--vtl-size-12: 12px;
+--vtl-size-14: 14px;
+--vtl-size-16: 16px;
+--vtl-size-20: 20px;
+--vtl-size-24: 24px;
+--vtl-size-32: 32px;
+--vtl-size-40: 40px;
+--vtl-size-48: 48px;
+--vtl-size-64: 64px;
+--vtl-font-weight-400: 400;
+--vtl-font-weight-600: 600;
+--vtl-line-height-140: 1.4;
+--vtl-text-decoration-none: none;
+--vtl-text-decoration-underline: underline;
+--vtl-border-width-1: var(--vtl-size-1);
+--vtl-border-width-2: var(--vtl-size-2);
+--vtl-color-bg-fill-inverse-on-light: var(--vtl-neutral-01);
+--vtl-color-text-disable-on-light: var(--vtl-neutral-70);
+--vtl-space-2: var(--vtl-size-2);
+--vtl-space-4: var(--vtl-size-4);
+--vtl-space-6: var(--vtl-size-6);
+--vtl-space-8: var(--vtl-size-8);
+--vtl-space-12: var(--vtl-size-12);
+--vtl-space-16: var(--vtl-size-16);
+--vtl-space-20: var(--vtl-size-20);
+--vtl-space-24: var(--vtl-size-24);
+--vtl-space-32: var(--vtl-size-32);
+--vtl-space-40: var(--vtl-size-40);
+--vtl-space-48: var(--vtl-size-48);
+--vtl-space-64: var(--vtl-size-64);
+--vtl-font-size-12: var(--vtl-size-12);
+--vtl-font-size-14: var(--vtl-size-14);
+--vtl-font-size-16: var(--vtl-size-16);
+--vtl-font-size-20: var(--vtl-size-20);
+--vtl-font-size-24: var(--vtl-size-24);
+--vtl-font-size-32: var(--vtl-size-32);
+--vtl-font-size-48: var(--vtl-size-48);
+}
+
+
+{% endstyle %}
+
+<!-- --UUID-dc22295c-- -->
+
+{%- liquid
+	assign mobile_image = section.settings.image_mobile
+
+	if mobile_image == blank
+		assign mobile_image = section.settings.image_desktop
+	endif
+
+    assign heading_block = section.blocks | where: "type", "heading" | first
+    assign has_heading = true
+    if heading_block == blank or heading_block.settings.heading == blank
+        assign has_heading = false
+    endif
+-%}
+
+<section class="Vtls-{{ section.id | handle }} VtlsCountdownBanner" {% if has_heading %}aria-labelledby="VtlsCountdownBannerHeading-{{ section.id }}"{% else %}aria-label="Countdown Timer Banner"{% endif %}>
+	<div
+		class="
+			VtlsCountdownBannerContainer
+			{% if section.settings.section_width == 100 %}VtlsCountdownBannerContainer--fullWidth{% endif %}
+		"
+	>
+		<div
+			class="
+				VtlsCountdownBannerTimer
+				VtlsCountdownBannerTimer--desktop-{{ section.settings.desktop_banner_height }}
+				VtlsCountdownBannerTimer--mobile-{{ section.settings.mobile_banner_height }}
+			"
+		>
+			<div class="VtlsCountdownBannerTimer__Image">
+				{%- if section.settings.image_desktop != blank -%}
+					{{-
+						section.settings.image_desktop
+						| image_url: width: section.settings.image_desktop.width
+						| image_tag:
+							sizes: "100vw",
+							alt: "",
+							widths: "400, 600, 800, 1200, 1600, 1800, 2400, 2800, 3200",
+							fetchpriority: "low",
+							loading: "lazy",
+							class: "VtlsCountdownBannerTimer__Image--desktop"
+					-}}
+				{%- else -%}
+					<img
+						src="data:image/webp;base64,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"
+						alt=""
+						width="1080"
+						height="1080"
+						loading="lazy"
+						sizes="100vw"
+						fetchpriority="low"
+						class="VtlsCountdownBannerTimer__Image--desktop"
+					>
+				{%- endif -%}
+				{%- if mobile_image != blank -%}
+					{{-
+						mobile_image
+						| image_url: width: mobile_image.width
+						| image_tag:
+							sizes: "100vw",
+							alt: "",
+							widths: "400, 600, 800, 1200, 1600, 1800, 2400, 2800, 3200",
+							fetchpriority: "low",
+							loading: "lazy",
+							class: "VtlsCountdownBannerTimer__Image--mobile"
+					-}}
+				{%- else -%}
+					<img
+						src="data:image/webp;base64,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"
+						alt=""
+						width="580"
+						height="580"
+						loading="lazy"
+						sizes="100vw"
+						fetchpriority="low"
+						class="VtlsCountdownBannerTimer__Image--mobile"
+					>
+				{%- endif -%}
+			</div>
+			<div
+				class="
+					VtlsCountdownBannerTimer__Content
+					VtlsCountdownBannerTimer__Content--desktopPosition-{{ section.settings.desktop_content_position }}
+					VtlsCountdownBannerTimer__Content--mobilePosition-{{ section.settings.mobile_content_position }}
+				"
+			>
+				<div class="VtlsTextBox">
+					{%- for block in section.blocks -%}
+						{%- case block.type -%}
+							{%- when "heading" -%}
+								{%- if block.settings.heading_alternative_font -%}
+									<style>
+										{{- block.settings.heading_font | font_face: font_display: 'swap' -}}
+									</style>
+								{%- endif -%}
+								{%- capture heading_css_variables -%}
+                                    --block-heading-size: {{- block.settings.heading_size -}}px;
+                                    --block-heading-color: {{- block.settings.heading_color -}};
+                                    --block-heading-font: {{- block.settings.heading_font.family -}};
+                                  {%- endcapture -%}
+								<h2
+									style="{{- heading_css_variables | strip_newlines | escape -}}"
+									class="VtlsTextBox__Heading VtlsTextBox__Heading--style-{{ block.settings.heading_style }} {% if block.settings.heading_alternative_font == true %}VtlsTextBox__Heading--alternativeFont{% endif %}"
+                  id="VtlsCountdownBannerHeading-{{ section.id }}"
+									{{ block.shopify_attributes }}
+								>
+									{{- block.settings.heading -}}
+								</h2>
+							{%- when "caption" -%}
+								{%- if block.settings.caption_alternative_font -%}
+									<style>
+										{{- block.settings.caption_font | font_face: font_display: 'swap' -}}
+									</style>
+								{%- endif -%}
+								{%- capture caption_css_variables -%}
+                                    --block-caption-size: {{- block.settings.caption_size -}}px;
+                                    --block-caption-color: {{- block.settings.caption_color -}};
+                                    --block-caption-font: {{- block.settings.caption_font.family -}};
+                                    --block-caption-weight: {{- block.settings.caption_weight -}};
+                                  {%- endcapture -%}
+								<p
+									style="{{- caption_css_variables | strip_newlines | escape -}}"
+									class="VtlsTextBox__Caption {% if block.settings.caption_alternative_font == true %}VtlsTextBox__Caption--alternativeFont{% endif %}"
+									{{ block.shopify_attributes }}
+								>
+									{{- block.settings.caption -}}
+								</p>
+							{%- when "text" -%}
+								{%- if block.settings.description_alternative_font -%}
+									{%- liquid
+										assign body_font_bold = block.settings.description_font | font_modify: 'weight', 'bold'
+										assign body_font_italic = block.settings.description_font | font_modify: 'style', 'italic'
+										assign body_font_bold_italic = body_font_bold | font_modify: 'style', 'italic'
+									%}
+									<style>
+										{{- block.settings.description_font | font_face: font_display: 'swap' -}}
+										{{ body_font_bold | font_face: font_display: 'swap' }}
+										{{ body_font_italic | font_face: font_display: 'swap' }}
+										{{ body_font_bold_italic | font_face: font_display: 'swap' }}
+									</style>
+								{%- endif -%}
+								{%- capture description_css_variables -%}
+                                    --block-description-size: {{- block.settings.description_size -}}px;
+                                    --block-description-color: {{- block.settings.description_color -}};
+                                    --block-description-font: {{- block.settings.description_font.family -}};
+                                  {%- endcapture -%}
+								<div
+									style="{{- description_css_variables | strip_newlines | escape -}}"
+									class="VtlsTextBox__Description VtlsTextBox__Description--alignment-{{ section.settings.text_alignment }} {% if block.settings.description_alternative_font == true %}VtlsTextBox__Description--alternativeFont{% endif %}"
+									{{ block.shopify_attributes }}
+								>
+									{{- block.settings.description -}}
+								</div>
+							{%- when "button" -%}
+								{%- capture buttons_css_variables -%}
+									--block-primary-button-text-color: {{- block.settings.primary_text_color -}};
+									--block-primary-button-background-color: {{- block.settings.primary_background_color -}};
+									--block-primary-button-corner-radius: {{- block.settings.primary_button_corner -}}px;
+									--block-primary-button-border-color: {{- block.settings.primary_border_color -}};
+								{%- endcapture -%}
+								<div
+									style="{{- buttons_css_variables | strip_newlines | escape -}}"
+									class="VtlsCountdownBannerButton"
+									{{ block.shopify_attributes }}
+								>
+									{%- if block.settings.primary_button_label != blank -%}
+										<a
+											{% if block.settings.primary_new_tab == true %}
+												target="_blank"
+												rel="noopener noreferrer"
+											{% endif %}
+											class="
+												VtlsCountdownBannerButton__Primary
+												VtlsCountdownBannerButton__Primary--{{ block.settings.primary_button_style }}
+											"
+											href="{{ block.settings.primary_button_link | default: "#" }}"
+										>
+											{{- block.settings.primary_button_label | escape -}}
+										</a>
+									{%- endif -%}
+								</div>
+							{%- when "timer" -%}
+								<vtls-countdown-timer-banner
+									class="
+										VtlsTextBox__Timer
+										{% if block.settings.show_numbers == true %}VtlsTextBox__Timer--onlyNumbers{% endif %}
+									"
+									{{ block.shopify_attributes }}
+								>
+									{%- assign end_date = block.settings.end_date -%}
+									{%- assign end_time = block.settings.end_time -%}
+
+									{%- capture heading_css_variables -%}
+                                        --block-numbers-color: {{- block.settings.numbers_color -}};
+                                        --block-text-color: {{- block.settings.text_color -}};
+                                    {%- endcapture -%}
+									<div
+										style="{{- heading_css_variables | strip_newlines | escape -}}"
+										id="VtlsCountdownTimer"
+										class="VtlsCountdownTimer"
+										{%- if end_date != blank and end_time != blank -%}
+											data-end-date="{{ end_date }}"
+											data-end-time="{{ end_time }}"
+										{%- endif -%}
+										data-completed-text="{{ section.settings.completed_message }}"
+										data-hide-section="{{ section.settings.hide_section }}"
+										role="timer"
+										aria-live="polite"
+										aria-atomic="true"
+										aria-label="Time remaining: 00 days, 00 hours, 00 minutes, 00 seconds"
+									>
+										<div
+											class="
+												VtlsCountdownTimerActive
+												VtlsCountdownTimerActive--{{ block.settings.countdown_size }}
+												VtlsCountdownTimerActive--{{ block.settings.numbers_style }}
+											"
+											aria-hidden="true"
+										>
+											<div class="VtlsCountdownTimerActive__Item">
+												<h6 class="VtlsCountdownTimerActive__Number VtlsDays">00</h6>
+												<span class="VtlsCountdownTimerActive__Text">days</span>
+											</div>
+												<span class="VtlsCountdownTimerActive__Divider" aria-hidden="true">:</span>
+											<div class="VtlsCountdownTimerActive__Item">
+												<h6 class="VtlsCountdownTimerActive__Number VtlsHours">00</h6>
+												<span class="VtlsCountdownTimerActive__Text">hours</span>
+											</div>
+												<span class="VtlsCountdownTimerActive__Divider" aria-hidden="true">:</span>
+											<div class="VtlsCountdownTimerActive__Item">
+												<h6 class="VtlsCountdownTimerActive__Number VtlsMinutes">00</h6>
+												<span class="VtlsCountdownTimerActive__Text">min</span>
+											</div>
+												<span class="VtlsCountdownTimerActive__Divider" aria-hidden="true">:</span>
+											<div class="VtlsCountdownTimerActive__Item">
+												<h6 class="VtlsCountdownTimerActive__Number VtlsSeconds">00</h6>
+												<span class="VtlsCountdownTimerActive__Text">sec</span>
+											</div>
+										</div>
+									</div>
+								</vtls-countdown-timer-banner>
+						{%- endcase -%}
+					{%- endfor -%}
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+{% schema %}
+{
+	"name": "🧡 Countdown Timer Banner",
+	"settings": [
+		{
+			"type": "header",
+			"content": "General"
+		},
+		{
+			"type": "select",
+			"id": "desktop_content_position",
+			"label": "Desktop content position",
+			"options": [
+				{
+					"value": "top-left",
+					"label": "Top left"
+				},
+				{
+					"value": "top-center",
+					"label": "Top center"
+				},
+				{
+					"value": "top-right",
+					"label": "Top right"
+				},
+				{
+					"value": "center-left",
+					"label": "Center left"
+				},
+				{
+					"value": "center-center",
+					"label": "Center center"
+				},
+				{
+					"value": "center-right",
+					"label": "Center right"
+				},
+				{
+					"value": "bottom-left",
+					"label": "Bottom left"
+				},
+				{
+					"value": "bottom-center",
+					"label": "Bottom center"
+				},
+				{
+					"value": "bottom-right",
+					"label": "Bottom right"
+				}
+			],
+			"default": "center-center"
+		},
+		{
+			"type": "select",
+			"id": "mobile_content_position",
+			"label": "Mobile content position",
+			"options": [
+				{
+					"value": "top",
+					"label": "Top"
+				},
+				{
+					"value": "center",
+					"label": "Center"
+				},
+				{
+					"value": "bottom",
+					"label": "Bottom"
+				}
+			],
+			"default": "center"
+		},
+		{
+			"type": "select",
+			"id": "desktop_banner_height",
+			"label": "Desktop banner height",
+			"options": [
+				{
+					"value": "small",
+					"label": "Small"
+				},
+				{
+					"value": "medium",
+					"label": "Medium"
+				},
+				{
+					"value": "large",
+					"label": "Large"
+				}
+			],
+			"default": "medium"
+		},
+		{
+			"type": "select",
+			"id": "mobile_banner_height",
+			"label": "Mobile banner height",
+			"options": [
+				{
+					"value": "small",
+					"label": "Small"
+				},
+				{
+					"value": "medium",
+					"label": "Medium"
+				},
+				{
+					"value": "large",
+					"label": "Large"
+				}
+			],
+			"default": "medium"
+		},
+		{
+			"type": "checkbox",
+			"id": "hide_section",
+			"label": "Hide entire section after countdown ends",
+			"default": true
+		},
+		{
+			"type": "text",
+			"id": "completed_message",
+			"label": "Completed message",
+			"info": "Visible if the setting to hide the section after countdown ends is inactive"
+		},
+		{
+			"type": "color",
+			"id": "completed_message_color",
+			"label": "Completed message color",
+			"default": "#ffffff"
+		},
+		{
+			"type": "header",
+			"content": "Image"
+		},
+		{
+			"type": "image_picker",
+			"id": "image_desktop",
+			"label": "Image on desktop"
+		},
+		{
+			"type": "image_picker",
+			"id": "image_mobile",
+			"label": "Image on mobile (optional)"
+		},
+		{
+			"type": "header",
+			"content": "Layout"
+		},
+		{
+			"type": "range",
+			"id": "section_width",
+			"min": 70,
+			"max": 100,
+			"step": 1,
+			"unit": "%",
+			"label": "Section width",
+			"default": 100
+		},
+		{
+			"type": "text",
+			"id": "section_max_width",
+			"label": "Custom max width (optional)",
+			"info": "Section max width in pixels"
+		},
+		{
+			"type": "range",
+			"id": "vertical_padding",
+			"min": 0,
+			"max": 100,
+			"step": 2,
+			"unit": "px",
+			"label": "Top - bottom padding (desktop)",
+			"default": 0
+		},
+		{
+			"type": "range",
+			"id": "vertical_margin",
+			"min": 0,
+			"max": 100,
+			"step": 2,
+			"unit": "px",
+			"label": "Top - bottom margin (desktop)",
+			"default": 0
+		},
+		{
+			"type": "range",
+			"id": "vertical_padding_mobile",
+			"min": 0,
+			"max": 100,
+			"step": 2,
+			"unit": "px",
+			"label": "Top - bottom padding (mobile)",
+			"default": 0
+		},
+		{
+			"type": "range",
+			"id": "vertical_margin_mobile",
+			"min": 0,
+			"max": 100,
+			"step": 2,
+			"unit": "px",
+			"label": "Top - bottom margin (mobile)",
+			"default": 0
+		},
+		{
+			"type": "header",
+			"content": "Design"
+		},
+		{
+			"type": "color",
+			"id": "section_background",
+			"label": "Section background"
+		},
+		{
+			"type": "color",
+			"id": "overlay_color",
+			"label": "Image overlay color",
+			"default": "#222222"
+		},
+		{
+			"type": "range",
+			"id": "overlay_opacity",
+			"min": 0,
+			"max": 100,
+			"step": 2,
+			"unit": "%",
+			"label": "Image overlay opacity",
+			"default": 20
+		}
+	],
+	"blocks": [
+		{
+			"type": "heading",
+			"name": "Heading",
+			"limit": 1,
+			"settings": [
+				{
+					"type": "text",
+					"id": "heading",
+					"default": "Flash Sale",
+					"label": "Heading"
+				},
+				{
+					"type": "select",
+					"id": "heading_size",
+					"label": "Size",
+					"options": [
+						{
+							"value": "24",
+							"label": "Small"
+						},
+						{
+							"value": "32",
+							"label": "Medium"
+						},
+						{
+							"value": "48",
+							"label": "Large"
+						}
+					],
+					"default": "32"
+				},
+				{
+					"type": "select",
+					"id": "heading_style",
+					"label": "Heading style",
+					"options": [
+						{
+							"value": "regular",
+							"label": "Regular"
+						},
+						{
+							"value": "bold",
+							"label": "Bold"
+						}
+					],
+					"default": "regular"
+				},
+				{
+					"type": "color",
+					"id": "heading_color",
+					"label": "Text color",
+					"default": "#ffffff"
+				},
+				{
+					"type": "header",
+					"content": "Alternative font"
+				},
+				{
+					"type": "checkbox",
+					"id": "heading_alternative_font",
+					"label": "Apply alternative font",
+					"default": false
+				},
+				{
+					"type": "font_picker",
+					"id": "heading_font",
+					"label": "Font",
+					"default": "sans_serif_n4"
+				}
+			]
+		},
+		{
+			"type": "caption",
+			"name": "Caption",
+			"limit": 1,
+			"settings": [
+				{
+					"type": "text",
+					"id": "caption",
+					"label": "Caption"
+				},
+				{
+					"type": "select",
+					"id": "caption_size",
+					"label": "Size",
+					"options": [
+						{
+							"value": "12",
+							"label": "Small"
+						},
+						{
+							"value": "16",
+							"label": "Medium"
+						},
+						{
+							"value": "20",
+							"label": "Large"
+						}
+					],
+					"default": "16"
+				},
+				{
+					"type": "select",
+					"id": "caption_weight",
+					"label": "Caption style",
+					"options": [
+						{
+							"value": "400",
+							"label": "Regular"
+						},
+						{
+							"value": "600",
+							"label": "Bold"
+						}
+					],
+					"default": "400"
+				},
+				{
+					"type": "color",
+					"id": "caption_color",
+					"label": "Text color",
+					"default": "#ffffff"
+				},
+				{
+					"type": "header",
+					"content": "Alternative font"
+				},
+				{
+					"type": "checkbox",
+					"id": "caption_alternative_font",
+					"label": "Apply alternative font",
+					"default": false
+				},
+				{
+					"type": "font_picker",
+					"id": "caption_font",
+					"label": "Font",
+					"default": "sans_serif_n4"
+				}
+			]
+		},
+		{
+			"type": "text",
+			"name": "Description",
+			"limit": 1,
+			"settings": [
+				{
+					"type": "richtext",
+					"id": "description",
+					"default": "<p>Share details about your exclusive limited-time offer or special promotion.</p>",
+					"label": "Text"
+				},
+				{
+					"type": "select",
+					"id": "description_size",
+					"label": "Size",
+					"options": [
+						{
+							"value": "12",
+							"label": "Small"
+						},
+						{
+							"value": "16",
+							"label": "Medium"
+						},
+						{
+							"value": "20",
+							"label": "Large"
+						}
+					],
+					"default": "16"
+				},
+				{
+					"type": "color",
+					"id": "description_color",
+					"label": "Text color",
+					"default": "#ffffff"
+				},
+				{
+					"type": "header",
+					"content": "Alternative font"
+				},
+				{
+					"type": "checkbox",
+					"id": "description_alternative_font",
+					"label": "Apply alternative font",
+					"default": false
+				},
+				{
+					"type": "font_picker",
+					"id": "description_font",
+					"label": "Font",
+					"default": "sans_serif_n4"
+				}
+			]
+		},
+		{
+			"type": "button",
+			"name": "Button",
+			"limit": 1,
+			"settings": [
+				{
+					"type": "header",
+					"content": "Primary button"
+				},
+				{
+					"type": "text",
+					"id": "primary_button_label",
+					"label": "Label"
+				},
+				{
+					"type": "url",
+					"id": "primary_button_link",
+					"label": "URL"
+				},
+				{
+					"type": "select",
+					"id": "primary_button_style",
+					"label": "Button style",
+					"options": [
+						{
+							"value": "solid",
+							"label": "Filled"
+						},
+						{
+							"value": "outline",
+							"label": "Outline"
+						},
+						{
+							"value": "link",
+							"label": "Link"
+						}
+					],
+					"default": "solid"
+				},
+				{
+					"type": "color",
+					"id": "primary_text_color",
+					"label": "Text color",
+					"default": "#ffffff"
+				},
+				{
+					"type": "color",
+					"id": "primary_background_color",
+					"label": "Background color",
+					"default": "#222222",
+					"visible_if": "{{ block.settings.primary_button_style == 'solid' }}"
+				},
+				{
+					"type": "color",
+					"id": "primary_border_color",
+					"label": "Border color",
+					"default": "#222222",
+					"visible_if": "{{ block.settings.primary_button_style == 'outline' }}"
+				},
+				{
+					"type": "range",
+					"id": "primary_button_corner",
+					"min": 0,
+					"max": 100,
+					"step": 2,
+					"unit": "px",
+					"label": "Corner radius",
+					"visible_if": "{{ block.settings.primary_button_style != 'link' }}",
+					"default": 0
+				},
+				{
+					"type": "checkbox",
+					"id": "primary_new_tab",
+					"label": "Open link in a new tab",
+					"default": false
+				}
+			]
+		},
+		{
+			"type": "timer",
+			"name": "Countdown timer",
+			"limit": 1,
+			"settings": [
+				{
+					"type": "text",
+					"id": "end_date",
+					"label": "End date",
+					"info": "Use format 'MM-DD-YYYY'. End date is based on the [store primary timezone](/admin/settings/general)"
+				},
+				{
+					"type": "select",
+					"id": "end_time",
+					"label": "End time",
+					"options": [
+						{
+							"value": "12am",
+							"label": "12:00 am (0:00)"
+						},
+						{
+							"value": "12:30am",
+							"label": "12:30 am (0:30)"
+						},
+						{
+							"value": "1am",
+							"label": "1:00 am (1:00)"
+						},
+						{
+							"value": "1:30am",
+							"label": "1:30 am (1:30)"
+						},
+						{
+							"value": "2am",
+							"label": "2:00 am (2:00)"
+						},
+						{
+							"value": "2:30am",
+							"label": "2:30 am (2:30)"
+						},
+						{
+							"value": "3am",
+							"label": "3:00 am (3:00)"
+						},
+						{
+							"value": "3:30am",
+							"label": "3:30 am (3:30)"
+						},
+						{
+							"value": "4am",
+							"label": "4:00 am (4:00)"
+						},
+						{
+							"value": "4:30am",
+							"label": "4:30 am (4:30)"
+						},
+						{
+							"value": "5am",
+							"label": "5:00 am (5:00)"
+						},
+						{
+							"value": "5:30am",
+							"label": "5:30 am (5:30)"
+						},
+						{
+							"value": "6am",
+							"label": "6:00 am (6:00)"
+						},
+						{
+							"value": "6:30am",
+							"label": "6:30 am (6:30)"
+						},
+						{
+							"value": "7am",
+							"label": "7:00 am (7:00)"
+						},
+						{
+							"value": "7:30am",
+							"label": "7:30 am (7:30)"
+						},
+						{
+							"value": "8am",
+							"label": "8:00 am (8:00)"
+						},
+						{
+							"value": "8:30am",
+							"label": "8:30 am (8:30)"
+						},
+						{
+							"value": "9am",
+							"label": "9:00 am (9:00)"
+						},
+						{
+							"value": "9:30am",
+							"label": "9:30 am (9:30)"
+						},
+						{
+							"value": "10am",
+							"label": "10:00 am (10:00)"
+						},
+						{
+							"value": "10:20am",
+							"label": "10:20 am (10:20)"
+						},
+						{
+							"value": "10:30am",
+							"label": "10:30 am (10:30)"
+						},
+						{
+							"value": "11am",
+							"label": "11:00 am (11:00)"
+						},
+						{
+							"value": "11:30am",
+							"label": "11:30 am (11:30)"
+						},
+						{
+							"value": "12pm",
+							"label": "12:00 pm (12:00)"
+						},
+						{
+							"value": "12:30pm",
+							"label": "12:30 pm (12:30)"
+						},
+						{
+							"value": "1pm",
+							"label": "1:00 pm (13:00)"
+						},
+						{
+							"value": "1:30pm",
+							"label": "1:30 pm (13:30)"
+						},
+						{
+							"value": "2pm",
+							"label": "2:00 pm (14:00)"
+						},
+						{
+							"value": "2:30pm",
+							"label": "2:30 pm (14:30)"
+						},
+						{
+							"value": "3pm",
+							"label": "3:00 pm (15:00)"
+						},
+						{
+							"value": "3:30pm",
+							"label": "3:30 pm (15:30)"
+						},
+						{
+							"value": "4pm",
+							"label": "4:00 pm (16:00)"
+						},
+						{
+							"value": "4:30pm",
+							"label": "4:30 pm (16:30)"
+						},
+						{
+							"value": "5pm",
+							"label": "5:00 pm (17:00)"
+						},
+						{
+							"value": "5:30pm",
+							"label": "5:30 pm (17:30)"
+						},
+						{
+							"value": "6pm",
+							"label": "6:00 pm (18:00)"
+						},
+						{
+							"value": "6:30pm",
+							"label": "6:30 pm (18:30)"
+						},
+						{
+							"value": "7pm",
+							"label": "7:00 pm (19:00)"
+						},
+						{
+							"value": "7:30pm",
+							"label": "7:30 pm (19:30)"
+						},
+						{
+							"value": "8pm",
+							"label": "8:00 pm (20:00)"
+						},
+						{
+							"value": "8:30pm",
+							"label": "8:00 pm (20:30)"
+						},
+						{
+							"value": "9pm",
+							"label": "9:00 pm (21:00)"
+						},
+						{
+							"value": "9:30pm",
+							"label": "9:30 pm (21:30)"
+						},
+						{
+							"value": "10pm",
+							"label": "22:00 pm (22:00)"
+						},
+						{
+							"value": "10:30pm",
+							"label": "22:30 pm (22:30)"
+						},
+						{
+							"value": "11pm",
+							"label": "23:00 pm (23:00)"
+						},
+						{
+							"value": "11:30pm",
+							"label": "11:30 pm (23:30)"
+						}
+					],
+					"default": "11:30pm"
+				},
+				{
+					"type": "checkbox",
+					"id": "show_numbers",
+					"label": "Show only numbers",
+					"default": false
+				},
+				{
+					"type": "select",
+					"id": "numbers_style",
+					"label": "Numbers style",
+					"options": [
+						{
+							"value": "regular",
+							"label": "Regular"
+						},
+						{
+							"value": "bold",
+							"label": "Bold"
+						}
+					],
+					"default": "bold"
+				},
+				{
+					"type": "select",
+					"id": "countdown_size",
+					"label": "Countdown timer size",
+					"options": [
+						{
+							"value": "small",
+							"label": "Small"
+						},
+						{
+							"value": "medium",
+							"label": "Medium"
+						},
+						{
+							"value": "large",
+							"label": "Large"
+						}
+					],
+					"default": "medium"
+				},
+				{
+					"type": "header",
+					"content": "Colors"
+				},
+				{
+					"type": "color",
+					"id": "numbers_color",
+					"label": "Numbers",
+					"default": "#ffffff"
+				},
+				{
+					"type": "color",
+					"id": "text_color",
+					"label": "Text",
+					"default": "#ffffff"
+				}
+			]
+		}
+	],
+	"presets": [
+		{
+			"name": "🧡 Vitals: Countdown Timer Banner",
+			"category": "Vitals sections",
+			"blocks": [
+				{
+					"type": "caption"
+				},
+				{
+					"type": "heading"
+				},
+				{
+					"type": "text"
+				},
+				{
+					"type": "timer"
+				},
+				{
+					"type": "button"
+				}
+			]
+		}
+	]
+}
+{% endschema %}
+
+{% style %}
+	.Vtls-{{ section.id | handle }} {
+	 --section-vertical-margin: {{- section.settings.vertical_margin -}}px;
+	 --section-vertical-margin-mobile: {{- section.settings.vertical_margin_mobile -}}px;
+	 --section-background-color: {{- section.settings.section_background -}};
+	 --section-overlay-color: {{- section.settings.overlay_color -}};
+	 --section-overlay-opacity: {{- section.settings.overlay_opacity -}}%;
+	    --section-completed-message-color: {{- section.settings.completed_message_color -}};
+	 --section-background-image: url({{- section.settings.background_image | img_url: 'master' -}});
+	 --section-vertical-padding: {{- section.settings.vertical_padding -}}px;
+	 --section-vertical-padding-mobile: {{- section.settings.vertical_padding_mobile -}}px;
+	 --section-text-background: {{- section.settings.text_box_background -}};
+	 --section-text-alignment: {{- section.settings.text_alignment -}};
+	 --section-max-width: {{- section.settings.section_max_width -}}px;
+	 --section-width: {{- section.settings.section_width -}}%;
+	 --section-text-box-width: {{- section.settings.text_box_width -}}%;
+	}
+
+	
+
+.Vtls-{{ section.id | handle }}.VtlsCountdownBanner{margin:var(--section-vertical-margin-mobile) 0;background-color:var(--section-background-color)}@media(min-width: 992px){.Vtls-{{ section.id | handle }}.VtlsCountdownBanner{margin:var(--section-vertical-margin) 0}}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerContainer{padding:var(--section-vertical-padding-mobile) 0;display:flex;max-width:var(--section-max-width);width:var(--section-width);margin:0 auto}@media(max-width: 480px){.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerContainer{max-width:100%;width:100%;margin:0 auto;padding:var(--section-vertical-padding-mobile) var(--vtl-space-20)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerContainer--fullWidth{padding:var(--section-vertical-padding-mobile) 0}}@media(min-width: 992px){.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerContainer{display:flex;padding:var(--section-vertical-padding) 0;max-width:var(--section-max-width);width:var(--section-width);margin:0 auto}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerContainer--desktopPosition-left{flex-direction:row}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerContainer--desktopPosition-right{flex-direction:row-reverse}}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer{position:relative;width:100%}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer--mobile-small{height:250px}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer--mobile-medium{height:350px}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer--mobile-large{height:400px}@media(min-width: 992px){.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer--desktop-small{height:350px}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer--desktop-medium{height:450px}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer--desktop-large{height:600px}}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content{display:flex;position:absolute;height:fit-content;width:100%;justify-content:center;padding:var(--vtl-space-12)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--mobilePosition-top{top:0;left:50%;transform:translate(-50%, 0);text-align:center;align-items:center}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--mobilePosition-top .VtlsTextBox__Timer,.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--mobilePosition-top .VtlsCountdownBannerButton{justify-content:center}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--mobilePosition-center{top:50%;left:50%;transform:translate(-50%, -50%);text-align:center;align-items:center}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--mobilePosition-center .VtlsTextBox__Timer,.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--mobilePosition-center .VtlsCountdownBannerButton{justify-content:center}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--mobilePosition-bottom{top:unset;bottom:0;left:50%;transform:translate(-50%, 0);text-align:center;align-items:center}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--mobilePosition-bottom .VtlsTextBox__Timer,.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--mobilePosition-bottom .VtlsCountdownBannerButton{justify-content:center}@media(min-width: 992px){.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content{padding:var(--vtl-space-40)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Timer--onlyNumbers .VtlsCountdownTimerActive--large .VtlsCountdownTimerActive__Item{min-width:var(--vtl-space-64)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Timer--onlyNumbers .VtlsCountdownTimerActive--medium .VtlsCountdownTimerActive__Item{min-width:var(--vtl-space-48)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Timer--onlyNumbers .VtlsCountdownTimerActive--small .VtlsCountdownTimerActive__Item{min-width:var(--vtl-space-40)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--desktopPosition-top-left{top:0;left:0;text-align:left;transform:unset;align-items:flex-start;justify-content:flex-start}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--desktopPosition-top-left .VtlsTextBox__Timer,.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--desktopPosition-top-left .VtlsCountdownBannerButton{justify-content:flex-start}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--desktopPosition-top-left .VtlsCountdownTimerActive{margin-left:calc(var(--vtl-space-6)*-1)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--desktopPosition-top-center{top:0;left:50%;transform:translate(-50%, 0);text-align:center;align-items:center;justify-content:center}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--desktopPosition-top-center .VtlsTextBox__Timer,.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--desktopPosition-top-center .VtlsCountdownBannerButton{justify-content:center}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--desktopPosition-top-right{top:0;right:0;left:0;text-align:right;transform:unset;align-items:flex-end;justify-content:flex-end}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--desktopPosition-top-right .VtlsTextBox__Timer,.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--desktopPosition-top-right .VtlsCountdownBannerButton{justify-content:flex-end}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--desktopPosition-top-right .VtlsCountdownTimerActive{margin-right:calc(var(--vtl-space-6)*-1)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--desktopPosition-center-left{top:50%;left:0;transform:translate(0, -50%);text-align:left;align-items:flex-start;justify-content:flex-start}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--desktopPosition-center-left .VtlsTextBox__Timer,.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--desktopPosition-center-left .VtlsCountdownBannerButton{justify-content:flex-start}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--desktopPosition-center-left .VtlsCountdownTimerActive{margin-left:calc(var(--vtl-space-6)*-1)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--desktopPosition-center-center{top:50%;left:50%;transform:translate(-50%, -50%);text-align:center;align-items:center;justify-content:center}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--desktopPosition-center-center .VtlsTextBox__Timer,.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--desktopPosition-center-center .VtlsCountdownBannerButton{justify-content:center}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--desktopPosition-center-right{top:50%;right:0;left:unset;transform:translate(0, -50%);text-align:right;align-items:flex-end;justify-content:flex-end}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--desktopPosition-center-right .VtlsTextBox__Timer,.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--desktopPosition-center-right .VtlsCountdownBannerButton{justify-content:flex-end}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--desktopPosition-center-right .VtlsCountdownTimerActive{margin-right:calc(var(--vtl-space-6)*-1)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--desktopPosition-bottom-left{bottom:0;left:0;text-align:left;top:unset;transform:unset;align-items:flex-start;justify-content:flex-start}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--desktopPosition-bottom-left .VtlsTextBox__Timer,.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--desktopPosition-bottom-left .VtlsCountdownBannerButton{justify-content:flex-start}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--desktopPosition-bottom-left .VtlsCountdownTimerActive{margin-left:calc(var(--vtl-space-6)*-1)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--desktopPosition-bottom-center{top:unset;bottom:0;left:50%;transform:translate(-50%, 0);text-align:center;align-items:center;justify-content:center}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--desktopPosition-bottom-center .VtlsTextBox__Timer,.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--desktopPosition-bottom-center .VtlsCountdownBannerButton{justify-content:center}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--desktopPosition-bottom-right{bottom:0;right:0;top:unset;left:unset;transform:unset;text-align:right;align-items:flex-end;justify-content:flex-end}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--desktopPosition-bottom-right .VtlsTextBox__Timer,.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--desktopPosition-bottom-right .VtlsCountdownBannerButton{justify-content:flex-end}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content--desktopPosition-bottom-right .VtlsCountdownTimerActive{margin-right:calc(var(--vtl-space-6)*-1)}}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox{display:flex;flex-direction:column;gap:var(--vtl-space-8);max-width:440px}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Heading{margin:0;font-size:calc(var(--block-heading-size)*.75);color:var(--block-heading-color)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Heading--style-regular{font-weight:var(--vtl-font-weight-400)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Heading--style-bold{font-weight:var(--vtl-font-weight-600)}@media(min-width: 992px){.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Heading{font-size:var(--block-heading-size)}}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Heading--alternativeFont{font-family:var(--block-heading-font)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Description p,.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Description ul,.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Description ol{margin:0;font-size:calc(var(--block-description-size)*.88);color:var(--block-description-color)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Description h1,.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Description h2,.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Description h3,.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Description h4,.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Description h5,.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Description h6{color:var(--block-description-color);margin:0;padding:0}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Description a{color:var(--block-description-color);margin:0;padding:0;text-decoration:underline;text-underline-offset:var(--vtl-space-2);transition:opacity .3s ease-in}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Description a:hover{opacity:.85}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Description ul,.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Description ol{padding-left:var(--vtl-space-20)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Description--alignment-center ul,.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Description--alignment-center ol,.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Description--alignment-right ul,.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Description--alignment-right ol{list-style-position:inside}@media(min-width: 992px){.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Description p,.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Description ul,.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Description ol{font-size:var(--block-description-size)}}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Description--alternativeFont p,.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Description--alternativeFont ul,.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Description--alternativeFont ol,.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Description--alternativeFont h1,.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Description--alternativeFont h2,.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Description--alternativeFont h3,.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Description--alternativeFont h4,.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Description--alternativeFont h5,.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Description--alternativeFont h6{font-family:var(--block-description-font)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Caption{margin:0;font-size:var(--block-caption-size);color:var(--block-caption-color);font-weight:var(--block-caption-weight)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Caption--alternativeFont{font-family:var(--block-caption-font)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Timer{width:100%;display:flex;margin:var(--vtl-space-8) 0}@media(min-width: 992px){.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Timer{font-size:var(--vtl-font-size-32)}}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Timer--onlyNumbers .VtlsCountdownTimerActive__Text{display:none}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Timer--onlyNumbers .VtlsCountdownTimerActive{display:flex}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Timer .VtlsCountdownTimer{color:var(--section-completed-message-color);font-size:var(--vtl-font-size-24);letter-spacing:normal}@media(min-width: 992px){.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsTextBox__Timer .VtlsCountdownTimer{font-size:var(--vtl-font-size-32)}}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsCountdownBannerButton{display:flex;gap:var(--vtl-space-12);flex-wrap:wrap}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsCountdownBannerButton__Primary{display:inline-flex;justify-content:center;align-items:center;cursor:pointer;font:inherit;font-size:var(--vtl-font-size-14);text-decoration:var(--vtl-text-decoration-none);-webkit-appearance:none;appearance:none;width:fit-content;padding:var(--vtl-space-16) var(--vtl-space-20);transition:all .3s ease-in;line-height:1;outline:none}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsCountdownBannerButton__Primary:hover{opacity:.85}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsCountdownBannerButton__Primary--solid{color:var(--block-primary-button-text-color);background:var(--block-primary-button-background-color);border-radius:var(--block-primary-button-corner-radius)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsCountdownBannerButton__Primary--outline{color:var(--block-primary-button-text-color);background:rgba(0,0,0,0);border:var(--vtl-border-width-1) solid var(--block-primary-button-border-color);border-radius:var(--block-primary-button-corner-radius)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsCountdownBannerButton__Primary--link{color:var(--block-primary-button-text-color);background:rgba(0,0,0,0);padding:0;border:0;border-radius:0;text-decoration:var(--vtl-text-decoration-underline);text-underline-offset:var(--vtl-space-4)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Content .VtlsCountdownBannerButton__Primary:focus-visible{outline:var(--vtl-border-width-2) solid var(--vtl-color-border-focus, #005fcc);outline-offset:var(--vtl-space-2)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Image{width:100%;height:100%}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Image::before{position:absolute;top:0;left:0;display:block;width:100%;height:100%;content:"";background-color:var(--section-overlay-color);opacity:var(--section-overlay-opacity)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Image img{width:100%;height:100%;object-fit:cover}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Image--desktop{display:none}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Image--mobile{display:block}@media(min-width: 992px){.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Image--desktop{display:block}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer__Image--mobile{display:none}}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer .VtlsCountdownTimerActive{display:grid;gap:var(--vtl-space-8);grid:auto/auto-flow minmax(0, 1fr) auto}@media(max-width: 479px){.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer .VtlsCountdownTimerActive{gap:var(--vtl-space-4)}}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer .VtlsCountdownTimerActive--regular .VtlsCountdownTimerActive__Number{font-weight:var(--vtl-font-weight-400)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer .VtlsCountdownTimerActive--bold .VtlsCountdownTimerActive__Number{font-weight:var(--vtl-font-weight-600)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer .VtlsCountdownTimerActive--small .VtlsCountdownTimerActive__Number{font-size:var(--vtl-font-size-20)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer .VtlsCountdownTimerActive--small .VtlsCountdownTimerActive__Text{font-size:var(--vtl-font-size-12)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer .VtlsCountdownTimerActive--small .VtlsCountdownTimerActive__Divider{font-size:var(--vtl-font-size-20)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer .VtlsCountdownTimerActive--medium .VtlsCountdownTimerActive__Number{font-size:var(--vtl-font-size-24)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer .VtlsCountdownTimerActive--medium .VtlsCountdownTimerActive__Text{font-size:var(--vtl-font-size-14)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer .VtlsCountdownTimerActive--medium .VtlsCountdownTimerActive__Divider{font-size:var(--vtl-font-size-24)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer .VtlsCountdownTimerActive--large .VtlsCountdownTimerActive__Number{font-size:var(--vtl-font-size-32)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer .VtlsCountdownTimerActive--large .VtlsCountdownTimerActive__Text{font-size:var(--vtl-font-size-16)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer .VtlsCountdownTimerActive--large .VtlsCountdownTimerActive__Divider{font-size:var(--vtl-font-size-32)}@media(min-width: 992px){.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer .VtlsCountdownTimerActive--small .VtlsCountdownTimerActive__Number{font-size:var(--vtl-font-size-24)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer .VtlsCountdownTimerActive--small .VtlsCountdownTimerActive__Text{font-size:var(--vtl-font-size-12)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer .VtlsCountdownTimerActive--small .VtlsCountdownTimerActive__Divider{font-size:var(--vtl-font-size-24)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer .VtlsCountdownTimerActive--medium .VtlsCountdownTimerActive__Number{font-size:var(--vtl-font-size-32)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer .VtlsCountdownTimerActive--medium .VtlsCountdownTimerActive__Text{font-size:var(--vtl-font-size-16)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer .VtlsCountdownTimerActive--medium .VtlsCountdownTimerActive__Divider{font-size:var(--vtl-font-size-32)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer .VtlsCountdownTimerActive--large .VtlsCountdownTimerActive__Number{font-size:var(--vtl-font-size-48)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer .VtlsCountdownTimerActive--large .VtlsCountdownTimerActive__Text{font-size:var(--vtl-font-size-20)}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer .VtlsCountdownTimerActive--large .VtlsCountdownTimerActive__Divider{font-size:var(--vtl-font-size-48)}}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer .VtlsCountdownTimerActive__Item{display:flex;flex-direction:column;align-items:center}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer .VtlsCountdownTimerActive__Number{color:var(--block-numbers-color);line-height:1.3;padding:0;margin:0}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer .VtlsCountdownTimerActive__Text{text-transform:uppercase;color:var(--block-text-color);font-size:var(--vtl-font-size-14)}@media(min-width: 992px){.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer .VtlsCountdownTimerActive__Text{font-size:var(--vtl-font-size-16)}}.Vtls-{{ section.id | handle }}.VtlsCountdownBanner .VtlsCountdownBannerTimer .VtlsCountdownTimerActive__Divider{color:var(--block-numbers-color);line-height:1.2;vertical-align:middle}
+
+{% endstyle %}
+
+<script>
+	(() => {
+		class VtlsCountdownBanner extends HTMLElement {
+			constructor() {
+				super();
+				this.timerElement = null;
+				this.targetDate = null;
+				this.endDate = null;
+				this.endTime = null;
+				this.interval = null;
+				this.lastAnnouncedMinutes = null;
+			}
+
+			connectedCallback() {
+				this.initCountdownTimer();
+			}
+
+			disconnectedCallback() {
+				clearInterval(this.interval);
+			}
+
+			initCountdownTimer() {
+				this.timerElement = this.querySelector('.VtlsCountdownTimer');
+				this.endDate = this.timerElement?.getAttribute('data-end-date');
+				this.endTime = this.timerElement?.getAttribute('data-end-time');
+
+				if (!this.endDate || !this.endTime) {
+					return;
+				}
+
+				if (!this.isValidDate(this.endDate)) {
+					return;
+				}
+
+				const { hours, minutes } = this.convertTo24Hour(this.endTime);
+				const [month, day, year] = this.endDate.split('-');
+				const isoDate = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+				this.targetDate = new Date(
+					`${isoDate}T${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:00`
+				);
+
+				if (isNaN(this.targetDate.getTime())) {
+					return;
+				}
+
+				this.updateCountdown();
+				this.interval = setInterval(() => this.updateCountdown(), 1000);
+			}
+
+			isValidDate(dateStr) {
+				const dateParts = dateStr.split('-');
+
+				if (dateParts.length !== 3) {
+					return false;
+				}
+
+				const [month, day, year] = dateParts.map(Number);
+
+				if (isNaN(year) || isNaN(month) || isNaN(day)) {
+					return false;
+				}
+
+				if (month < 1 || month > 12) {
+					return false;
+				}
+
+				const lastDayOfMonth = new Date(year, month, 0).getDate();
+
+				if (day < 1 || day > lastDayOfMonth) {
+					return false;
+				}
+
+				return true;
+			}
+
+			convertTo24Hour(timeStr) {
+				const match = timeStr.match(/(\d+)(?::(\d+))?(am|pm)/);
+
+				if (!match) {
+					return { hours: 0, minutes: 0 };
+				}
+
+				let [_, hours, minutes, period] = match;
+				hours = parseInt(hours, 10);
+				minutes = minutes ? parseInt(minutes, 10) : 0;
+
+				if (period === 'pm' && hours !== 12) {
+					hours += 12;
+				}
+
+				if (period === 'am' && hours === 12) {
+					hours = 0;
+				}
+
+				return { hours, minutes };
+			}
+
+			updateCountdown() {
+				if (!this.targetDate) {
+					return;
+				}
+
+				const now = new Date();
+				const timeLeft = this.targetDate - now;
+				const completedMessage = this.timerElement.getAttribute('data-completed-text') || 'Expired';
+				const sectionElement = this.closest('section');
+
+				if (timeLeft <= 0) {
+					this.timerElement.setAttribute('aria-label', completedMessage.trim() !== '' ? completedMessage : 'Expired');
+					this.timerElement.innerHTML = completedMessage.trim() !== '' ? completedMessage : 'Expired';
+					clearInterval(this.interval);
+
+					if (
+						sectionElement &&
+						this.timerElement.dataset.hideSection === 'true' &&
+						!window.Shopify.designMode
+					) {
+						sectionElement.remove();
+					}
+
+					return;
+				}
+
+				const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+				const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+				const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+				const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+				this.timerElement.querySelector('.VtlsDays').textContent = String(days).padStart(2, '0');
+				this.timerElement.querySelector('.VtlsHours').textContent = String(hours).padStart(2, '0');
+				this.timerElement.querySelector('.VtlsMinutes').textContent = String(minutes).padStart(2, '0');
+				this.timerElement.querySelector('.VtlsSeconds').textContent = String(seconds).padStart(2, '0');
+
+				const totalMinutesLeft = Math.floor(timeLeft / (1000 * 60));
+
+				if (timeLeft <= 0) {
+					this.timerElement.setAttribute(
+						'aria-label',
+						this.timerElement.dataset.completedText || 'Countdown finished'
+					);
+				} else {
+					if (totalMinutesLeft > 1) {
+						if (this.lastAnnouncedMinutes !== totalMinutesLeft) {
+							this.lastAnnouncedMinutes = totalMinutesLeft;
+							const parts = [];
+							if (days > 0) parts.push(`${days} ${days === 1 ? 'day' : 'days'}`);
+							if (hours > 0 || days > 0) parts.push(`${hours} ${hours === 1 ? 'hour' : 'hours'}`);
+							parts.push(`${minutes} ${minutes === 1 ? 'minute' : 'minutes'}`);
+							this.timerElement.setAttribute(
+								'aria-label',
+								`Time remaining: ${parts.join(', ')}`
+							);
+						}
+					} else {
+						const parts = [];
+						if (days > 0) parts.push(`${days} ${days === 1 ? 'day' : 'days'}`);
+						if (hours > 0 || days > 0) parts.push(`${hours} ${hours === 1 ? 'hour' : 'hours'}`);
+						if (minutes > 0) parts.push(`${minutes} ${minutes === 1 ? 'minute' : 'minutes'}`);
+						parts.push(`${seconds} ${seconds === 1 ? 'second' : 'seconds'}`);
+						this.timerElement.setAttribute(
+							'aria-label',
+							`Time remaining: ${parts.join(', ')}`
+						);
+					}
+				}
+			}
+		}
+
+		document.addEventListener('DOMContentLoaded', () => {
+			if (!customElements.get('vtls-countdown-timer-banner')) {
+				customElements.define('vtls-countdown-timer-banner', VtlsCountdownBanner);
+			}
+		});
+	})();
+</script>
+
+<script>
+	(function () {
+		const uninstallMessage = 'Displaying this section requires an active Vitals subscription. Reinstall the <a href="https://apps.shopify.com/vitals" target="_blank">Vitals app</a> to activate it or consider removing the section.';
+		const downgradeMessage = 'You downgraded to a free plan. You need to upgrade your <a href="https://apps.shopify.com/vitals" target="_blank">Vitals app</a> plan to activate it or consider removing the section.';
+		const projectId = '1';
+		const sectionsSelector = '.shopify-section';
+		const apps = {
+			'1': {
+				prefix: 'vitals',
+				hostname: 'https://appsolve.io'
+			},
+			'5': {
+				prefix: 'tsapb',
+				hostname: 'https://theme-sections.sqa-api.com'
+			}
+		};
+
+		const cacheKeysMetaFields = '{{ shop.metafields.vitals.tsck }}';
+		const shopId = '{{ shop.id }}';
+
+		const getHostname = () => {
+			if (apps[projectId].hostname) {
+				return apps[projectId].hostname;
+			}
+
+			console.error(`hostname for appId ${projectId} cannot be determined.`);
+			return undefined;
+		}
+
+		const disableSection = (message, selector) => {
+			const mainContainer = document.querySelector(selector);
+			const contentContainer = document.querySelector(`${selector} > section`);
+
+			if ('{{ request.design_mode }}' === 'true') {
+				contentContainer.innerHTML = `<h2 class="VtlsUninstallBG"><div class="VtlsUninstallBG__Text">${message}</div></h2>`;
+			} else {
+				mainContainer.style.display = 'none';
+				mainContainer.remove();
+			}
+		};
+
+		const getThemeSectionIdsByUUID = (installedThemeSections, uuid, appId) => {
+			const listIds = [];
+
+			installedThemeSections.forEach((installedThemeSection) => {
+				if (installedThemeSection.id.includes(`${apps[appId].prefix}_${uuid}`)) {
+					listIds.push(installedThemeSection.id);
+				}
+			})
+
+			return listIds;
+		}
+
+		const getThemeSectionsStatusList = (url) => fetch(url, {
+			method: 'GET',
+			headers: { 'Content-Type': 'application/json' },
+		}).then((response) => response.json());
+
+		const evaluateThemeSections = (url) => {
+			getThemeSectionsStatusList(url).then(response => {
+				const { data, f, i } = response;
+				const installedThemeSections = document.querySelectorAll(sectionsSelector);
+
+				data.forEach((themeSection) => {
+					const { e, u, a } = themeSection;
+
+					if (!e) {
+						const themeSectionsWithUUID = getThemeSectionIdsByUUID(installedThemeSections, u, a);
+						let message = '';
+
+						if (f) {
+							message = downgradeMessage;
+						}
+
+						if (!i) {
+							message = uninstallMessage;
+						}
+
+						themeSectionsWithUUID.forEach((themeSectionSelector) => {
+							disableSection(message, `#${themeSectionSelector}`);
+						})
+					}
+				});
+			})
+		}
+
+		if (shopId) {
+			if (window.vtlsSecurityCheckStarted === undefined) {
+				window.vtlsSecurityCheckStarted = true;
+
+				let url = '';
+				const hostname = getHostname();
+
+				if (!hostname) {
+					return;
+				}
+
+				const baseUrl = `${hostname}/bundle/api/v2/sf/ts`;
+
+				if (cacheKeysMetaFields) {
+					url = `${baseUrl}/${shopId}/${cacheKeysMetaFields}.json`;
+				} else {
+					const timestamp = Math.round(new Date().getTime() / 1000 / 10000) * 10000;
+					url = `${baseUrl}/${shopId}/${timestamp}.json`;
+				}
+
+				evaluateThemeSections(url);
+			}
+		}
+	})();
+</script>
+
+{% style %}
+	
+
+.VtlsUninstallBG{background-color:var(--vtl-color-bg-fill-inverse-on-light);background-image:url("data:image/avif;base64,iVBORw0KGgoAAAANSUhEUgAABOcAAABkCAQAAABnAJxfAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAACYktHRAD/h4/MvwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB+gLFQgmAgUXFkMAAARaSURBVHja7daxbSRBEATB8ZzvKw0h1dcIlJS4jl25Azlavffn9/3v++e//+vvCwqFQqFQKBRKSklEUCgUCoVCoVAMOgqFQqFQKJSzSiKCQqFQKBQKhWLQUSgUCoVCoZxVEhEUCoVCoVAoFIOOQqFQKBQK5VOURASFQqFQKBQKZVUSERQKhUKhUCiUVUlEUCgUCoVCoVBWZbtOPoVCoVAoFArlovIKERQKhUKhUCiUVXmFCAqFQqFQKBTKqrxCBIVCoVAoFAplVV4hgkKhUCgUCoUyK4kICoVCoVAoFMqqJCIoFAqFQqFQKKuSiKBQKBQKhUKhrEoigkKhUCgUCoVi0FEoFAqFQqGcVRIRFAqFQqFQKBSDjkKhUCgUCuWskoigUCgUCoVCoRh0FAqFQqFQKGeVRASFQqFQKBQKxaCjUCgUCoVCOaskIigUCoVCoVAoBh2FQqFQKBTKWSURQaFQKBQKhUIx6CgUCoVCoVDOKokICoVCoVAoFIpBR6FQKBQKhXJWSURQKBQKhUKhUAw6CoVCoVAolLNKIoJCoVAoFAqFYtBRKBQKhUKhnFUSERQKhUKhUCgUg45CoVAoFArlrJKIoFAoFAqFQqEYdBQKhUKhUChnlUQEhUKhUCgUCsWgo1AoFAqFQvkUJRFBoVAoFAqFQlmVRASFQqFQKBQKZVUSERQKhUKhUCiUVdmuk0+hUCgUCoVCuai8QgSFQqFQKBQKZVVeIYJCoVAoFAqFsiqvEEGhUCgUCoVCWZVXiKBQKBQKhUKhzEoigkKhUCgUCoWyKokICoVCoVAoFMqqJCIoFAqFQqFQKKuSiKBQKBQKhUKhGHQUCoVCoVAoZ5VEBIVCoVAoFArFoKNQKBQKhUI5qyQiKBQKhUKhUCgGHYVCoVAoFMpZJRFBoVAoFAqFQjHoKBQKhUKhUM4qiQgKhUKhUCgUikFHoVAoFAqFclZJRFAoFAqFQqFQDDoKhUKhUCiUs0oigkKhUCgUCoVi0FEoFAqFQqGcVRIRFAqFQqFQKBSDjkKhUCgUCuWskoigUCgUCoVCoRh0FAqFQqFQKGeVRASFQqFQKBQKxaCjUCgUCoVCOaskIigUCoVCoVAoBh2FQqFQKBTKWSURQaFQKBQKhUIx6CgUCoVCoVA+RUlEUCgUCoVCoVBWJRFBoVAoFAqFQlmVRASFQqFQKBQKZVW26+RTKBQKhUKhUC4qrxBBoVAoFAqFQlmVV4igUCgUCoVCoazKK0RQKBQKhUKhUFblFSIoFAqFQqFQKLOSiKBQKBQKhUKhrEoigkKhUCgUCoWyKokICoVCoVAoFMqqJCIoFAqFQqFQKAYdhUKhUCgUylklEUGhUCgUCoVCMegoFAqFQqFQziqJCAqFQqFQKBSKQUehUCgUCoVyVklEUCgUCoVCoVAMOgqFQqFQKJSzSiKCQqFQKBQKhWLQUSgUCoVCoZxVEhEUCoVCoVAoFIOOQqFQKBQK5dOVX5nMB52iezhxAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDI0LTExLTIxVDA4OjM4OjAyKzAwOjAw30WrCwAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyNC0xMS0yMVQwODozODowMiswMDowMK4YE7cAAAAodEVYdGRhdGU6dGltZXN0YW1wADIwMjQtMTEtMjFUMDg6Mzg6MDIrMDA6MDD5DTJoAAAAAElFTkSuQmCC");background-position:center;background-size:cover;text-align:center;padding:var(--vtl-space-32);margin:0}.VtlsUninstallBG__Text{color:var(--vtl-color-text-disable-on-light);font-family:Inter,sans-serif;font-size:var(--vtl-font-size-14);font-weight:var(--vtl-font-weight-400);line-height:var(--vtl-line-height-140);padding:var(--vtl-space-16) var(--vtl-space-16) var(--vtl-space-16) var(--vtl-space-40);background-color:var(--vtl-color-bg-fill-inverse-on-light);display:inline-block}.VtlsUninstallBG__Text::before{content:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%0A%09%09%09%3Cpath%20d%3D%22M9.99994%206.75C10.4142%206.75%2010.7499%207.08579%2010.7499%207.5V11C10.7499%2011.4142%2010.4142%2011.75%209.99994%2011.75C9.58573%2011.75%209.24994%2011.4142%209.24994%2011V7.5C9.24994%207.08579%209.58573%206.75%209.99994%206.75Z%22%20fill%3D%22%23B28400%22%2F%3E%0A%09%09%09%3Cpath%20d%3D%22M11%2013.5C11%2014.0523%2010.5523%2014.5%2010%2014.5C9.44772%2014.5%209%2014.0523%209%2013.5C9%2012.9477%209.44772%2012.5%2010%2012.5C10.5523%2012.5%2011%2012.9477%2011%2013.5Z%22%20fill%3D%22%23B28400%22%2F%3E%0A%09%09%09%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M10%203.5C8.95471%203.5%208.21616%204.20232%207.84762%204.94672C7.65565%205.33448%206.75984%207.0441%205.84305%208.79353L5.81531%208.84646C4.9229%2010.5493%204.01714%2012.2777%203.80716%2012.702C3.4351%2013.4537%203.32931%2014.4519%203.89953%2015.316C4.46911%2016.1791%205.44222%2016.5%206.36356%2016.5L13.6364%2016.5C14.5577%2016.5%2015.5308%2016.1791%2016.1004%2015.316C16.6707%2014.4519%2016.5649%2013.4537%2016.1928%2012.702C15.9832%2012.2784%2015.08%2010.555%2014.1889%208.85476L14.1569%208.79352C13.24%207.044%2012.3443%205.33454%2012.1524%204.94693C11.784%204.20242%2011.0454%203.5%2010%203.5ZM9.1919%205.61225C9.59605%204.79592%2010.4041%204.79592%2010.8081%205.61225C11.0102%206.02061%2011.9201%207.75686%2012.8296%209.49243C13.7383%2011.2262%2014.6466%2012.9594%2014.8485%2013.3673C15.2525%2014.1837%2014.8485%2015%2013.6364%2015L6.36356%2015C5.1515%2015%204.74746%2014.1837%205.1515%2013.3673C5.35376%2012.9587%206.26468%2011.2205%207.1748%209.4838C8.08283%207.75111%208.99005%206.01994%209.1919%205.61225Z%22%20fill%3D%22%23B28400%22%2F%3E%0A%09%09%3C%2Fsvg%3E");position:absolute;width:var(--vtl-space-20);height:var(--vtl-space-20);margin-left:calc(-1*var(--vtl-space-24))}.VtlsUninstallBG__Text a{color:var(--vtl-color-text-disable-on-light)}.VtlsUninstallBG__Text a:hover{text-decoration:none}
+
+{% endstyle %}
+
