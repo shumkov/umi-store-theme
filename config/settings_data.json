@@ -209,6 +209,37 @@
           "n99gb_embed_css": "/* CSS Rules */",
           "n99gb_embed_js": "/* JS Code */"
         }
+      },
+      "7398019964405354113": {
+        "type": "shopify://apps/adsgun/blocks/adsgun/eefd9671-57eb-40f1-ba25-de091fe93b0f",
+        "disabled": false,
+        "settings": {
+          "loaders_enabled": false,
+          "loader_color": "#5b0a91",
+          "enable_notification": true,
+          "background_color": "#5b0a91",
+          "text_color": "#ffffff",
+          "border_color": "#5b0a91",
+          "border_radius": 5,
+          "border_size": 1,
+          "enable_max_width": true,
+          "vertical_padding": 20,
+          "horizontal_padding": 25,
+          "text_align": "left",
+          "font_size": 16,
+          "box_shadow": true,
+          "placement": "bottom_center",
+          "dismiss": "manual",
+          "dismiss_delay": 5,
+          "di_padding": 10,
+          "di_bg_color": "#f5f5f5",
+          "di_border_color": "#dedede",
+          "di_placeholder_color": "#707070",
+          "di_button_bg_color": "#5b0a91",
+          "di_btn_hover_bg_color": "#105989",
+          "di_btn_color": "#fff",
+          "cart_drawer_font": "sans_serif_n4"
+        }
       }
     },
     "color_schemes": {
