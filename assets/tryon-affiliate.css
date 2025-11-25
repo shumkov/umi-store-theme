@@ -1,3 +1,4 @@
-shopify-forms-embedd {
+/* Hide Shopify Forms on tryon market pages */
+shopify-forms-embed {
   display: none !important;
 }
