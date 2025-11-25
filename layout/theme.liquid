@@ -44,6 +44,10 @@
       assign current_market_handle = current_market_handle | downcase
     -%}
 
+    {%- if current_market_handle == 'tryon' -%}
+      <script src="{{ 'tryon-affiliate.js' | asset_url }}"></script>
+    {%- endif -%}
+
     <script>
       (function () {
         var marketHandle = '{{ current_market_handle }}';
@@ -314,7 +318,6 @@
     {%- endif -%}
     {%- if current_market_handle == 'tryon' -%}
       {{ 'tryon-affiliate.css' | asset_url | stylesheet_tag }}
-      <script src="{{ 'tryon-affiliate.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
 
     <script>
