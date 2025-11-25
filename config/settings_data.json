@@ -216,7 +216,7 @@
         "settings": {
           "loaders_enabled": false,
           "loader_color": "#5b0a91",
-          "enable_notification": true,
+          "enable_notification": false,
           "background_color": "#5b0a91",
           "text_color": "#ffffff",
           "border_color": "#5b0a91",
@@ -237,7 +237,7 @@
           "di_placeholder_color": "#707070",
           "di_button_bg_color": "#5b0a91",
           "di_btn_hover_bg_color": "#105989",
-          "di_btn_color": "#fff",
+          "di_btn_color": "#ffffff",
           "cart_drawer_font": "sans_serif_n4"
         }
       }
