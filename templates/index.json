@@ -132,7 +132,7 @@
         "button_9VzX7H"
       ],
       "custom_css": [
-        ".VtlsTextBox{min-width: 600px}"
+        ".VtlsTextBox {min-width: 600px;}"
       ],
       "name": "🧡 Vitals: Countdown Timer Banner",
       "settings": {
@@ -143,7 +143,7 @@
         "hide_section": false,
         "completed_message": "",
         "completed_message_color": "#ffffff",
-        "image_desktop": "shopify://shop_images/066_9760ad94-5bfb-4a7b-816d-7b36ebb2f935.jpg",
+        "image_desktop": "shopify://shop_images/081.jpg",
         "section_width": 100,
         "section_max_width": "",
         "vertical_padding": 0,
