@@ -131,6 +131,9 @@
         "text_8mNRhw",
         "button_9VzX7H"
       ],
+      "custom_css": [
+        ".VtlsTextBox{min-width: 600px}"
+      ],
       "name": "🧡 Vitals: Countdown Timer Banner",
       "settings": {
         "desktop_content_position": "center-center",
