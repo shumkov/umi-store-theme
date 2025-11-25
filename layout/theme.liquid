@@ -39,7 +39,80 @@
       <script src="{{ 'animations.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
 
+    {%- liquid
+      assign current_market_handle = request.market.handle | default: localization.market.handle | default: localization.country.iso_code
+      assign current_market_handle = current_market_handle | downcase
+    -%}
+
+    <script>
+      (function () {
+        var marketHandle = '{{ current_market_handle }}';
+        if (marketHandle === 'tryon') return;
+
+        var params = new URLSearchParams(window.location.search);
+        if (!params.get('bg_ref')) return;
+
+        var targetHost = 'tryon.umi.store';
+        var url = new URL(window.location.href);
+        if (url.hostname === targetHost) return;
+
+        url.hostname = targetHost;
+        window.location.replace(url.toString());
+      })();
+    </script>
+
     {{ content_for_header }}
+
+    <script>
+      (function () {
+        let blockedFragment = '019a535f-3eae-72b8-a511-9f3864a5ad71';
+        function isGoalifyScript(node) {
+          return (
+            node &&
+            node.tagName === 'SCRIPT' &&
+            typeof node.src === 'string' &&
+            node.src.indexOf(blockedFragment) !== -1
+          );
+        }
+        function purgeScripts(context) {
+          let removed = false;
+
+          context.querySelectorAll('script[src*="' + blockedFragment + '"]').forEach(function (el) {
+            removed = true;
+            el.parentNode && el.parentNode.removeChild(el);
+          });
+
+          return removed;
+        }
+        function handleNode(node) {
+          if (!node || node.nodeType !== 1) return false;
+
+          if (isGoalifyScript(node)) {
+            node.parentNode && node.parentNode.removeChild(node);
+            return true;
+          }
+
+          return purgeScripts(node);
+        }
+        let observer;
+        observer = new MutationObserver(function (mutations) {
+          var removed = false;
+          mutations.forEach(function (mutation) {
+            mutation.addedNodes.forEach(function (node) {
+              removed = handleNode(node) || removed;
+            });
+          });
+          if (removed) {
+            observer.disconnect();
+            observer = null;
+          }
+        });
+        observer.observe(document.documentElement, {
+          childList: !0,
+          subtree: !0,
+        });
+      })();
+    </script>
 
     {%- liquid
       assign body_font_bold = settings.type_body_font | font_modify: 'weight', 'bold'
@@ -290,8 +363,10 @@
         onload="this.media='all'"
       >
     {%- endif -%}
-
-    {{ 'custom.css' | asset_url | stylesheet_tag }}
+    {%- if current_market_handle == 'tryon' -%}
+      {{ 'tryon-affiliate.css' | asset_url | stylesheet_tag }}
+      <script src="{{ 'tryon-affiliate.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
 
     <script>
       if (Shopify.designMode) {
