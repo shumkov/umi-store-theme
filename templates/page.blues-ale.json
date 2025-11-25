@@ -275,6 +275,7 @@
       "block_order": [
         "heading_rHFRDx"
       ],
+      "disabled": true,
       "name": "t:sections.rich-text.presets.name",
       "settings": {
         "desktop_content_position": "left",
@@ -287,6 +288,7 @@
     },
     "collection_featured_main_g6W3XU": {
       "type": "collection-featured-main",
+      "disabled": true,
       "name": "Collection grid hidden",
       "settings": {
         "collection": "2025",
