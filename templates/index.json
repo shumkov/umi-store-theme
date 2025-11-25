@@ -132,7 +132,7 @@
         "button_9VzX7H"
       ],
       "custom_css": [
-        ".VtlsTextBox{min-width: 600px}"
+        "@media(max-width:600px){.VtlsTextBox{width:100%;max-width:480px}}@media(min-width:601px){.VtlsTextBox{min-width:600px;max-width:600px}}"
       ],
       "name": "🧡 Vitals: Countdown Timer Banner",
       "settings": {
