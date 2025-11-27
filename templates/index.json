@@ -69,7 +69,7 @@
         "caption_jNUD3a": {
           "type": "caption",
           "settings": {
-            "caption": "Black Friday is Coming. 28 Nov-1 Dec",
+            "caption": "Until December 1st",
             "caption_size": "16",
             "caption_weight": "400",
             "caption_color": "#ffffff",
@@ -90,6 +90,7 @@
         },
         "timer_jYzniU": {
           "type": "timer",
+          "disabled": true,
           "settings": {
             "end_date": "11-28-2025",
             "end_time": "1am",
@@ -103,7 +104,7 @@
         "text_8mNRhw": {
           "type": "text",
           "settings": {
-            "description": "<p><em>explore the collection, add your favorite pieces to the cart, and set a reminder to return once the offer goes live</em></p>",
+            "description": "<p>This is our <strong>final promotion of the year</strong>, </p><p>making it the perfect moment to choose your seasonal essentials.</p>",
             "description_size": "12",
             "description_color": "#ffffff",
             "description_alternative_font": false,
@@ -113,12 +114,12 @@
         "button_9VzX7H": {
           "type": "button",
           "settings": {
-            "primary_button_label": "",
-            "primary_button_link": "",
-            "primary_button_style": "solid",
+            "primary_button_label": "Shop now",
+            "primary_button_link": "shopify://collections/2025",
+            "primary_button_style": "outline",
             "primary_text_color": "#ffffff",
             "primary_background_color": "#222222",
-            "primary_border_color": "#222222",
+            "primary_border_color": "#ffffff",
             "primary_button_corner": 0,
             "primary_new_tab": false
           }
@@ -132,8 +133,9 @@
         "button_9VzX7H"
       ],
       "custom_css": [
-        "@media(max-width:600px){.VtlsTextBox{width:100%;max-width:480px}}@media(min-width:601px){.VtlsTextBox{min-width:600px;max-width:600px}}",
-        ".VtlsCountdownBanner .VtlsCountdownBannerTimer__Image img{object-position:top center}"
+        "@media (max-width: 600px) {.VtlsTextBox {width: 100%; max-width: 480px; }}",
+        "@media (min-width: 601px) {.VtlsTextBox {min-width: 600px; max-width: 600px; }}",
+        ".VtlsCountdownBanner .VtlsCountdownBannerTimer__Image img {object-position: top center;}"
       ],
       "name": "🧡 Vitals: Countdown Timer Banner",
       "settings": {
