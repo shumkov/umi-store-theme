@@ -135,7 +135,8 @@
       "custom_css": [
         "@media (max-width: 600px) {.VtlsTextBox {width: 100%; max-width: 480px; }}",
         "@media (min-width: 601px) {.VtlsTextBox {min-width: 600px; max-width: 600px; }}",
-        ".VtlsCountdownBanner .VtlsCountdownBannerTimer__Image img {object-position: top center;}"
+        ".VtlsCountdownBanner .VtlsCountdownBannerTimer__Image img {object-position: top center;}",
+        ".VtlsCountdownBannerButton{padding-top:20px}"
       ],
       "name": "🧡 Vitals: Countdown Timer Banner",
       "settings": {
