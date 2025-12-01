@@ -69,7 +69,7 @@
         "caption_jNUD3a": {
           "type": "caption",
           "settings": {
-            "caption": "Until December 1st",
+            "caption": "Last Day",
             "caption_size": "16",
             "caption_weight": "400",
             "caption_color": "#ffffff",
@@ -90,10 +90,9 @@
         },
         "timer_jYzniU": {
           "type": "timer",
-          "disabled": true,
           "settings": {
-            "end_date": "11-28-2025",
-            "end_time": "1am",
+            "end_date": "12-02-2025",
+            "end_time": "12am",
             "show_numbers": false,
             "numbers_style": "regular",
             "countdown_size": "medium",
@@ -104,7 +103,7 @@
         "text_8mNRhw": {
           "type": "text",
           "settings": {
-            "description": "<p>This is our <strong>final promotion of the year</strong>, </p><p>making it the perfect moment to choose your seasonal essentials.</p>",
+            "description": "<p><strong>It’s the final day to shop 30% off </strong>the entire knitwear collection.<br/>If you’ve been considering a piece, now is the moment.</p>",
             "description_size": "12",
             "description_color": "#ffffff",
             "description_alternative_font": false,
@@ -136,7 +135,7 @@
         "@media (max-width: 600px) {.VtlsTextBox {width: 100%; max-width: 480px; }}",
         "@media (min-width: 601px) {.VtlsTextBox {min-width: 600px; max-width: 600px; }}",
         ".VtlsCountdownBanner .VtlsCountdownBannerTimer__Image img {object-position: top center;}",
-        ".VtlsCountdownBannerButton{padding-top:20px}"
+        ".VtlsCountdownBannerButton {padding-top: 20px;}"
       ],
       "name": "🧡 Vitals: Countdown Timer Banner",
       "settings": {
@@ -144,7 +143,7 @@
         "mobile_content_position": "center",
         "desktop_banner_height": "large",
         "mobile_banner_height": "large",
-        "hide_section": false,
+        "hide_section": true,
         "completed_message": "",
         "completed_message_color": "#ffffff",
         "image_desktop": "shopify://shop_images/081.jpg",

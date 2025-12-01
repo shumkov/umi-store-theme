@@ -17,7 +17,7 @@
         "announcement-bar-0": {
           "type": "announcement",
           "settings": {
-            "text": "Shop 30% Off Knitwear until December 1.",
+            "text": "Shop 30% Off Knitwear — Last Day",
             "link": "shopify://collections/2025"
           }
         }
