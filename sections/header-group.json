@@ -25,6 +25,9 @@
       "block_order": [
         "announcement-bar-0"
       ],
+      "custom_css": [
+        ".gradient {background-color: #4b261a !important;}"
+      ],
       "settings": {
         "auto_rotate": false,
         "change_slides_speed": 5,
