@@ -29,7 +29,7 @@
         "button": {
           "type": "buttons",
           "settings": {
-            "button_label_1": "Explore",
+            "button_label_1": "Explore now",
             "button_link_1": "https://umi.store/collections/2025?filter.v.price.gte=&filter.v.price.lte=&filter.v.t.shopify.color-pattern=gid%3A%2F%2Fshopify%2FTaxonomyValue%2F7&sort_by=best-selling",
             "button_style_secondary_1": true,
             "button_label_2": "",
