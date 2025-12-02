@@ -44,6 +44,7 @@
         "text_fJKc3i",
         "button"
       ],
+      "disabled": true,
       "custom_css": [
         "h2 {text-transform: uppercase; font-size: 36px;}",
         "@media (max-width: 768px) {h2 {display: none; } .banner__text {display: none; }}"
