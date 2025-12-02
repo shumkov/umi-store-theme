@@ -15,23 +15,22 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Confidence is the new sexy",
+            "heading": "NEW BROWN DROP",
             "heading_size": "h1"
           }
         },
         "text_fJKc3i": {
           "type": "text",
           "settings": {
-            "text": "natural fabric wear",
+            "text": "Our bestselling knitwear pieces are now available in new brown shades",
             "text_style": "body"
           }
         },
         "button": {
           "type": "buttons",
-          "disabled": true,
           "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
+            "button_label_1": "Explore",
+            "button_link_1": "https://umi.store/collections/2025?filter.v.price.gte=&filter.v.price.lte=&filter.v.t.shopify.color-pattern=gid%3A%2F%2Fshopify%2FTaxonomyValue%2F7&sort_by=best-selling",
             "button_style_secondary_1": true,
             "button_label_2": "",
             "button_link_2": "",
@@ -48,6 +47,56 @@
         "h2 {text-transform: uppercase; font-size: 36px;}",
         "@media (max-width: 768px) {h2 {display: none; } .banner__text {display: none; }}"
       ],
+      "settings": {
+        "image": "shopify://shop_images/Android_Medium_-_1.png",
+        "image_overlay_opacity": 10,
+        "image_height": "adapt",
+        "image_behavior": "none",
+        "desktop_content_position": "bottom-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": false,
+        "color_scheme": "scheme-3",
+        "stack_images_on_mobile": false,
+        "mobile_content_alignment": "center",
+        "show_text_below": false
+      }
+    },
+    "image_banner_6AczN9": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_g7ChMt": {
+          "type": "heading",
+          "settings": {
+            "heading": "Confidence is the new sexy",
+            "heading_size": "h1"
+          }
+        },
+        "text_rEyrHa": {
+          "type": "text",
+          "settings": {
+            "text": "natural fabric wear",
+            "text_style": "body"
+          }
+        },
+        "buttons_T48DYf": {
+          "type": "buttons",
+          "disabled": true,
+          "settings": {
+            "button_label_1": "Shop all",
+            "button_link_1": "shopify://collections/all",
+            "button_style_secondary_1": true,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_g7ChMt",
+        "text_rEyrHa",
+        "buttons_T48DYf"
+      ],
+      "disabled": true,
       "settings": {
         "image": "shopify://shop_images/Android_Medium_-_1.png",
         "image_overlay_opacity": 10,
@@ -334,6 +383,7 @@
   },
   "order": [
     "image_banner",
+    "image_banner_6AczN9",
     "vitals_dc22295c_dJp6w6",
     "rich_text_ngkJ6U",
     "image_with_text_tKffFV",
