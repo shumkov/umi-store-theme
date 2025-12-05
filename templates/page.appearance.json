@@ -91,7 +91,7 @@
         "overlay_opacity": 20,
         "section_background": "",
         "text_box_height": "default",
-        "desktop_content_position": "bottom-center",
+        "desktop_content_position": "center-center",
         "mobile_content_position": "center",
         "text_box_background": "#ffffff",
         "text_box_opacity": 0,
