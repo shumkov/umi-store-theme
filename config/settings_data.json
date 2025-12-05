@@ -108,7 +108,7 @@
     "sale_badge_color_scheme": "scheme-4",
     "sold_out_badge_color_scheme": "scheme-3",
     "brand_headline": "Confidence is the new sexy",
-    "brand_description": "<p>Every UMI piece is created with care —  designed for your comfort, elegance, and confidence in warm climates. We carefully select lightweight, breathable fabrics that gently embrace your skin, allowing the clothing to become a natural extension of you rather than just part of your wardrobe.</p>",
+    "brand_description": "",
     "brand_image_width": 120,
     "social_facebook_link": "https://www.facebook.com/umi.clothing.store/",
     "social_instagram_link": "http://instagram.com/umi.asia/",
@@ -208,37 +208,6 @@
         "settings": {
           "n99gb_embed_css": "/* CSS Rules */",
           "n99gb_embed_js": "/* JS Code */"
-        }
-      },
-      "7398019964405354113": {
-        "type": "shopify://apps/adsgun/blocks/adsgun/eefd9671-57eb-40f1-ba25-de091fe93b0f",
-        "disabled": false,
-        "settings": {
-          "loaders_enabled": false,
-          "loader_color": "#5b0a91",
-          "enable_notification": false,
-          "background_color": "#5b0a91",
-          "text_color": "#ffffff",
-          "border_color": "#5b0a91",
-          "border_radius": 5,
-          "border_size": 1,
-          "enable_max_width": true,
-          "vertical_padding": 20,
-          "horizontal_padding": 25,
-          "text_align": "left",
-          "font_size": 16,
-          "box_shadow": true,
-          "placement": "bottom_center",
-          "dismiss": "manual",
-          "dismiss_delay": 5,
-          "di_padding": 10,
-          "di_bg_color": "#f5f5f5",
-          "di_border_color": "#dedede",
-          "di_placeholder_color": "#707070",
-          "di_button_bg_color": "#5b0a91",
-          "di_btn_hover_bg_color": "#105989",
-          "di_btn_color": "#ffffff",
-          "cart_drawer_font": "sans_serif_n4"
         }
       }
     },
