@@ -1,0 +1,487 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "multicolumn_dTJMT8": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_y6QngL": {
+          "type": "column",
+          "settings": {
+            "title": "",
+            "text": "<h2><strong>UMI is a clothing brand born in the tropics and inspired by the sea.</strong></h2><p>Dedicated to modern minimalism  and sensual elegance, it unites <strong>lightness and comfort with refined cuts and natural fabrics</strong>.</p><p>The philosophy of UMI is the pursuit of inner confidence and beauty, expressed through simplicity of line, fluid  silhouettes, and a gentle touch on the body.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_y6QngL"
+      ],
+      "name": "t:sections.multicolumn.presets.name",
+      "settings": {
+        "title": "",
+        "heading_size": "h1",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 1,
+        "column_alignment": "left",
+        "background_style": "none",
+        "color_scheme": "",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 56,
+        "padding_bottom": 36
+      }
+    },
+    "image_with_text_dwcYBj": {
+      "type": "image-with-text",
+      "blocks": {
+        "text_x9cpV6": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>Founded</strong> by Dina Shumkova<strong> in 2024 in Phuket,</strong> the brand debuted with a knitwear collection that  introduced a new interpretation of the summer wardrobe. Each piece was designed to complement the others, remaining  versatile and enduring </p><h3>— <strong>breathable, lightweight, and made for hot climates.</strong></h3>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "text_x9cpV6"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/217.jpg",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "",
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "multicolumn_hYjrTj": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_waAmT4": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/217.jpg",
+            "title": "",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_mBFi3P": {
+          "type": "column",
+          "settings": {
+            "title": "",
+            "text": "<p><strong>Founded</strong> by Dina Shumkova<strong> in 2024 in Phuket,</strong> the brand debuted with a knitwear collection that  introduced a new interpretation of the summer wardrobe. Each piece was designed to complement the others, remaining  versatile and enduring. </p><p><strong>Linen, Tencel, and Japanese cotton </strong>define the uniqueness of UMI’s fabrics</p><h3>— <strong>breathable, lightweight, and made for hot climates.</strong></h3>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_waAmT4",
+        "column_mBFi3P"
+      ],
+      "disabled": true,
+      "name": "t:sections.multicolumn.presets.name",
+      "settings": {
+        "title": "",
+        "heading_size": "h1",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 2,
+        "column_alignment": "left",
+        "background_style": "none",
+        "color_scheme": "",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "multicolumn_YUEPQx": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_pDxRrJ": {
+          "type": "column",
+          "settings": {
+            "title": "",
+            "text": "<p>From the very beginning, <strong>UMI has embodied the values of slow fashion: small-scale production, meticulous attention to detail, and a careful use of resources.</strong> The garments are created to stay with a woman for a long time, revealing her individuality and emphasizing her  natural sensuality.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_97jz39": {
+          "type": "column",
+          "settings": {
+            "title": "",
+            "text": "<p>UMI continues to evolve while preserving its distinctive voice: a brand that seeks to become the expression of a new  femininity</p><p></p><p></p><h3>—soft, confident, and at the same time as powerful as the ocean from which it takes its  name.</h3>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_pDxRrJ",
+        "column_97jz39"
+      ],
+      "name": "t:sections.multicolumn.presets.name",
+      "settings": {
+        "title": "",
+        "heading_size": "h1",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 2,
+        "column_alignment": "left",
+        "background_style": "none",
+        "color_scheme": "",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "image_banner_FEQANY": {
+      "type": "image-banner",
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/29_a67c87c2-2015-4b9e-ac62-ffc6119b0d4f.jpg",
+        "image_overlay_opacity": 0,
+        "image_height": "adapt",
+        "image_behavior": "none",
+        "desktop_content_position": "middle-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": false,
+        "color_scheme": "",
+        "stack_images_on_mobile": true,
+        "mobile_content_alignment": "center",
+        "show_text_below": false
+      }
+    },
+    "multicolumn_rrCjMi": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_gMJXtz": {
+          "type": "column",
+          "settings": {
+            "title": "",
+            "text": "<p>UMI is dedicated to the modern woman — <strong>confident, sensual, and free</strong>.</p><h2>Our philosophy is rooted in the  belief that confidence is the new sexy</h2><p>—true allure comes not from excess, but from presence, ease,  and self-assurance.</p><p>Every piece is created to support this feeling—light on the body, refined in detail, and versatile in style.</p><p>UMI celebrates femininity in its  softest and strongest forms, offering women clothing that feels natural, empowering, and enduring.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_gMJXtz"
+      ],
+      "name": "t:sections.multicolumn.presets.name",
+      "settings": {
+        "title": "",
+        "heading_size": "h1",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 3,
+        "column_alignment": "left",
+        "background_style": "none",
+        "color_scheme": "",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 72,
+        "padding_bottom": 56
+      }
+    },
+    "image_banner_ggeQyU": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_YDRBPP": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "heading": "UMI celebrates femininity in its  softest and strongest forms, offering women clothing that feels natural, empowering, and enduring.",
+            "heading_size": "h2"
+          }
+        }
+      },
+      "block_order": [
+        "heading_YDRBPP"
+      ],
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/068_24bdfe47-dee4-4b59-aa0c-24e6845b1d9f.jpg",
+        "image_overlay_opacity": 10,
+        "image_height": "adapt",
+        "image_behavior": "none",
+        "desktop_content_position": "middle-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": false,
+        "color_scheme": "scheme-3",
+        "stack_images_on_mobile": false,
+        "mobile_content_alignment": "center",
+        "show_text_below": false
+      }
+    },
+    "multicolumn_x9eMcw": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_dCLELN": {
+          "type": "column",
+          "settings": {
+            "title": "",
+            "text": "<h2>All production takes place in Thailand in small batches, supporting local artisans and ensuring meticulous quality control at every stage.</h2><p>Each piece is created with care to highlight inner confidence while remaining in harmony with the world around us.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_XCGccm": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/003_10222817-0d55-45a4-9152-b6d2ff1feea4.jpg",
+            "title": "",
+            "text": "<p>UMI follows a philosophy of <strong>minimalism </strong>and <strong>natural sensuality</strong>. The wardrobe is built on lightness, refinement, and versatility — considered, modern, and enduring.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_dCLELN",
+        "column_XCGccm"
+      ],
+      "name": "t:sections.multicolumn.presets.name",
+      "settings": {
+        "title": "",
+        "heading_size": "h1",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 2,
+        "column_alignment": "left",
+        "background_style": "none",
+        "color_scheme": "",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 96,
+        "padding_bottom": 80
+      }
+    },
+    "image_banner_6XbekR": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_GVNeah": {
+          "type": "heading",
+          "settings": {
+            "heading": "At the heart of UMI lies the search for fabrics that fuse aesthetics with functionality.",
+            "heading_size": "h2"
+          }
+        },
+        "text_eBK6eF": {
+          "type": "text",
+          "settings": {
+            "text": "",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_GVNeah",
+        "text_eBK6eF"
+      ],
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/073_79acdb5f-f5bc-416d-b150-9334219aceca.jpg",
+        "image_overlay_opacity": 0,
+        "image_height": "adapt",
+        "image_behavior": "none",
+        "desktop_content_position": "middle-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": false,
+        "color_scheme": "scheme-3",
+        "stack_images_on_mobile": true,
+        "mobile_content_alignment": "center",
+        "show_text_below": false
+      }
+    },
+    "multicolumn_MY8aCU": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_4WBQct": {
+          "type": "column",
+          "settings": {
+            "title": "",
+            "text": "<p>We select <strong>only</strong> the finest <strong>natural materials</strong>, paying attention to their origin and the way they feel on the skin. Our collections are built on<strong> lightweight, breathable fabrics — linen, Tencel, and Japanese cotton</strong> — specially chosen<strong> for hot climates </strong>and for a <strong>gentle touch</strong> against the body.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_x6CUUJ": {
+          "type": "column",
+          "settings": {
+            "title": "",
+            "text": "<p>We are guided by principles of conscious choice: <strong>using sustainable</strong> and <strong>durable fabrics,</strong> <strong>minimizing environmental impact, and producing in small batches</strong> to avoid overproduction and preserve resources.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_4WBQct",
+        "column_x6CUUJ"
+      ],
+      "name": "t:sections.multicolumn.presets.name",
+      "settings": {
+        "title": "",
+        "heading_size": "h1",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 3,
+        "column_alignment": "left",
+        "background_style": "none",
+        "color_scheme": "",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 80,
+        "padding_bottom": 64
+      }
+    },
+    "image_with_text_8BFMxJ": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_rDK4bK": {
+          "type": "heading",
+          "settings": {
+            "heading": "",
+            "heading_size": "h1"
+          }
+        },
+        "text_KWWcK9": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Every fabric at UMI is chosen with care and precision — not only to meet the highest standards of quality, but also to embody the brand’s philosophy: comfort, lightness, and respect for nature.</p>",
+            "text_style": "body"
+          }
+        },
+        "button_fydJEb": {
+          "type": "button",
+          "settings": {
+            "button_label": "",
+            "button_link": "",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_rDK4bK",
+        "text_KWWcK9",
+        "button_fydJEb"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/002_e4242629-84e9-4a24-abb3-b9621f43a231.jpg",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "",
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "collection_list_8hpU9p": {
+      "type": "collection-list",
+      "blocks": {
+        "featured_collection_eBnQdJ": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "2025"
+          }
+        },
+        "featured_collection_GU8tUc": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "underwear"
+          }
+        },
+        "featured_collection_XLNHKU": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "coming-soon-2025"
+          }
+        }
+      },
+      "block_order": [
+        "featured_collection_eBnQdJ",
+        "featured_collection_GU8tUc",
+        "featured_collection_XLNHKU"
+      ],
+      "name": "t:sections.collection-list.presets.name",
+      "settings": {
+        "title": "UMI collections",
+        "heading_size": "h2",
+        "image_ratio": "square",
+        "columns_desktop": 3,
+        "color_scheme": "",
+        "show_view_all": false,
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "main",
+    "multicolumn_dTJMT8",
+    "image_with_text_dwcYBj",
+    "multicolumn_hYjrTj",
+    "multicolumn_YUEPQx",
+    "image_banner_FEQANY",
+    "multicolumn_rrCjMi",
+    "image_banner_ggeQyU",
+    "multicolumn_x9eMcw",
+    "image_banner_6XbekR",
+    "multicolumn_MY8aCU",
+    "image_with_text_8BFMxJ",
+    "collection_list_8hpU9p"
+  ]
+}
