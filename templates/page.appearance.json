@@ -9,6 +9,96 @@
  */
 {
   "sections": {
+    "vitals_2a48386f_FdXUiw": {
+      "type": "vitals-2a48386f",
+      "blocks": {
+        "caption_TkL8bk": {
+          "type": "caption",
+          "settings": {
+            "caption": "123",
+            "caption_size": "16",
+            "caption_weight": "400",
+            "caption_color": "#222222",
+            "caption_alternative_font": false,
+            "caption_font": "sans_serif_n4"
+          }
+        },
+        "heading_8kRKF3": {
+          "type": "heading",
+          "settings": {
+            "heading": "Appearance",
+            "heading_size": "32",
+            "heading_style": "bold",
+            "heading_color": "#ffffff",
+            "heading_alternative_font": false,
+            "heading_font": "sans_serif_n4"
+          }
+        },
+        "text_FWrWpb": {
+          "type": "text",
+          "settings": {
+            "description": "<p>Fashion performance</p><p>18 December</p><p>HOMA Cherngtalay, Phuket</p>",
+            "description_size": "16",
+            "description_color": "#ffffff",
+            "description_alternative_font": false,
+            "description_font": "sans_serif_n4"
+          }
+        },
+        "buttons_a3Xtw9": {
+          "type": "buttons",
+          "disabled": true,
+          "settings": {
+            "primary_button_label": "BUTTON LABEL",
+            "primary_button_link": "",
+            "primary_button_style": "solid",
+            "primary_text_color": "#ffffff",
+            "primary_background_color": "#222222",
+            "primary_border_color": "#222222",
+            "primary_button_corner": 0,
+            "primary_new_tab": false,
+            "secondary_button_label": "",
+            "secondary_button_link": "",
+            "secondary_button_style": "link",
+            "secondary_text_color": "#222222",
+            "secondary_background_color": "#222222",
+            "secondary_border_color": "#222222",
+            "secondary_button_corner": 0,
+            "secondary_new_tab": false
+          }
+        }
+      },
+      "block_order": [
+        "caption_TkL8bk",
+        "heading_8kRKF3",
+        "text_FWrWpb",
+        "buttons_a3Xtw9"
+      ],
+      "name": "🧡 Vitals: Text Box & Video",
+      "settings": {
+        "video_type": "upload",
+        "video_desktop": "shopify://files/videos/IMG_7900.MP4",
+        "autoplay": true,
+        "loop": true,
+        "show_video_controls": false,
+        "desktop_banner_height": "700",
+        "mobile_banner_height": "650",
+        "overlay_color": "#222222",
+        "overlay_opacity": 10,
+        "section_background": "",
+        "text_box_height": "default",
+        "desktop_content_position": "center-center",
+        "mobile_content_position": "center",
+        "text_box_background": "#ffffff",
+        "text_box_opacity": 0,
+        "text_box_border_radius": 0,
+        "section_width": 100,
+        "section_max_width": "",
+        "vertical_padding": 0,
+        "vertical_margin": 0,
+        "vertical_padding_mobile": 0,
+        "vertical_margin_mobile": 0
+      }
+    },
     "main": {
       "type": "main-page",
       "disabled": true,
@@ -33,6 +123,7 @@
       "block_order": [
         "column_y6QngL"
       ],
+      "disabled": true,
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
         "title": "",
@@ -65,6 +156,7 @@
       "block_order": [
         "text_x9cpV6"
       ],
+      "disabled": true,
       "name": "t:sections.image-with-text.presets.name",
       "settings": {
         "image": "shopify://shop_images/217.jpg",
@@ -154,6 +246,7 @@
         "column_pDxRrJ",
         "column_97jz39"
       ],
+      "disabled": true,
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
         "title": "",
@@ -174,6 +267,7 @@
     },
     "image_banner_FEQANY": {
       "type": "image-banner",
+      "disabled": true,
       "name": "t:sections.image-banner.presets.name",
       "settings": {
         "image": "shopify://shop_images/29_a67c87c2-2015-4b9e-ac62-ffc6119b0d4f.jpg",
@@ -205,6 +299,7 @@
       "block_order": [
         "column_gMJXtz"
       ],
+      "disabled": true,
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
         "title": "",
@@ -238,6 +333,7 @@
       "block_order": [
         "heading_YDRBPP"
       ],
+      "disabled": true,
       "name": "t:sections.image-banner.presets.name",
       "settings": {
         "image": "shopify://shop_images/068_24bdfe47-dee4-4b59-aa0c-24e6845b1d9f.jpg",
@@ -280,6 +376,7 @@
         "column_dCLELN",
         "column_XCGccm"
       ],
+      "disabled": true,
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
         "title": "",
@@ -320,6 +417,7 @@
         "heading_GVNeah",
         "text_eBK6eF"
       ],
+      "disabled": true,
       "name": "t:sections.image-banner.presets.name",
       "settings": {
         "image": "shopify://shop_images/073_79acdb5f-f5bc-416d-b150-9334219aceca.jpg",
@@ -361,6 +459,7 @@
         "column_4WBQct",
         "column_x6CUUJ"
       ],
+      "disabled": true,
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
         "title": "",
@@ -410,6 +509,7 @@
         "text_KWWcK9",
         "button_fydJEb"
       ],
+      "disabled": true,
       "name": "t:sections.image-with-text.presets.name",
       "settings": {
         "image": "shopify://shop_images/002_e4242629-84e9-4a24-abb3-b9621f43a231.jpg",
@@ -454,6 +554,7 @@
         "featured_collection_GU8tUc",
         "featured_collection_XLNHKU"
       ],
+      "disabled": true,
       "name": "t:sections.collection-list.presets.name",
       "settings": {
         "title": "UMI collections",
@@ -470,6 +571,7 @@
     }
   },
   "order": [
+    "vitals_2a48386f_FdXUiw",
     "main",
     "multicolumn_dTJMT8",
     "image_with_text_dwcYBj",
