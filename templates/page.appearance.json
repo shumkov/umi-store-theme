@@ -75,7 +75,7 @@
       ],
       "custom_css": [
         ".VtlsTextBox{opacity:0!important}",
-        ".VtlsTextBoxVideoSection__Content{background:url('https://cdn.shopify.com/s/files/1/0673/9496/1455/files/Group_43.png?v=1764941906') center/auto 80% no-repeat!important;max-width:100%!important;width:100%!important}"
+        ".VtlsTextBoxVideoSection__Content{background:url('https://cdn.shopify.com/s/files/1/0673/9496/1455/files/Group_43.png?v=1764941906') center/contain no-repeat!important;max-width:100%!important;width:100%!important;padding:0 10%!important}"
       ],
       "name": "🧡 Vitals: Text Box & Video",
       "settings": {
