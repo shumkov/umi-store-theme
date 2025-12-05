@@ -74,8 +74,8 @@
         "buttons_a3Xtw9"
       ],
       "custom_css": [
-        ".VtlsTextBox{opacity:0!important}",
-        ".VtlsTextBoxVideoSection__Content{background:url('https://cdn.shopify.com/s/files/1/0673/9496/1455/files/Group_43_e98a127c-a64c-4eb6-ba11-6ef98a9bb4a0.png?v=1764942332') center bottom 20px/80vw auto no-repeat!important;max-width:100%!important;width:100%!important}"
+        ".VtlsTextBox {opacity: 0 !important;}",
+        ".VtlsTextBoxVideoSection__Content {background: url(\"https://cdn.shopify.com/s/files/1/0673/9496/1455/files/Group_43_e98a127c-a64c-4eb6-ba11-6ef98a9bb4a0.png?v=1764942332\") center bottom 20px/80vw auto no-repeat !important; max-width: 100% !important; width: 100% !important;}"
       ],
       "name": "🧡 Vitals: Text Box & Video",
       "settings": {
@@ -91,7 +91,7 @@
         "overlay_opacity": 20,
         "section_background": "",
         "text_box_height": "default",
-        "desktop_content_position": "center-center",
+        "desktop_content_position": "bottom-center",
         "mobile_content_position": "center",
         "text_box_background": "#ffffff",
         "text_box_opacity": 0,
