@@ -74,8 +74,8 @@
         "buttons_a3Xtw9"
       ],
       "custom_css": [
-        ".vitals-background-video__content *{display:none!important}",
-        ".vitals-background-video__content{background:url('https://cdn.shopify.com/s/files/1/0673/9496/1455/files/appearance.png?v=1764920622') center/contain no-repeat!important;min-height:400px!important}"
+        ".VtlsTextBox *{display:none!important}",
+        ".VtlsTextBox{background:url('https://cdn.shopify.com/s/files/1/0673/9496/1455/files/appearance.png?v=1764920622') center/contain no-repeat!important;min-height:400px!important}"
       ],
       "name": "🧡 Vitals: Text Box & Video",
       "settings": {
