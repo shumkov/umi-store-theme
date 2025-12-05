@@ -15,10 +15,10 @@
         "caption_TkL8bk": {
           "type": "caption",
           "settings": {
-            "caption": "123",
-            "caption_size": "16",
-            "caption_weight": "400",
-            "caption_color": "#222222",
+            "caption": "UMI PRESENTS",
+            "caption_size": "12",
+            "caption_weight": "600",
+            "caption_color": "#ffffff",
             "caption_alternative_font": false,
             "caption_font": "sans_serif_n4"
           }
@@ -26,8 +26,8 @@
         "heading_8kRKF3": {
           "type": "heading",
           "settings": {
-            "heading": "Appearance",
-            "heading_size": "32",
+            "heading": "APPEARANCE",
+            "heading_size": "48",
             "heading_style": "bold",
             "heading_color": "#ffffff",
             "heading_alternative_font": false,
@@ -37,7 +37,7 @@
         "text_FWrWpb": {
           "type": "text",
           "settings": {
-            "description": "<p>Fashion performance</p><p>18 December</p><p>HOMA Cherngtalay, Phuket</p>",
+            "description": "<p><strong>FASHION PERFORMANCE</strong></p><p><strong>18 DECEMBER</strong></p><p><strong>HOMA CHERNGTALAY, PHUKET</strong></p>",
             "description_size": "16",
             "description_color": "#ffffff",
             "description_alternative_font": false,
