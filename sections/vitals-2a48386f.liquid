@@ -1,0 +1,1089 @@
+<!-- --VERSION-16-- -->
+
+{% style %}
+:root {
+--vtl-neutral-70: #5e5e5e;
+--vtl-neutral-01: #fff;
+--vtl-size-0: 0px;
+--vtl-size-1: 1px;
+--vtl-size-2: 2px;
+--vtl-size-4: 4px;
+--vtl-size-8: 8px;
+--vtl-size-12: 12px;
+--vtl-size-14: 14px;
+--vtl-size-16: 16px;
+--vtl-size-20: 20px;
+--vtl-size-24: 24px;
+--vtl-size-32: 32px;
+--vtl-size-40: 40px;
+--vtl-font-weight-400: 400;
+--vtl-font-weight-600: 600;
+--vtl-line-height-140: 1.4;
+--vtl-text-decoration-none: none;
+--vtl-text-decoration-underline: underline;
+--vtl-border-width-1: var(--vtl-size-1);
+--vtl-color-bg-fill-inverse-on-light: var(--vtl-neutral-01);
+--vtl-color-text-disable-on-light: var(--vtl-neutral-70);
+--vtl-space-0: var(--vtl-size-0);
+--vtl-space-2: var(--vtl-size-2);
+--vtl-space-4: var(--vtl-size-4);
+--vtl-space-8: var(--vtl-size-8);
+--vtl-space-12: var(--vtl-size-12);
+--vtl-space-16: var(--vtl-size-16);
+--vtl-space-20: var(--vtl-size-20);
+--vtl-space-24: var(--vtl-size-24);
+--vtl-space-32: var(--vtl-size-32);
+--vtl-space-40: var(--vtl-size-40);
+--vtl-font-size-14: var(--vtl-size-14);
+}
+
+
+{% endstyle %}
+
+<!-- --UUID-2a48386f-- -->
+
+{%- liquid
+	assign autoplay_option = section.settings.autoplay
+	assign loop_option = section.settings.loop
+	assign controls_option = section.settings.show_video_controls
+
+	assign autoplay_iframe = 0
+	assign controls_iframe = 0
+	assign loop_iframe = 0
+
+	if section.settings.autoplay == true
+		assign autoplay_iframe = 1
+	endif
+	if section.settings.show_video_controls == true
+		assign controls_iframe = 1
+	endif
+	if section.settings.loop == true
+		assign loop_iframe = 1
+	endif
+
+	if section.settings.poster_desktop != blank
+		assign poster_option = section.settings.poster_desktop | img_url: "master"
+	endif
+-%}
+
+<section class="Vtls-{{ section.id | handle }} VtlsTextBoxVideo">
+	<div
+		class="VtlsTextBoxVideoContainer"
+	>
+		<div
+			class="VtlsTextBoxVideoSection {% if section.settings.section_width == 100 %}VtlsTextBoxVideoSection--fullWidth{% endif %}"
+		>
+			<vtls-video-text class="VtlsTextBoxVideoSection__Media">
+				{%- if section.settings.video_desktop != blank and section.settings.video_type == "upload" -%}
+					{%- if poster_option != blank -%}
+						{{
+							section.settings.video_desktop
+							| video_tag:
+								autoplay: autoplay_option,
+								loop: loop_option,
+								muted: autoplay_option,
+								playsinline: true,
+								preload: metadata,
+								controls: controls_option,
+								poster: poster_option,
+								class: "VtlsTextBoxVideoSection__Media--desktop"
+						}}
+					{%- else -%}
+						{{
+							section.settings.video_desktop
+							| video_tag:
+								autoplay: autoplay_option,
+								loop: loop_option,
+								muted: autoplay_option,
+								playsinline: true,
+								preload: metadata,
+								controls: controls_option,
+								image_size: "600x",
+								class: "VtlsTextBoxVideoSection__Media--desktop"
+						}}
+					{%- endif -%}
+
+				{% elsif section.settings.video_url_desktop != blank and section.settings.video_type == "link" %}
+					{% assign video_url = section.settings.video_url_desktop %}
+					{% if video_url contains "youtube.com" or video_url contains "youtu.be" %}
+						{% assign video_id = video_url | split: "v=" | last | split: "&" | first %}
+						<iframe
+							width="100%"
+							height="auto"
+							src="https://www.youtube.com/embed/{{ video_id }}?autoplay={{ autoplay_iframe }}&loop={{ loop_iframe }}&controls={{ controls_iframe }}&mute={{ autoplay_iframe }}"
+							allowfullscreen
+							class="VtlsTextBoxVideoSection__Media--desktop"
+						></iframe>
+					{% elsif video_url contains "vimeo.com" %}
+						{% assign video_id = video_url | split: "/" | last %}
+						<iframe
+							src="https://player.vimeo.com/video/{{ video_id }}?autoplay={{ autoplay_iframe }}&muted={{ autoplay_iframe }}"
+							width="100%"
+							height="auto"
+							allowfullscreen
+							class="VtlsTextBoxVideoSection__Media--desktop"
+						></iframe>
+					{% endif %}
+				{% else %}
+					<img
+						src="data:image/webp;base64,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"
+						alt="Image with an abstract figure"
+						width="1280"
+						height="600"
+						loading="lazy"
+						sizes="100vw"
+						fetchpriority="low"
+						class="VtlsTextBoxVideoSection__Media--defaultVideo"
+					>
+				{% endif %}
+			</vtls-video-text>
+			<div class="VtlsTextBoxVideoSection__ContentWrapper">
+				<div
+					class="
+						VtlsTextBoxVideoSection__Content
+						VtlsTextBoxVideoSection__Content--desktopPosition-{{ section.settings.desktop_content_position }}
+						VtlsTextBoxVideoSection__Content--mobilePosition-{{ section.settings.mobile_content_position }}
+					"
+				>
+					<div class="VtlsTextBox VtlsTextBox--height-{{ section.settings.text_box_height }}">
+						{%- for block in section.blocks -%}
+							{%- case block.type -%}
+								{%- when "heading" -%}
+									{%- if block.settings.heading_alternative_font -%}
+										<style>
+											{{- block.settings.heading_font | font_face: font_display: 'swap' -}}
+										</style>
+									{%- endif -%}
+									{%- capture heading_css_variables -%}
+                                            --block-heading-size: {{- block.settings.heading_size -}}px;
+                                            --block-heading-color: {{- block.settings.heading_color -}};
+                                            --block-heading-font: {{- block.settings.heading_font.family -}};
+                                          {%- endcapture -%}
+									<h2
+										style="{{- heading_css_variables | strip_newlines | escape -}}"
+										class="VtlsTextBox__Heading VtlsTextBox__Heading--style-{{ block.settings.heading_style }} {% if block.settings.heading_alternative_font == true %}VtlsTextBox__Heading--alternativeFont{% endif %}"
+										{{ block.shopify_attributes }}
+									>
+										{{- block.settings.heading -}}
+									</h2>
+								{%- when "caption" -%}
+									{%- if block.settings.caption_alternative_font -%}
+										<style>
+											{{- block.settings.caption_font | font_face: font_display: 'swap' -}}
+										</style>
+									{%- endif -%}
+									{%- capture caption_css_variables -%}
+                                            --block-caption-size: {{- block.settings.caption_size -}}px;
+                                            --block-caption-color: {{- block.settings.caption_color -}};
+                                            --block-caption-font: {{- block.settings.caption_font.family -}};
+                                            --block-caption-weight: {{- block.settings.caption_weight -}};
+                                          {%- endcapture -%}
+									<p
+										style="{{- caption_css_variables | strip_newlines | escape -}}"
+										class="VtlsTextBox__Caption {% if block.settings.caption_alternative_font == true %}VtlsTextBox__Caption--alternativeFont{% endif %}"
+										{{ block.shopify_attributes }}
+									>
+										{{- block.settings.caption -}}
+									</p>
+								{%- when "text" -%}
+									{%- if block.settings.description_alternative_font -%}
+										{%- liquid
+											assign body_font_bold = block.settings.description_font | font_modify: 'weight', 'bold'
+											assign body_font_italic = block.settings.description_font | font_modify: 'style', 'italic'
+											assign body_font_bold_italic = body_font_bold | font_modify: 'style', 'italic'
+										%}
+										<style>
+											{{- block.settings.description_font | font_face: font_display: 'swap' -}}
+											{{ body_font_bold | font_face: font_display: 'swap' }}
+											{{ body_font_italic | font_face: font_display: 'swap' }}
+											{{ body_font_bold_italic | font_face: font_display: 'swap' }}
+										</style>
+									{%- endif -%}
+									{%- capture description_css_variables -%}
+                                            --block-description-size: {{- block.settings.description_size -}}px;
+                                            --block-description-color: {{- block.settings.description_color -}};
+                                            --block-description-font: {{- block.settings.description_font.family -}};
+                                          {%- endcapture -%}
+									<div
+										style="{{- description_css_variables | strip_newlines | escape -}}"
+										class="VtlsTextBox__Description {% if block.settings.description_alternative_font == true %}VtlsTextBox__Description--alternativeFont{% endif %}"
+										{{ block.shopify_attributes }}
+									>
+										{{- block.settings.description -}}
+									</div>
+								{%- when "buttons" -%}
+									{%- capture buttons_css_variables -%}
+                                            --block-primary-button-text-color: {{- block.settings.primary_text_color -}};
+                                            --block-primary-button-background-color: {{- block.settings.primary_background_color -}};
+                                            --block-primary-button-corner-radius: {{- block.settings.primary_button_corner -}}px;
+                                            --block-primary-button-border-color: {{- block.settings.primary_border_color -}};
+    
+                                            --block-secondary-button-text-color: {{- block.settings.secondary_text_color -}};
+                                            --block-secondary-button-background-color: {{- block.settings.secondary_background_color -}};
+                                            --block-secondary-button-corner-radius: {{- block.settings.secondary_button_corner -}}px;
+                                            --block-secondary-button-border-color: {{- block.settings.secondary_border_color -}};
+                                          {%- endcapture -%}
+									<div
+										style="{{- buttons_css_variables | strip_newlines | escape -}}"
+										class="VtlsTextBoxVideoButtons"
+										{{ block.shopify_attributes }}
+									>
+										{%- if block.settings.primary_button_label != blank -%}
+											<a
+												{% if block.settings.primary_new_tab == true %}
+													target="_blank"
+													rel="noopener noreferrer"
+												{% endif %}
+												class="
+													VtlsTextBoxVideoButtons__Primary
+													VtlsTextBoxVideoButtons__Primary--{{ block.settings.primary_button_style }}
+												"
+												href="{{ block.settings.primary_button_link | default: "#" }}"
+											>
+												{{- block.settings.primary_button_label | escape -}}
+											</a>
+										{%- endif -%}
+
+										{%- if block.settings.secondary_button_label != blank -%}
+											<a
+												{% if block.settings.secondary_new_tab == true %}
+													target="_blank"
+													rel="noopener noreferrer"
+												{% endif %}
+												class="
+													VtlsTextBoxVideoButtons__Secondary
+													VtlsTextBoxVideoButtons__Secondary--{{ block.settings.secondary_button_style }}
+												"
+												href="{{ block.settings.secondary_button_link | default: "#" }}"
+											>
+												{{- block.settings.secondary_button_label | escape -}}
+											</a>
+										{%- endif -%}
+									</div>
+							{%- endcase -%}
+						{%- endfor -%}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+{% schema %}
+{
+	"name": "🧡 Text Box & Video",
+	"disabled_on": {
+		"groups": ["header", "footer"]
+	},
+	"settings": [
+		{
+			"type": "header",
+			"content": "Video Settings"
+		},
+		{
+			"type": "select",
+			"id": "video_type",
+			"label": "Video type",
+			"options": [
+				{
+					"value": "upload",
+					"label": "Upload"
+				},
+				{
+					"value": "link",
+					"label": "Link"
+				}
+			],
+			"default": "upload"
+		},
+		{
+			"type": "video",
+			"id": "video_desktop",
+			"label": "Video",
+			"info": "Recommended aspect ratio is 16:9",
+			"visible_if": "{{ section.settings.video_type == 'upload' }}"
+		},
+		{
+			"type": "video_url",
+			"id": "video_url_desktop",
+			"label": "Video link",
+			"accept": ["youtube", "vimeo"],
+			"info": "Supports links from YouTube or Vimeo",
+			"visible_if": "{{ section.settings.video_type == 'link' }}"
+		},
+		{
+			"type": "checkbox",
+			"id": "autoplay",
+			"label": "Autoplay",
+			"info": "Video will be on mute.",
+			"default": true
+		},
+		{
+			"type": "image_picker",
+			"id": "poster_desktop",
+			"label": "Thumbnail (optional)",
+			"visible_if": "{{ section.settings.video_type == 'upload' and section.settings.autoplay == false }}"
+		},
+		{
+			"type": "checkbox",
+			"id": "loop",
+			"label": "Play on loop",
+			"default": true
+		},
+		{
+			"type": "checkbox",
+			"id": "show_video_controls",
+			"label": "Show video controls",
+			"default": true
+		},
+		{
+			"type": "select",
+			"id": "desktop_banner_height",
+			"label": "Video height on desktop",
+			"options": [
+				{
+					"value": "450",
+					"label": "Small"
+				},
+				{
+					"value": "550",
+					"label": "Medium"
+				},
+				{
+					"value": "700",
+					"label": "Large"
+				}
+			],
+			"default": "550"
+		},
+		{
+			"type": "select",
+			"id": "mobile_banner_height",
+			"label": "Video height on mobile",
+			"options": [
+				{
+					"value": "450",
+					"label": "Small"
+				},
+				{
+					"value": "550",
+					"label": "Medium"
+				},
+				{
+					"value": "650",
+					"label": "Large"
+				}
+			],
+			"default": "550"
+		},
+		{
+			"type": "color",
+			"id": "overlay_color",
+			"label": "Video overlay color",
+			"default": "#222222"
+		},
+		{
+			"type": "range",
+			"id": "overlay_opacity",
+			"min": 0,
+			"max": 100,
+			"step": 2,
+			"unit": "%",
+			"label": "Video overlay opacity",
+			"default": 0
+		},
+		{
+			"type": "color",
+			"id": "section_background",
+			"label": "Section background"
+		},
+		{
+			"type": "header",
+			"content": "Text box settings"
+		},
+		{
+			"type": "select",
+			"id": "text_box_height",
+			"label": "Text box height",
+			"options": [
+				{
+					"value": "default",
+					"label": "Fit to text"
+				},
+				{
+					"value": "medium",
+					"label": "Medium"
+				},
+				{
+					"value": "large",
+					"label": "Large"
+				}
+			],
+			"default": "default"
+		},
+		{
+			"type": "select",
+			"id": "desktop_content_position",
+			"label": "Position on desktop",
+			"options": [
+				{
+					"value": "top-left",
+					"label": "Top left"
+				},
+				{
+					"value": "top-center",
+					"label": "Top center"
+				},
+				{
+					"value": "top-right",
+					"label": "Top right"
+				},
+				{
+					"value": "center-left",
+					"label": "Center left"
+				},
+				{
+					"value": "center-center",
+					"label": "Center center"
+				},
+				{
+					"value": "center-right",
+					"label": "Center right"
+				},
+				{
+					"value": "bottom-left",
+					"label": "Bottom left"
+				},
+				{
+					"value": "bottom-center",
+					"label": "Bottom center"
+				},
+				{
+					"value": "bottom-right",
+					"label": "Bottom right"
+				}
+			],
+			"default": "center-center"
+		},
+		{
+			"type": "select",
+			"id": "mobile_content_position",
+			"label": "Position on mobile",
+			"options": [
+				{
+					"value": "top",
+					"label": "Top"
+				},
+				{
+					"value": "center",
+					"label": "Center"
+				},
+				{
+					"value": "bottom",
+					"label": "Bottom"
+				}
+			],
+			"default": "center"
+		},
+		{
+			"type": "color",
+			"id": "text_box_background",
+			"label": "Text box background",
+			"default": "#ffffff"
+		},
+		{
+			"type": "range",
+			"id": "text_box_opacity",
+			"min": 0,
+			"max": 100,
+			"step": 2,
+			"unit": "%",
+			"label": "Text box opacity",
+			"default": 100
+		},
+		{
+			"type": "range",
+			"id": "text_box_border_radius",
+			"min": 0,
+			"max": 100,
+			"step": 2,
+			"unit": "px",
+			"label": "Corner radius",
+			"default": 0
+		},
+		{
+			"type": "header",
+			"content": "Layout"
+		},
+		{
+			"type": "range",
+			"id": "section_width",
+			"min": 70,
+			"max": 100,
+			"step": 1,
+			"unit": "%",
+			"label": "Section width",
+			"default": 100
+		},
+		{
+			"type": "text",
+			"id": "section_max_width",
+			"label": "Custom max width (optional)",
+			"info": "Section max width in pixels"
+		},
+		{
+			"type": "range",
+			"id": "vertical_padding",
+			"min": 0,
+			"max": 100,
+			"step": 2,
+			"unit": "px",
+			"label": "Top - bottom padding (desktop)",
+			"default": 0
+		},
+		{
+			"type": "range",
+			"id": "vertical_margin",
+			"min": 0,
+			"max": 100,
+			"step": 2,
+			"unit": "px",
+			"label": "Top - bottom margin (desktop)",
+			"default": 0
+		},
+		{
+			"type": "range",
+			"id": "vertical_padding_mobile",
+			"min": 0,
+			"max": 100,
+			"step": 2,
+			"unit": "px",
+			"label": "Top - bottom padding (mobile)",
+			"default": 0
+		},
+		{
+			"type": "range",
+			"id": "vertical_margin_mobile",
+			"min": 0,
+			"max": 100,
+			"step": 2,
+			"unit": "px",
+			"label": "Top - bottom margin (mobile)",
+			"default": 0
+		}
+	],
+	"blocks": [
+		{
+			"type": "heading",
+			"name": "Heading",
+			"limit": 1,
+			"settings": [
+				{
+					"type": "text",
+					"id": "heading",
+					"default": "Text Box & Video",
+					"label": "Heading"
+				},
+				{
+					"type": "select",
+					"id": "heading_size",
+					"label": "Size",
+					"options": [
+						{
+							"value": "24",
+							"label": "Small"
+						},
+						{
+							"value": "32",
+							"label": "Medium"
+						},
+						{
+							"value": "48",
+							"label": "Large"
+						}
+					],
+					"default": "32"
+				},
+				{
+					"type": "select",
+					"id": "heading_style",
+					"label": "Heading style",
+					"options": [
+						{
+							"value": "regular",
+							"label": "Regular"
+						},
+						{
+							"value": "bold",
+							"label": "Bold"
+						}
+					],
+					"default": "bold"
+				},
+				{
+					"type": "color",
+					"id": "heading_color",
+					"label": "Text color",
+					"default": "#222222"
+				},
+				{
+					"type": "header",
+					"content": "Alternative font"
+				},
+				{
+					"type": "checkbox",
+					"id": "heading_alternative_font",
+					"label": "Apply alternative font",
+					"default": false
+				},
+				{
+					"type": "font_picker",
+					"id": "heading_font",
+					"label": "Font",
+					"default": "sans_serif_n4"
+				}
+			]
+		},
+		{
+			"type": "caption",
+			"name": "Caption",
+			"limit": 1,
+			"settings": [
+				{
+					"type": "text",
+					"id": "caption",
+					"label": "Caption"
+				},
+				{
+					"type": "select",
+					"id": "caption_size",
+					"label": "Size",
+					"options": [
+						{
+							"value": "12",
+							"label": "Small"
+						},
+						{
+							"value": "16",
+							"label": "Medium"
+						},
+						{
+							"value": "20",
+							"label": "Large"
+						}
+					],
+					"default": "16"
+				},
+				{
+					"type": "select",
+					"id": "caption_weight",
+					"label": "Caption style",
+					"options": [
+						{
+							"value": "400",
+							"label": "Regular"
+						},
+						{
+							"value": "600",
+							"label": "Bold"
+						}
+					],
+					"default": "400"
+				},
+				{
+					"type": "color",
+					"id": "caption_color",
+					"label": "Text color",
+					"default": "#222222"
+				},
+				{
+					"type": "header",
+					"content": "Alternative font"
+				},
+				{
+					"type": "checkbox",
+					"id": "caption_alternative_font",
+					"label": "Apply alternative font",
+					"default": false
+				},
+				{
+					"type": "font_picker",
+					"id": "caption_font",
+					"label": "Font",
+					"default": "sans_serif_n4"
+				}
+			]
+		},
+		{
+			"type": "text",
+			"name": "Description",
+			"limit": 1,
+			"settings": [
+				{
+					"type": "richtext",
+					"id": "description",
+					"default": "<p>Share details about your exclusive limited-time offer or special promotion.</p>",
+					"label": "Text"
+				},
+				{
+					"type": "select",
+					"id": "description_size",
+					"label": "Size",
+					"options": [
+						{
+							"value": "12",
+							"label": "Small"
+						},
+						{
+							"value": "16",
+							"label": "Medium"
+						},
+						{
+							"value": "20",
+							"label": "Large"
+						}
+					],
+					"default": "16"
+				},
+				{
+					"type": "color",
+					"id": "description_color",
+					"label": "Text color",
+					"default": "#222222"
+				},
+				{
+					"type": "header",
+					"content": "Alternative font"
+				},
+				{
+					"type": "checkbox",
+					"id": "description_alternative_font",
+					"label": "Apply alternative font",
+					"default": false
+				},
+				{
+					"type": "font_picker",
+					"id": "description_font",
+					"label": "Font",
+					"default": "sans_serif_n4"
+				}
+			]
+		},
+		{
+			"type": "buttons",
+			"name": "Buttons",
+			"limit": 1,
+			"settings": [
+				{
+					"type": "header",
+					"content": "Primary button"
+				},
+				{
+					"type": "text",
+					"id": "primary_button_label",
+					"label": "Label",
+					"default": "BUTTON LABEL"
+				},
+				{
+					"type": "url",
+					"id": "primary_button_link",
+					"label": "URL"
+				},
+				{
+					"type": "select",
+					"id": "primary_button_style",
+					"label": "Button style",
+					"options": [
+						{
+							"value": "solid",
+							"label": "Filled"
+						},
+						{
+							"value": "outline",
+							"label": "Outline"
+						},
+						{
+							"value": "link",
+							"label": "Link"
+						}
+					],
+					"default": "solid"
+				},
+				{
+					"type": "color",
+					"id": "primary_text_color",
+					"label": "Text color",
+					"default": "#ffffff"
+				},
+				{
+					"type": "color",
+					"id": "primary_background_color",
+					"label": "Background color",
+					"default": "#222222",
+					"visible_if": "{{ block.settings.primary_button_style == 'solid' }}"
+				},
+				{
+					"type": "color",
+					"id": "primary_border_color",
+					"label": "Border color",
+					"default": "#222222",
+					"visible_if": "{{ block.settings.primary_button_style == 'outline' }}"
+				},
+				{
+					"type": "range",
+					"id": "primary_button_corner",
+					"min": 0,
+					"max": 100,
+					"step": 2,
+					"unit": "px",
+					"label": "Corner radius",
+					"visible_if": "{{ block.settings.primary_button_style != 'link' }}",
+					"default": 0
+				},
+				{
+					"type": "checkbox",
+					"id": "primary_new_tab",
+					"label": "Open link in a new tab",
+					"default": false
+				},
+				{
+					"type": "header",
+					"content": "Secondary button"
+				},
+				{
+					"type": "text",
+					"id": "secondary_button_label",
+					"label": "Label"
+				},
+				{
+					"type": "url",
+					"id": "secondary_button_link",
+					"label": "URL"
+				},
+				{
+					"type": "select",
+					"id": "secondary_button_style",
+					"label": "Button style",
+					"options": [
+						{
+							"value": "solid",
+							"label": "Filled"
+						},
+						{
+							"value": "outline",
+							"label": "Outline"
+						},
+						{
+							"value": "link",
+							"label": "Link"
+						}
+					],
+					"default": "link"
+				},
+				{
+					"type": "color",
+					"id": "secondary_text_color",
+					"label": "Text color",
+					"default": "#222222"
+				},
+				{
+					"type": "color",
+					"id": "secondary_background_color",
+					"label": "Background color",
+					"default": "#222222",
+					"visible_if": "{{ block.settings.secondary_button_style == 'solid' }}"
+				},
+				{
+					"type": "color",
+					"id": "secondary_border_color",
+					"label": "Border color",
+					"default": "#222222",
+					"visible_if": "{{ block.settings.secondary_button_style == 'outline' }}"
+				},
+				{
+					"type": "range",
+					"id": "secondary_button_corner",
+					"min": 0,
+					"max": 100,
+					"step": 2,
+					"unit": "px",
+					"label": "Corner radius",
+					"visible_if": "{{ block.settings.secondary_button_style != 'link' }}",
+					"default": 0
+				},
+				{
+					"type": "checkbox",
+					"id": "secondary_new_tab",
+					"label": "Open link in a new tab",
+					"default": false
+				}
+			]
+		}
+	],
+	"presets": [
+		{
+			"name": "🧡 Vitals: Text Box & Video",
+			"category": "Vitals sections",
+			"blocks": [
+				{
+					"type": "caption"
+				},
+				{
+					"type": "heading"
+				},
+				{
+					"type": "text"
+				},
+				{
+					"type": "buttons"
+				}
+			]
+		}
+	]
+}
+{% endschema %}
+
+{% style %}
+	.Vtls-{{ section.id | handle }} {
+	 --section-vertical-margin: {{- section.settings.vertical_margin -}}px;
+	 --section-vertical-margin-mobile: {{- section.settings.vertical_margin_mobile -}}px;
+	 --section-video-height-desktop: {{- section.settings.desktop_banner_height -}}px;
+	 --section-video-height-mobile: {{- section.settings.mobile_banner_height -}}px;
+	 --section-background-color: {{- section.settings.section_background -}};
+	 --section-text-box-color: {{- section.settings.text_box_background -}};
+	 --section-text-box-opacity: {{- section.settings.text_box_opacity -}}%;
+	 --section-text-box-border-radius: {{- section.settings.text_box_border_radius -}}px;
+	 --section-overlay-color: {{- section.settings.overlay_color -}};
+	 --section-overlay-opacity: {{- section.settings.overlay_opacity -}}%;
+	 --section-vertical-padding: {{- section.settings.vertical_padding -}}px;
+	 --section-vertical-padding-mobile: {{- section.settings.vertical_padding_mobile -}}px;
+	 --section-text-background: {{- section.settings.text_box_background -}};
+	 --section-max-width: {{- section.settings.section_max_width -}}px;
+	 --section-width: {{- section.settings.section_width -}}%;
+	}
+
+	
+
+.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer{margin:var(--section-vertical-margin-mobile) 0;background-color:var(--section-background-color)}@media(min-width: 992px){.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer{margin:var(--section-vertical-margin) 0}}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection{align-items:stretch;padding:var(--section-vertical-padding-mobile) var(--vtl-space-20);display:flex;overflow:hidden;position:relative;margin:0 auto}@media(min-width: 992px){.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection{display:flex;padding:var(--section-vertical-padding) 0;max-width:var(--section-max-width);width:var(--section-width);margin:0 auto}}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection--fullWidth{padding:var(--section-vertical-padding-mobile) 0}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Media{width:100%;z-index:1;display:flex;height:100%;align-self:center;align-items:center;position:relative}@media(min-width: 992px){.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Media{padding:0}}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Media::before{position:absolute;top:0;left:0;z-index:1;display:block;width:100%;pointer-events:none;height:100%;content:"";background-color:var(--section-overlay-color);opacity:var(--section-overlay-opacity)}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Media img,.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Media video,.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Media iframe{width:100%;height:var(--section-video-height-mobile);object-fit:cover;border:var(--vtl-space-0)}@media(min-width: 992px){.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Media img,.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Media video,.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Media iframe{height:var(--section-video-height-desktop)}}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection .VtlsTextBoxVideoSection__ContentWrapper{position:absolute;left:0;height:var(--section-video-height-mobile);width:100%}@media(min-width: 992px){.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection .VtlsTextBoxVideoSection__ContentWrapper{height:var(--section-video-height-desktop)}}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content{display:flex;position:absolute;z-index:1;height:fit-content;width:100%;max-width:320px;justify-content:center;padding:var(--vtl-space-12)}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content:has(.VtlsTextBox--height-medium){height:85%}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content:has(.VtlsTextBox--height-large){height:100%}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content--mobilePosition-top{top:0;left:50%;transform:translate(-50%, 0);text-align:center;align-items:center}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content--mobilePosition-top .VtlsTextBoxVideoButtons{justify-content:center}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content--mobilePosition-center{top:50%;left:50%;transform:translate(-50%, -50%);text-align:center;align-items:center}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content--mobilePosition-center .VtlsTextBoxVideoButtons{justify-content:center}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content--mobilePosition-bottom{top:unset;bottom:0;left:50%;transform:translate(-50%, 0);text-align:center;align-items:center}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content--mobilePosition-bottom .VtlsTextBoxVideoButtons{justify-content:center}@media(min-width: 480px){.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content{max-width:560px}}@media(min-width: 992px){.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content{padding:var(--vtl-space-40)}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content--desktopPosition-top-left{top:0;left:0;text-align:left;transform:unset;align-items:flex-start;justify-content:flex-start}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content--desktopPosition-top-left .VtlsTextBoxVideoButtons{justify-content:flex-start}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content--desktopPosition-top-center{top:0;left:50%;transform:translate(-50%, 0);text-align:center;align-items:center;justify-content:center}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content--desktopPosition-top-center .VtlsTextBoxVideoButtons{justify-content:center}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content--desktopPosition-top-right{top:0;right:0;left:unset;text-align:right;transform:unset;align-items:flex-end;justify-content:flex-end}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content--desktopPosition-top-right .VtlsTextBoxVideoButtons{justify-content:flex-end}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content--desktopPosition-center-left{top:50%;left:0;transform:translate(0, -50%);text-align:left;align-items:flex-start;justify-content:flex-start}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content--desktopPosition-center-left .VtlsTextBoxVideoButtons{justify-content:flex-start}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content--desktopPosition-center-center{top:50%;left:50%;transform:translate(-50%, -50%);text-align:center;align-items:center;justify-content:center}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content--desktopPosition-center-center .VtlsTextBoxVideoButtons{justify-content:center}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content--desktopPosition-center-right{top:50%;right:0;left:unset;transform:translate(0, -50%);text-align:right;align-items:flex-end;justify-content:flex-end}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content--desktopPosition-center-right .VtlsTextBoxVideoButtons{justify-content:flex-end}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content--desktopPosition-bottom-left{bottom:0;left:0;text-align:left;top:unset;transform:unset;align-items:flex-start;justify-content:flex-start}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content--desktopPosition-bottom-left .VtlsTextBoxVideoButtons{justify-content:flex-start}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content--desktopPosition-bottom-center{top:unset;bottom:0;left:50%;transform:translate(-50%, 0);text-align:center;align-items:center;justify-content:center}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content--desktopPosition-bottom-center .VtlsTextBoxVideoButtons{justify-content:center}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content--desktopPosition-bottom-right{bottom:0;right:0;top:unset;left:unset;transform:unset;text-align:right;align-items:flex-end;justify-content:flex-end}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content--desktopPosition-bottom-right .VtlsTextBoxVideoButtons{justify-content:flex-end}}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox{display:flex;flex-direction:column;position:relative;z-index:2;padding:var(--vtl-space-24);gap:var(--vtl-space-8);max-width:480px}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox--height-medium{height:100%;justify-content:center}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox--height-large{height:100%;justify-content:center}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox::before{content:"";top:0;display:block;position:absolute;left:0;width:100%;height:100%;background-color:var(--section-text-box-color, var(--vtl-color-bg-fill-inverse-on-light));opacity:var(--section-text-box-opacity);border-radius:var(--section-text-box-border-radius)}@media(min-width: 992px){.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox{padding:var(--vtl-space-40)}}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Heading{margin:0;z-index:1;font-size:calc(var(--block-heading-size)*.75);color:var(--block-heading-color)}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Heading--style-regular{font-weight:var(--vtl-font-weight-400)}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Heading--style-bold{font-weight:var(--vtl-font-weight-600)}@media(min-width: 992px){.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Heading{font-size:var(--block-heading-size)}}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Heading--alternativeFont{font-family:var(--block-heading-font)}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Description{z-index:1}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Description p,.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Description ul,.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Description ol{margin:0;font-size:calc(var(--block-description-size)*.88);color:var(--block-description-color)}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Description h1,.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Description h2,.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Description h3,.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Description h4,.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Description h5,.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Description h6{color:var(--block-description-color);margin:0;padding:0}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Description a{color:var(--block-description-color);margin:0;padding:0;text-decoration:underline;text-underline-offset:var(--vtl-space-2);transition:opacity .3s ease-in}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Description a:hover{opacity:.85}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Description ul,.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Description ol{padding-left:var(--vtl-space-20)}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Description--alignment-center ul,.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Description--alignment-center ol,.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Description--alignment-right ul,.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Description--alignment-right ol{list-style-position:inside}@media(min-width: 992px){.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Description p,.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Description ul,.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Description ol{font-size:var(--block-description-size)}}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Description--alternativeFont p,.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Description--alternativeFont ul,.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Description--alternativeFont ol,.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Description--alternativeFont h1,.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Description--alternativeFont h2,.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Description--alternativeFont h3,.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Description--alternativeFont h4,.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Description--alternativeFont h5,.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Description--alternativeFont h6{font-family:var(--block-description-font)}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Caption{z-index:1;margin:0;font-size:var(--block-caption-size);color:var(--block-caption-color);font-weight:var(--block-caption-weight)}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection__Content .VtlsTextBox__Caption--alternativeFont{font-family:var(--block-caption-font)}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection .VtlsTextBoxVideoButtons{z-index:1;display:flex;gap:var(--vtl-space-24);flex-wrap:wrap}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection .VtlsTextBoxVideoButtons__Primary{display:inline-flex;justify-content:center;align-items:center;font:inherit;font-size:var(--vtl-font-size-14);text-decoration:var(--vtl-text-decoration-none);-webkit-appearance:none;appearance:none;width:fit-content;padding:var(--vtl-space-16) var(--vtl-space-20);transition:all .3s ease-in;line-height:1}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection .VtlsTextBoxVideoButtons__Primary:hover{opacity:.85;cursor:pointer}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection .VtlsTextBoxVideoButtons__Primary--solid{color:var(--block-primary-button-text-color);background-color:var(--block-primary-button-background-color, var(--vtl-color-bg-fill-inverse-on-light));border-radius:var(--block-primary-button-corner-radius)}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection .VtlsTextBoxVideoButtons__Primary--outline{color:var(--block-primary-button-text-color);background-color:rgba(0,0,0,0);border:var(--vtl-border-width-1) solid var(--block-primary-button-border-color);border-radius:var(--block-primary-button-corner-radius)}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection .VtlsTextBoxVideoButtons__Primary--link{color:var(--block-primary-button-text-color, var(--vtl-color-bg-fill-inverse-on-light));background-color:rgba(0,0,0,0);padding:var(--vtl-space-2) 0;border:var(--vtl-space-0);border-radius:var(--vtl-space-0);text-decoration:var(--vtl-text-decoration-underline);text-underline-offset:var(--vtl-space-4)}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection .VtlsTextBoxVideoButtons__Secondary{display:inline-flex;justify-content:center;align-items:center;font:inherit;font-size:var(--vtl-font-size-14);text-decoration:var(--vtl-text-decoration-none);-webkit-appearance:none;appearance:none;width:fit-content;padding:var(--vtl-space-16) var(--vtl-space-20);transition:all .3s ease-in;line-height:1}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection .VtlsTextBoxVideoButtons__Secondary:hover{opacity:.85;cursor:pointer}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection .VtlsTextBoxVideoButtons__Secondary--solid{color:var(--block-secondary-button-text-color);background-color:var(--block-secondary-button-background-color);border-radius:var(--block-secondary-button-corner-radius)}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection .VtlsTextBoxVideoButtons__Secondary--outline{color:var(--block-secondary-button-text-color);background-color:rgba(0,0,0,0);border:var(--vtl-border-width-1) solid var(--block-secondary-button-border-color);border-radius:var(--block-secondary-button-corner-radius)}.Vtls-{{ section.id | handle }} .VtlsTextBoxVideoContainer .VtlsTextBoxVideoSection .VtlsTextBoxVideoButtons__Secondary--link{color:var(--block-secondary-button-text-color);background-color:rgba(0,0,0,0);padding:var(--vtl-space-2) 0;border:var(--vtl-space-0);border-radius:var(--vtl-space-0);text-decoration:var(--vtl-text-decoration-underline);text-underline-offset:var(--vtl-space-4)}
+
+{% endstyle %}
+
+<script>
+	(function () {
+		const uninstallMessage = 'Displaying this section requires an active Vitals subscription. Reinstall the <a href="https://apps.shopify.com/vitals" target="_blank">Vitals app</a> to activate it or consider removing the section.';
+		const downgradeMessage = 'You downgraded to a free plan. You need to upgrade your <a href="https://apps.shopify.com/vitals" target="_blank">Vitals app</a> plan to activate it or consider removing the section.';
+		const projectId = '1';
+		const sectionsSelector = '.shopify-section';
+		const apps = {
+			'1': {
+				prefix: 'vitals',
+				hostname: 'https://appsolve.io'
+			},
+			'5': {
+				prefix: 'tsapb',
+				hostname: 'https://theme-sections.sqa-api.com'
+			}
+		};
+
+		const cacheKeysMetaFields = '{{ shop.metafields.vitals.tsck }}';
+		const shopId = '{{ shop.id }}';
+
+		const getHostname = () => {
+			if (apps[projectId].hostname) {
+				return apps[projectId].hostname;
+			}
+
+			console.error(`hostname for appId ${projectId} cannot be determined.`);
+			return undefined;
+		}
+
+		const disableSection = (message, selector) => {
+			const mainContainer = document.querySelector(selector);
+			const contentContainer = document.querySelector(`${selector} > section`);
+
+			if ('{{ request.design_mode }}' === 'true') {
+				contentContainer.innerHTML = `<h2 class="VtlsUninstallBG"><div class="VtlsUninstallBG__Text">${message}</div></h2>`;
+			} else {
+				mainContainer.style.display = 'none';
+				mainContainer.remove();
+			}
+		};
+
+		const getThemeSectionIdsByUUID = (installedThemeSections, uuid, appId) => {
+			const listIds = [];
+
+			installedThemeSections.forEach((installedThemeSection) => {
+				if (installedThemeSection.id.includes(`${apps[appId].prefix}_${uuid}`)) {
+					listIds.push(installedThemeSection.id);
+				}
+			})
+
+			return listIds;
+		}
+
+		const getThemeSectionsStatusList = (url) => fetch(url, {
+			method: 'GET',
+			headers: { 'Content-Type': 'application/json' },
+		}).then((response) => response.json());
+
+		const evaluateThemeSections = (url) => {
+			getThemeSectionsStatusList(url).then(response => {
+				const { data, f, i } = response;
+				const installedThemeSections = document.querySelectorAll(sectionsSelector);
+
+				data.forEach((themeSection) => {
+					const { e, u, a } = themeSection;
+
+					if (!e) {
+						const themeSectionsWithUUID = getThemeSectionIdsByUUID(installedThemeSections, u, a);
+						let message = '';
+
+						if (f) {
+							message = downgradeMessage;
+						}
+
+						if (!i) {
+							message = uninstallMessage;
+						}
+
+						themeSectionsWithUUID.forEach((themeSectionSelector) => {
+							disableSection(message, `#${themeSectionSelector}`);
+						})
+					}
+				});
+			})
+		}
+
+		if (shopId) {
+			if (window.vtlsSecurityCheckStarted === undefined) {
+				window.vtlsSecurityCheckStarted = true;
+
+				let url = '';
+				const hostname = getHostname();
+
+				if (!hostname) {
+					return;
+				}
+
+				const baseUrl = `${hostname}/bundle/api/v2/sf/ts`;
+
+				if (cacheKeysMetaFields) {
+					url = `${baseUrl}/${shopId}/${cacheKeysMetaFields}.json`;
+				} else {
+					const timestamp = Math.round(new Date().getTime() / 1000 / 10000) * 10000;
+					url = `${baseUrl}/${shopId}/${timestamp}.json`;
+				}
+
+				evaluateThemeSections(url);
+			}
+		}
+	})();
+</script>
+
+{% style %}
+	
+
+.VtlsUninstallBG{background-color:var(--vtl-color-bg-fill-inverse-on-light);background-image:url("data:image/avif;base64,iVBORw0KGgoAAAANSUhEUgAABOcAAABkCAQAAABnAJxfAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAACYktHRAD/h4/MvwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB+gLFQgmAgUXFkMAAARaSURBVHja7daxbSRBEATB8ZzvKw0h1dcIlJS4jl25Azlavffn9/3v++e//+vvCwqFQqFQKBRKSklEUCgUCoVCoVAMOgqFQqFQKJSzSiKCQqFQKBQKhWLQUSgUCoVCoZxVEhEUCoVCoVAoFIOOQqFQKBQK5VOURASFQqFQKBQKZVUSERQKhUKhUCiUVUlEUCgUCoVCoVBWZbtOPoVCoVAoFArlovIKERQKhUKhUCiUVXmFCAqFQqFQKBTKqrxCBIVCoVAoFAplVV4hgkKhUCgUCoUyK4kICoVCoVAoFMqqJCIoFAqFQqFQKKuSiKBQKBQKhUKhrEoigkKhUCgUCoVi0FEoFAqFQqGcVRIRFAqFQqFQKBSDjkKhUCgUCuWskoigUCgUCoVCoRh0FAqFQqFQKGeVRASFQqFQKBQKxaCjUCgUCoVCOaskIigUCoVCoVAoBh2FQqFQKBTKWSURQaFQKBQKhUIx6CgUCoVCoVDOKokICoVCoVAoFIpBR6FQKBQKhXJWSURQKBQKhUKhUAw6CoVCoVAolLNKIoJCoVAoFAqFYtBRKBQKhUKhnFUSERQKhUKhUCgUg45CoVAoFArlrJKIoFAoFAqFQqEYdBQKhUKhUChnlUQEhUKhUCgUCsWgo1AoFAqFQvkUJRFBoVAoFAqFQlmVRASFQqFQKBQKZVUSERQKhUKhUCiUVdmuk0+hUCgUCoVCuai8QgSFQqFQKBQKZVVeIYJCoVAoFAqFsiqvEEGhUCgUCoVCWZVXiKBQKBQKhUKhzEoigkKhUCgUCoWyKokICoVCoVAoFMqqJCIoFAqFQqFQKKuSiKBQKBQKhUKhGHQUCoVCoVAoZ5VEBIVCoVAoFArFoKNQKBQKhUI5qyQiKBQKhUKhUCgGHYVCoVAoFMpZJRFBoVAoFAqFQjHoKBQKhUKhUM4qiQgKhUKhUCgUikFHoVAoFAqFclZJRFAoFAqFQqFQDDoKhUKhUCiUs0oigkKhUCgUCoVi0FEoFAqFQqGcVRIRFAqFQqFQKBSDjkKhUCgUCuWskoigUCgUCoVCoRh0FAqFQqFQKGeVRASFQqFQKBQKxaCjUCgUCoVCOaskIigUCoVCoVAoBh2FQqFQKBTKWSURQaFQKBQKhUIx6CgUCoVCoVA+RUlEUCgUCoVCoVBWJRFBoVAoFAqFQlmVRASFQqFQKBQKZVW26+RTKBQKhUKhUC4qrxBBoVAoFAqFQlmVV4igUCgUCoVCoazKK0RQKBQKhUKhUFblFSIoFAqFQqFQKLOSiKBQKBQKhUKhrEoigkKhUCgUCoWyKokICoVCoVAoFMqqJCIoFAqFQqFQKAYdhUKhUCgUylklEUGhUCgUCoVCMegoFAqFQqFQziqJCAqFQqFQKBSKQUehUCgUCoVyVklEUCgUCoVCoVAMOgqFQqFQKJSzSiKCQqFQKBQKhWLQUSgUCoVCoZxVEhEUCoVCoVAoFIOOQqFQKBQK5dOVX5nMB52iezhxAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDI0LTExLTIxVDA4OjM4OjAyKzAwOjAw30WrCwAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyNC0xMS0yMVQwODozODowMiswMDowMK4YE7cAAAAodEVYdGRhdGU6dGltZXN0YW1wADIwMjQtMTEtMjFUMDg6Mzg6MDIrMDA6MDD5DTJoAAAAAElFTkSuQmCC");background-position:center;background-size:cover;text-align:center;padding:var(--vtl-space-32);margin:0}.VtlsUninstallBG__Text{color:var(--vtl-color-text-disable-on-light);font-family:Inter,sans-serif;font-size:var(--vtl-font-size-14);font-weight:var(--vtl-font-weight-400);line-height:var(--vtl-line-height-140);padding:var(--vtl-space-16) var(--vtl-space-16) var(--vtl-space-16) var(--vtl-space-40);background-color:var(--vtl-color-bg-fill-inverse-on-light);display:inline-block}.VtlsUninstallBG__Text::before{content:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%0A%09%09%09%3Cpath%20d%3D%22M9.99994%206.75C10.4142%206.75%2010.7499%207.08579%2010.7499%207.5V11C10.7499%2011.4142%2010.4142%2011.75%209.99994%2011.75C9.58573%2011.75%209.24994%2011.4142%209.24994%2011V7.5C9.24994%207.08579%209.58573%206.75%209.99994%206.75Z%22%20fill%3D%22%23B28400%22%2F%3E%0A%09%09%09%3Cpath%20d%3D%22M11%2013.5C11%2014.0523%2010.5523%2014.5%2010%2014.5C9.44772%2014.5%209%2014.0523%209%2013.5C9%2012.9477%209.44772%2012.5%2010%2012.5C10.5523%2012.5%2011%2012.9477%2011%2013.5Z%22%20fill%3D%22%23B28400%22%2F%3E%0A%09%09%09%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M10%203.5C8.95471%203.5%208.21616%204.20232%207.84762%204.94672C7.65565%205.33448%206.75984%207.0441%205.84305%208.79353L5.81531%208.84646C4.9229%2010.5493%204.01714%2012.2777%203.80716%2012.702C3.4351%2013.4537%203.32931%2014.4519%203.89953%2015.316C4.46911%2016.1791%205.44222%2016.5%206.36356%2016.5L13.6364%2016.5C14.5577%2016.5%2015.5308%2016.1791%2016.1004%2015.316C16.6707%2014.4519%2016.5649%2013.4537%2016.1928%2012.702C15.9832%2012.2784%2015.08%2010.555%2014.1889%208.85476L14.1569%208.79352C13.24%207.044%2012.3443%205.33454%2012.1524%204.94693C11.784%204.20242%2011.0454%203.5%2010%203.5ZM9.1919%205.61225C9.59605%204.79592%2010.4041%204.79592%2010.8081%205.61225C11.0102%206.02061%2011.9201%207.75686%2012.8296%209.49243C13.7383%2011.2262%2014.6466%2012.9594%2014.8485%2013.3673C15.2525%2014.1837%2014.8485%2015%2013.6364%2015L6.36356%2015C5.1515%2015%204.74746%2014.1837%205.1515%2013.3673C5.35376%2012.9587%206.26468%2011.2205%207.1748%209.4838C8.08283%207.75111%208.99005%206.01994%209.1919%205.61225Z%22%20fill%3D%22%23B28400%22%2F%3E%0A%09%09%3C%2Fsvg%3E");position:absolute;width:var(--vtl-space-20);height:var(--vtl-space-20);margin-left:calc(-1*var(--vtl-space-24))}.VtlsUninstallBG__Text a{color:var(--vtl-color-text-disable-on-light)}.VtlsUninstallBG__Text a:hover{text-decoration:none}
+
+{% endstyle %}
+
