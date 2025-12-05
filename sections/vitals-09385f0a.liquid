@@ -1,0 +1,421 @@
+<!-- --VERSION-12-- -->
+
+{% style %}
+:root {
+--vtl-neutral-70: #5e5e5e;
+--vtl-neutral-01: #fff;
+--vtl-size-14: 14px;
+--vtl-size-16: 16px;
+--vtl-size-20: 20px;
+--vtl-size-24: 24px;
+--vtl-size-32: 32px;
+--vtl-size-40: 40px;
+--vtl-size-48: 48px;
+--vtl-font-weight-400: 400;
+--vtl-font-weight-600: 600;
+--vtl-line-height-140: 1.4;
+--vtl-color-bg-fill-inverse-on-light: var(--vtl-neutral-01);
+--vtl-color-text-disable-on-light: var(--vtl-neutral-70);
+--vtl-space-16: var(--vtl-size-16);
+--vtl-space-20: var(--vtl-size-20);
+--vtl-space-24: var(--vtl-size-24);
+--vtl-space-32: var(--vtl-size-32);
+--vtl-space-40: var(--vtl-size-40);
+--vtl-space-48: var(--vtl-size-48);
+--vtl-font-size-14: var(--vtl-size-14);
+}
+
+
+{% endstyle %}
+
+<!-- --UUID-09385f0a-- -->
+
+<section class="Vtls-{{ section.id | handle }} VtlsMapSimple">
+	<div class="VtlsMapSimpleContainer">
+		<div class="VtlsMapSimpleMapContent">
+			<div class="VtlsMapSimpleMapContent__Heading">
+				{%- if section.settings.heading != blank -%}
+					<h2 class="VtlsMapSimpleHeading VtlsMapSimpleHeading--style-{{ section.settings.heading_style }}">
+						{{ section.settings.heading }}
+					</h2>
+				{%- endif -%}
+			</div>
+			<div class="VtlsMapSimpleMapContent__Map  VtlsMapSimpleMapContent__Map--{{ section.settings.map_style }}">
+				<iframe
+					width="100%"
+					height="100%"
+					frameborder="0"
+					style="border:0"
+					src="https://www.google.com/maps?q={{ section.settings.map_address | escape }}&output=embed"
+					allowfullscreen
+				>
+				</iframe>
+			</div>
+		</div>
+	</div>
+</section>
+
+{% schema %}
+{
+	"name": "🧡 Map",
+	"disabled_on": {
+		"groups": ["header", "footer"]
+	},
+	"settings": [
+		{
+			"type": "header",
+			"content": "Map"
+		},
+		{
+			"type": "text",
+			"id": "map_address",
+			"label": "Map address",
+			"info": "Enter the address in the standard format: street, building number, floor (if applicable), city, state/province, postal code. (e.g., 151 O'Connor Street, Ground floor, Ottawa, ON, K2P 2L8)."
+		},
+		{
+			"type": "select",
+			"id": "map_height_desktop",
+			"label": "Map height desktop",
+			"options": [
+				{
+					"value": "350",
+					"label": "Small"
+				},
+				{
+					"value": "450",
+					"label": "Medium"
+				},
+				{
+					"value": "600",
+					"label": "Large"
+				}
+			],
+			"default": "450"
+		},
+		{
+			"type": "select",
+			"id": "map_height_mobile",
+			"label": "Map height mobile",
+			"options": [
+				{
+					"value": "250",
+					"label": "Small"
+				},
+				{
+					"value": "350",
+					"label": "Medium"
+				},
+				{
+					"value": "400",
+					"label": "Large"
+				}
+			],
+			"default": "350"
+		},
+		{
+			"type": "select",
+			"id": "map_style",
+			"label": "Map color",
+			"options": [
+				{
+					"value": "default",
+					"label": "Standard"
+				},
+				{
+					"value": "grayscale",
+					"label": "Gray"
+				},
+				{
+					"value": "dark",
+					"label": "Dark"
+				}
+			],
+			"default": "default"
+		},
+		{
+			"type": "header",
+			"content": "Heading (optional)"
+		},
+		{
+			"type": "text",
+			"id": "heading",
+			"label": "Heading (optional)"
+		},
+		{
+			"type": "select",
+			"id": "heading_size",
+			"label": "Heading size",
+			"options": [
+				{
+					"value": "24",
+					"label": "Small"
+				},
+				{
+					"value": "32",
+					"label": "Medium"
+				},
+				{
+					"value": "48",
+					"label": "Large"
+				}
+			],
+			"default": "32"
+		},
+		{
+			"type": "select",
+			"id": "heading_style",
+			"label": "Heading style",
+			"options": [
+				{
+					"value": "regular",
+					"label": "Regular"
+				},
+				{
+					"value": "bold",
+					"label": "Bold"
+				}
+			],
+			"default": "regular"
+		},
+		{
+			"type": "select",
+			"id": "heading_alignment",
+			"label": "Heading alignment",
+			"options": [
+				{
+					"value": "left",
+					"label": "Left"
+				},
+				{
+					"value": "center",
+					"label": "Center"
+				},
+				{
+					"value": "right",
+					"label": "Right"
+				}
+			],
+			"default": "center"
+		},
+		{
+			"type": "color",
+			"id": "heading_color",
+			"label": "Heading color",
+			"default": "#222222"
+		},
+		{
+			"type": "header",
+			"content": "Layout"
+		},
+		{
+			"type": "range",
+			"id": "section_width",
+			"min": 70,
+			"max": 100,
+			"step": 1,
+			"unit": "%",
+			"label": "Section width",
+			"default": 100
+		},
+		{
+			"type": "text",
+			"id": "section_max_width",
+			"label": "Custom max width (optional)",
+			"info": "Section max width in pixels"
+		},
+		{
+			"type": "range",
+			"id": "vertical_padding",
+			"min": 0,
+			"max": 100,
+			"step": 2,
+			"unit": "px",
+			"label": "Top - bottom padding (desktop)",
+			"default": 0
+		},
+		{
+			"type": "range",
+			"id": "vertical_margin",
+			"min": 0,
+			"max": 100,
+			"step": 2,
+			"unit": "px",
+			"label": "Top - bottom margin (desktop)",
+			"default": 0
+		},
+		{
+			"type": "range",
+			"id": "vertical_padding_mobile",
+			"min": 0,
+			"max": 100,
+			"step": 2,
+			"unit": "px",
+			"label": "Top - bottom padding (mobile)",
+			"default": 0
+		},
+		{
+			"type": "range",
+			"id": "vertical_margin_mobile",
+			"min": 0,
+			"max": 100,
+			"step": 2,
+			"unit": "px",
+			"label": "Top - bottom margin (mobile)",
+			"default": 0
+		},
+		{
+			"type": "color",
+			"id": "section_background",
+			"label": "Section background"
+		}
+	],
+	"presets": [
+		{
+			"name": "🧡 Vitals: Map",
+			"category": "Vitals sections",
+		}
+	]
+}
+{% endschema %}
+
+{% style %}
+	.Vtls-{{ section.id | handle }} {
+		--section-vertical-margin: {{- section.settings.vertical_margin -}}px;
+		--section-heading-alignment: {{ section.settings.heading_alignment }};
+		--section-heading-color: {{ section.settings.heading_color }};
+		--section-heading-size: {{ section.settings.heading_size }}px;
+		--section-map-height-desktop: {{ section.settings.map_height_desktop }}px;
+		--section-map-height-mobile: {{ section.settings.map_height_mobile}}px;
+		--section-vertical-margin-mobile: {{- section.settings.vertical_margin_mobile -}}px;
+		--section-background-color: {{- section.settings.section_background -}};
+		--section-vertical-padding: {{- section.settings.vertical_padding -}}px;
+		--section-vertical-padding-mobile: {{- section.settings.vertical_padding_mobile -}}px;
+		--section-max-width: {{- section.settings.section_max_width -}}px;
+		--section-width: {{- section.settings.section_width -}}%;
+	}
+
+	
+
+.Vtls-{{ section.id | handle }}{background-color:var(--section-background-color)}.Vtls-{{ section.id | handle }} .VtlsMapSimpleContainer{margin:var(--section-vertical-margin-mobile) auto;padding:var(--section-vertical-padding-mobile) 0;list-style-type:none;gap:var(--vtl-space-32);display:flex;flex-direction:column;max-width:var(--section-max-width);width:var(--section-width)}@media(min-width: 992px){.Vtls-{{ section.id | handle }} .VtlsMapSimpleContainer{margin:var(--section-vertical-margin) auto;padding:var(--section-vertical-padding) 0;gap:var(--vtl-space-48);padding-left:0;max-width:var(--section-max-width);width:var(--section-width)}}.Vtls-{{ section.id | handle }} .VtlsMapSimpleMapContent{display:flex;flex-direction:column;gap:var(--vtl-space-24)}@media(min-width: 992px){.Vtls-{{ section.id | handle }} .VtlsMapSimpleMapContent{gap:var(--vtl-space-32)}}.Vtls-{{ section.id | handle }} .VtlsMapSimpleMapContent__Heading .VtlsMapSimpleHeading{margin:0;font-size:calc(var(--section-heading-size)*.75);text-decoration:none;color:var(--section-heading-color);display:block;text-align:var(--section-heading-alignment);width:100%;pointer-events:auto}@media(min-width: 992px){.Vtls-{{ section.id | handle }} .VtlsMapSimpleMapContent__Heading .VtlsMapSimpleHeading{font-size:var(--section-heading-size)}}.Vtls-{{ section.id | handle }} .VtlsMapSimpleMapContent__Heading .VtlsMapSimpleHeading--style-regular{font-weight:var(--vtl-font-weight-400)}.Vtls-{{ section.id | handle }} .VtlsMapSimpleMapContent__Heading .VtlsMapSimpleHeading--style-bold{font-weight:var(--vtl-font-weight-600)}.Vtls-{{ section.id | handle }} .VtlsMapSimpleMapContent__Map{height:var(--section-map-height-mobile)}@media(min-width: 992px){.Vtls-{{ section.id | handle }} .VtlsMapSimpleMapContent__Map{height:var(--section-map-height-desktop)}}.Vtls-{{ section.id | handle }} .VtlsMapSimpleMapContent__Map--standard{filter:none}.Vtls-{{ section.id | handle }} .VtlsMapSimpleMapContent__Map--grayscale{filter:grayscale(100%)}.Vtls-{{ section.id | handle }} .VtlsMapSimpleMapContent__Map--dark{filter:invert(100%) hue-rotate(180deg)}
+
+{% endstyle %}
+
+<script>
+	(function () {
+		const uninstallMessage = 'Displaying this section requires an active Vitals subscription. Reinstall the <a href="https://apps.shopify.com/vitals" target="_blank">Vitals app</a> to activate it or consider removing the section.';
+		const downgradeMessage = 'You downgraded to a free plan. You need to upgrade your <a href="https://apps.shopify.com/vitals" target="_blank">Vitals app</a> plan to activate it or consider removing the section.';
+		const projectId = '1';
+		const sectionsSelector = '.shopify-section';
+		const apps = {
+			'1': {
+				prefix: 'vitals',
+				hostname: 'https://appsolve.io'
+			},
+			'5': {
+				prefix: 'tsapb',
+				hostname: 'https://theme-sections.sqa-api.com'
+			}
+		};
+
+		const cacheKeysMetaFields = '{{ shop.metafields.vitals.tsck }}';
+		const shopId = '{{ shop.id }}';
+
+		const getHostname = () => {
+			if (apps[projectId].hostname) {
+				return apps[projectId].hostname;
+			}
+
+			console.error(`hostname for appId ${projectId} cannot be determined.`);
+			return undefined;
+		}
+
+		const disableSection = (message, selector) => {
+			const mainContainer = document.querySelector(selector);
+			const contentContainer = document.querySelector(`${selector} > section`);
+
+			if ('{{ request.design_mode }}' === 'true') {
+				contentContainer.innerHTML = `<h2 class="VtlsUninstallBG"><div class="VtlsUninstallBG__Text">${message}</div></h2>`;
+			} else {
+				mainContainer.style.display = 'none';
+				mainContainer.remove();
+			}
+		};
+
+		const getThemeSectionIdsByUUID = (installedThemeSections, uuid, appId) => {
+			const listIds = [];
+
+			installedThemeSections.forEach((installedThemeSection) => {
+				if (installedThemeSection.id.includes(`${apps[appId].prefix}_${uuid}`)) {
+					listIds.push(installedThemeSection.id);
+				}
+			})
+
+			return listIds;
+		}
+
+		const getThemeSectionsStatusList = (url) => fetch(url, {
+			method: 'GET',
+			headers: { 'Content-Type': 'application/json' },
+		}).then((response) => response.json());
+
+		const evaluateThemeSections = (url) => {
+			getThemeSectionsStatusList(url).then(response => {
+				const { data, f, i } = response;
+				const installedThemeSections = document.querySelectorAll(sectionsSelector);
+
+				data.forEach((themeSection) => {
+					const { e, u, a } = themeSection;
+
+					if (!e) {
+						const themeSectionsWithUUID = getThemeSectionIdsByUUID(installedThemeSections, u, a);
+						let message = '';
+
+						if (f) {
+							message = downgradeMessage;
+						}
+
+						if (!i) {
+							message = uninstallMessage;
+						}
+
+						themeSectionsWithUUID.forEach((themeSectionSelector) => {
+							disableSection(message, `#${themeSectionSelector}`);
+						})
+					}
+				});
+			})
+		}
+
+		if (shopId) {
+			if (window.vtlsSecurityCheckStarted === undefined) {
+				window.vtlsSecurityCheckStarted = true;
+
+				let url = '';
+				const hostname = getHostname();
+
+				if (!hostname) {
+					return;
+				}
+
+				const baseUrl = `${hostname}/bundle/api/v2/sf/ts`;
+
+				if (cacheKeysMetaFields) {
+					url = `${baseUrl}/${shopId}/${cacheKeysMetaFields}.json`;
+				} else {
+					const timestamp = Math.round(new Date().getTime() / 1000 / 10000) * 10000;
+					url = `${baseUrl}/${shopId}/${timestamp}.json`;
+				}
+
+				evaluateThemeSections(url);
+			}
+		}
+	})();
+</script>
+
+{% style %}
+	
+
+.VtlsUninstallBG{background-color:var(--vtl-color-bg-fill-inverse-on-light);background-image:url("data:image/avif;base64,iVBORw0KGgoAAAANSUhEUgAABOcAAABkCAQAAABnAJxfAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAACYktHRAD/h4/MvwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB+gLFQgmAgUXFkMAAARaSURBVHja7daxbSRBEATB8ZzvKw0h1dcIlJS4jl25Azlavffn9/3v++e//+vvCwqFQqFQKBRKSklEUCgUCoVCoVAMOgqFQqFQKJSzSiKCQqFQKBQKhWLQUSgUCoVCoZxVEhEUCoVCoVAoFIOOQqFQKBQK5VOURASFQqFQKBQKZVUSERQKhUKhUCiUVUlEUCgUCoVCoVBWZbtOPoVCoVAoFArlovIKERQKhUKhUCiUVXmFCAqFQqFQKBTKqrxCBIVCoVAoFAplVV4hgkKhUCgUCoUyK4kICoVCoVAoFMqqJCIoFAqFQqFQKKuSiKBQKBQKhUKhrEoigkKhUCgUCoVi0FEoFAqFQqGcVRIRFAqFQqFQKBSDjkKhUCgUCuWskoigUCgUCoVCoRh0FAqFQqFQKGeVRASFQqFQKBQKxaCjUCgUCoVCOaskIigUCoVCoVAoBh2FQqFQKBTKWSURQaFQKBQKhUIx6CgUCoVCoVDOKokICoVCoVAoFIpBR6FQKBQKhXJWSURQKBQKhUKhUAw6CoVCoVAolLNKIoJCoVAoFAqFYtBRKBQKhUKhnFUSERQKhUKhUCgUg45CoVAoFArlrJKIoFAoFAqFQqEYdBQKhUKhUChnlUQEhUKhUCgUCsWgo1AoFAqFQvkUJRFBoVAoFAqFQlmVRASFQqFQKBQKZVUSERQKhUKhUCiUVdmuk0+hUCgUCoVCuai8QgSFQqFQKBQKZVVeIYJCoVAoFAqFsiqvEEGhUCgUCoVCWZVXiKBQKBQKhUKhzEoigkKhUCgUCoWyKokICoVCoVAoFMqqJCIoFAqFQqFQKKuSiKBQKBQKhUKhGHQUCoVCoVAoZ5VEBIVCoVAoFArFoKNQKBQKhUI5qyQiKBQKhUKhUCgGHYVCoVAoFMpZJRFBoVAoFAqFQjHoKBQKhUKhUM4qiQgKhUKhUCgUikFHoVAoFAqFclZJRFAoFAqFQqFQDDoKhUKhUCiUs0oigkKhUCgUCoVi0FEoFAqFQqGcVRIRFAqFQqFQKBSDjkKhUCgUCuWskoigUCgUCoVCoRh0FAqFQqFQKGeVRASFQqFQKBQKxaCjUCgUCoVCOaskIigUCoVCoVAoBh2FQqFQKBTKWSURQaFQKBQKhUIx6CgUCoVCoVA+RUlEUCgUCoVCoVBWJRFBoVAoFAqFQlmVRASFQqFQKBQKZVW26+RTKBQKhUKhUC4qrxBBoVAoFAqFQlmVV4igUCgUCoVCoazKK0RQKBQKhUKhUFblFSIoFAqFQqFQKLOSiKBQKBQKhUKhrEoigkKhUCgUCoWyKokICoVCoVAoFMqqJCIoFAqFQqFQKAYdhUKhUCgUylklEUGhUCgUCoVCMegoFAqFQqFQziqJCAqFQqFQKBSKQUehUCgUCoVyVklEUCgUCoVCoVAMOgqFQqFQKJSzSiKCQqFQKBQKhWLQUSgUCoVCoZxVEhEUCoVCoVAoFIOOQqFQKBQK5dOVX5nMB52iezhxAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDI0LTExLTIxVDA4OjM4OjAyKzAwOjAw30WrCwAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyNC0xMS0yMVQwODozODowMiswMDowMK4YE7cAAAAodEVYdGRhdGU6dGltZXN0YW1wADIwMjQtMTEtMjFUMDg6Mzg6MDIrMDA6MDD5DTJoAAAAAElFTkSuQmCC");background-position:center;background-size:cover;text-align:center;padding:var(--vtl-space-32);margin:0}.VtlsUninstallBG__Text{color:var(--vtl-color-text-disable-on-light);font-family:Inter,sans-serif;font-size:var(--vtl-font-size-14);font-weight:var(--vtl-font-weight-400);line-height:var(--vtl-line-height-140);padding:var(--vtl-space-16) var(--vtl-space-16) var(--vtl-space-16) var(--vtl-space-40);background-color:var(--vtl-color-bg-fill-inverse-on-light);display:inline-block}.VtlsUninstallBG__Text::before{content:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%0A%09%09%09%3Cpath%20d%3D%22M9.99994%206.75C10.4142%206.75%2010.7499%207.08579%2010.7499%207.5V11C10.7499%2011.4142%2010.4142%2011.75%209.99994%2011.75C9.58573%2011.75%209.24994%2011.4142%209.24994%2011V7.5C9.24994%207.08579%209.58573%206.75%209.99994%206.75Z%22%20fill%3D%22%23B28400%22%2F%3E%0A%09%09%09%3Cpath%20d%3D%22M11%2013.5C11%2014.0523%2010.5523%2014.5%2010%2014.5C9.44772%2014.5%209%2014.0523%209%2013.5C9%2012.9477%209.44772%2012.5%2010%2012.5C10.5523%2012.5%2011%2012.9477%2011%2013.5Z%22%20fill%3D%22%23B28400%22%2F%3E%0A%09%09%09%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M10%203.5C8.95471%203.5%208.21616%204.20232%207.84762%204.94672C7.65565%205.33448%206.75984%207.0441%205.84305%208.79353L5.81531%208.84646C4.9229%2010.5493%204.01714%2012.2777%203.80716%2012.702C3.4351%2013.4537%203.32931%2014.4519%203.89953%2015.316C4.46911%2016.1791%205.44222%2016.5%206.36356%2016.5L13.6364%2016.5C14.5577%2016.5%2015.5308%2016.1791%2016.1004%2015.316C16.6707%2014.4519%2016.5649%2013.4537%2016.1928%2012.702C15.9832%2012.2784%2015.08%2010.555%2014.1889%208.85476L14.1569%208.79352C13.24%207.044%2012.3443%205.33454%2012.1524%204.94693C11.784%204.20242%2011.0454%203.5%2010%203.5ZM9.1919%205.61225C9.59605%204.79592%2010.4041%204.79592%2010.8081%205.61225C11.0102%206.02061%2011.9201%207.75686%2012.8296%209.49243C13.7383%2011.2262%2014.6466%2012.9594%2014.8485%2013.3673C15.2525%2014.1837%2014.8485%2015%2013.6364%2015L6.36356%2015C5.1515%2015%204.74746%2014.1837%205.1515%2013.3673C5.35376%2012.9587%206.26468%2011.2205%207.1748%209.4838C8.08283%207.75111%208.99005%206.01994%209.1919%205.61225Z%22%20fill%3D%22%23B28400%22%2F%3E%0A%09%09%3C%2Fsvg%3E");position:absolute;width:var(--vtl-space-20);height:var(--vtl-space-20);margin-left:calc(-1*var(--vtl-space-24))}.VtlsUninstallBG__Text a{color:var(--vtl-color-text-disable-on-light)}.VtlsUninstallBG__Text a:hover{text-decoration:none}
+
+{% endstyle %}
+
