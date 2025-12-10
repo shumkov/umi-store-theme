@@ -112,91 +112,6 @@
         "padding_bottom": 28
       }
     },
-    "vitals_7efc3a94_L98Xgk": {
-      "type": "vitals-7efc3a94",
-      "blocks": {
-        "caption_wEhJxD": {
-          "type": "caption",
-          "settings": {
-            "caption": "Add a tagline",
-            "caption_size": "16",
-            "caption_weight": "400",
-            "caption_color": "#222222",
-            "caption_alternative_font": false,
-            "caption_font": "sans_serif_n4"
-          }
-        },
-        "heading_gmgJHT": {
-          "type": "heading",
-          "settings": {
-            "heading": "Map & Text",
-            "heading_size": "32",
-            "heading_style": "regular",
-            "heading_color": "#222222",
-            "heading_alternative_font": false,
-            "heading_font": "sans_serif_n4"
-          }
-        },
-        "text_jTDVXc": {
-          "type": "text",
-          "settings": {
-            "description": "<p>Add additional information that will be useful to your users. For example, store opening hours.</p>",
-            "description_size": "16",
-            "description_color": "#222222",
-            "description_alternative_font": false,
-            "description_font": "sans_serif_n4"
-          }
-        },
-        "buttons_n9YgaB": {
-          "type": "buttons",
-          "settings": {
-            "primary_button_label": "Button Label",
-            "primary_button_link": "",
-            "primary_button_style": "solid",
-            "primary_text_color": "#ffffff",
-            "primary_background_color": "#222222",
-            "primary_border_color": "#222222",
-            "primary_button_corner": 0,
-            "primary_new_tab": false,
-            "secondary_button_label": "",
-            "secondary_button_link": "",
-            "secondary_button_style": "solid",
-            "secondary_text_color": "#ffffff",
-            "secondary_background_color": "#222222",
-            "secondary_border_color": "#222222",
-            "secondary_button_corner": 0,
-            "secondary_new_tab": false
-          }
-        }
-      },
-      "block_order": [
-        "caption_wEhJxD",
-        "heading_gmgJHT",
-        "text_jTDVXc",
-        "buttons_n9YgaB"
-      ],
-      "name": "🧡 Vitals: Map & Text",
-      "settings": {
-        "map_address": "",
-        "map_style": "default",
-        "aspect_ratio": "landscape",
-        "map_position_desktop": "left",
-        "map_position_mobile": "above",
-        "text_alignment": "left",
-        "text_box_width": 50,
-        "section_width": 70,
-        "section_max_width": "",
-        "vertical_padding": 40,
-        "vertical_margin": 0,
-        "vertical_padding_mobile": 20,
-        "vertical_margin_mobile": 0,
-        "text_box_background": "",
-        "section_background_style": "color",
-        "section_background": "",
-        "overlay_color": "#222222",
-        "overlay_opacity": 0
-      }
-    },
     "multicolumn_dTJMT8": {
       "type": "multicolumn",
       "blocks": {
@@ -403,6 +318,92 @@
         "swipe_on_mobile": false,
         "padding_top": 72,
         "padding_bottom": 56
+      }
+    },
+    "vitals_7efc3a94_L98Xgk": {
+      "type": "vitals-7efc3a94",
+      "blocks": {
+        "caption_wEhJxD": {
+          "type": "caption",
+          "settings": {
+            "caption": "Add a tagline",
+            "caption_size": "16",
+            "caption_weight": "400",
+            "caption_color": "#222222",
+            "caption_alternative_font": false,
+            "caption_font": "sans_serif_n4"
+          }
+        },
+        "heading_gmgJHT": {
+          "type": "heading",
+          "settings": {
+            "heading": "Map & Text",
+            "heading_size": "32",
+            "heading_style": "regular",
+            "heading_color": "#222222",
+            "heading_alternative_font": false,
+            "heading_font": "sans_serif_n4"
+          }
+        },
+        "text_jTDVXc": {
+          "type": "text",
+          "settings": {
+            "description": "<p>Add additional information that will be useful to your users. For example, store opening hours.</p>",
+            "description_size": "16",
+            "description_color": "#222222",
+            "description_alternative_font": false,
+            "description_font": "sans_serif_n4"
+          }
+        },
+        "buttons_n9YgaB": {
+          "type": "buttons",
+          "settings": {
+            "primary_button_label": "Button Label",
+            "primary_button_link": "",
+            "primary_button_style": "solid",
+            "primary_text_color": "#ffffff",
+            "primary_background_color": "#222222",
+            "primary_border_color": "#222222",
+            "primary_button_corner": 0,
+            "primary_new_tab": false,
+            "secondary_button_label": "",
+            "secondary_button_link": "",
+            "secondary_button_style": "solid",
+            "secondary_text_color": "#ffffff",
+            "secondary_background_color": "#222222",
+            "secondary_border_color": "#222222",
+            "secondary_button_corner": 0,
+            "secondary_new_tab": false
+          }
+        }
+      },
+      "block_order": [
+        "caption_wEhJxD",
+        "heading_gmgJHT",
+        "text_jTDVXc",
+        "buttons_n9YgaB"
+      ],
+      "disabled": true,
+      "name": "🧡 Vitals: Map & Text",
+      "settings": {
+        "map_address": "",
+        "map_style": "default",
+        "aspect_ratio": "landscape",
+        "map_position_desktop": "left",
+        "map_position_mobile": "above",
+        "text_alignment": "left",
+        "text_box_width": 50,
+        "section_width": 70,
+        "section_max_width": "",
+        "vertical_padding": 40,
+        "vertical_margin": 0,
+        "vertical_padding_mobile": 20,
+        "vertical_margin_mobile": 0,
+        "text_box_background": "",
+        "section_background_style": "color",
+        "section_background": "",
+        "overlay_color": "#222222",
+        "overlay_opacity": 0
       }
     },
     "image_banner_ggeQyU": {
