@@ -146,38 +146,6 @@
         "padding_bottom": 36
       }
     },
-    "image_with_text_dwcYBj": {
-      "type": "image-with-text",
-      "blocks": {
-        "text_x9cpV6": {
-          "type": "text",
-          "settings": {
-            "text": "<p><strong>Founded</strong> by Dina Shumkova<strong> in 2024 in Phuket,</strong> the brand debuted with a knitwear collection that  introduced a new interpretation of the summer wardrobe. Each piece was designed to complement the others, remaining  versatile and enduring </p><h3>— <strong>breathable, lightweight, and made for hot climates.</strong></h3>",
-            "text_style": "body"
-          }
-        }
-      },
-      "block_order": [
-        "text_x9cpV6"
-      ],
-      "disabled": true,
-      "name": "t:sections.image-with-text.presets.name",
-      "settings": {
-        "image": "shopify://shop_images/217.jpg",
-        "height": "adapt",
-        "desktop_image_width": "medium",
-        "layout": "image_first",
-        "image_behavior": "none",
-        "content_layout": "no-overlap",
-        "desktop_content_position": "top",
-        "desktop_content_alignment": "left",
-        "mobile_content_alignment": "left",
-        "section_color_scheme": "",
-        "color_scheme": "",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
     "multicolumn_hYjrTj": {
       "type": "multicolumn",
       "blocks": {
@@ -284,6 +252,38 @@
         "stack_images_on_mobile": true,
         "mobile_content_alignment": "center",
         "show_text_below": false
+      }
+    },
+    "image_with_text_dwcYBj": {
+      "type": "image-with-text",
+      "blocks": {
+        "text_x9cpV6": {
+          "type": "text",
+          "settings": {
+            "text": "<h2><strong>December 18</strong></h2><h3><strong>16:00 — Open Doors<br/>17:30 — Show<br/>18:30 — After-party</strong></h3>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "text_x9cpV6"
+      ],
+      "disabled": true,
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/DSC00834_1.png",
+        "height": "small",
+        "desktop_image_width": "small",
+        "layout": "image_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "",
+        "color_scheme": "",
+        "padding_top": 52,
+        "padding_bottom": 52
       }
     },
     "multicolumn_rrCjMi": {
@@ -738,10 +738,10 @@
     "vitals_2a48386f_FdXUiw",
     "main",
     "multicolumn_dTJMT8",
-    "image_with_text_dwcYBj",
     "multicolumn_hYjrTj",
     "multicolumn_YUEPQx",
     "image_banner_FEQANY",
+    "image_with_text_dwcYBj",
     "multicolumn_rrCjMi",
     "multicolumn_pHeppW",
     "vitals_7efc3a94_L98Xgk",
