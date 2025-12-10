@@ -302,8 +302,8 @@
         "column_Emm8AC": {
           "type": "column",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "title": "",
+            "text": "<h3>The performance translates this emotional journey through movement, fabric, and form, creating an immersive visual narrative. The collection features natural textures, fluid silhouettes, and handcrafted details, reflecting the intimacy and depth of this transformation.</h3>",
             "link_label": "",
             "link": ""
           }
@@ -323,7 +323,7 @@
         "button_link": "",
         "columns_desktop": 2,
         "column_alignment": "left",
-        "background_style": "primary",
+        "background_style": "none",
         "color_scheme": "",
         "columns_mobile": "1",
         "swipe_on_mobile": false,
