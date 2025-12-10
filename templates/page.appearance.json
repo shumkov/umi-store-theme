@@ -314,9 +314,9 @@
         "column_Emm8AC"
       ],
       "custom_css": [
-        ".page-appearance .multicolumn-list__item:first-child .multicolumn-card{position:relative}",
-        ".page-appearance .multicolumn-list__item:first-child .multicolumn-card__info{position:absolute;inset:0;padding:60px;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;color:#fff}",
-        ".page-appearance .multicolumn-list__item:first-child .multicolumn-card__info *{color:inherit}"
+        ".multicolumn-list__item:first-child .multicolumn-card{position:relative}",
+        ".multicolumn-list__item:first-child .multicolumn-card__info{position:absolute;inset:0;padding:60px;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;color:#fff}",
+        ".multicolumn-list__item:first-child .multicolumn-card__info *{color:inherit}"
       ],
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
