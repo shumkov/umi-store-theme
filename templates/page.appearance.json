@@ -286,6 +286,40 @@
         "show_text_below": false
       }
     },
+    "multicolumn_rrCjMi": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_gMJXtz": {
+          "type": "column",
+          "settings": {
+            "title": "",
+            "text": "<h2><strong>December 18</strong></h2><h3><strong>16:00 — Open Doors<br/>17:30 — Show<br/>18:30 — After-party</strong></h3>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_gMJXtz"
+      ],
+      "name": "t:sections.multicolumn.presets.name",
+      "settings": {
+        "title": "",
+        "heading_size": "h1",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 3,
+        "column_alignment": "left",
+        "background_style": "none",
+        "color_scheme": "",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 72,
+        "padding_bottom": 56
+      }
+    },
     "multicolumn_pHeppW": {
       "type": "multicolumn",
       "blocks": {
@@ -313,6 +347,7 @@
         "column_dMEREn",
         "column_Emm8AC"
       ],
+      "disabled": true,
       "custom_css": [
         ".multicolumn-list__item:first-child .multicolumn-card {position: relative; padding: 0;}",
         ".multicolumn-list__item:first-child .multicolumn-card__info {position: absolute; inset: 0; padding: 60px; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; color: #fff; background: rgba(0, 0, 0, 0.2);}",
@@ -334,51 +369,6 @@
         "swipe_on_mobile": false,
         "padding_top": 36,
         "padding_bottom": 36
-      }
-    },
-    "contact_form_UFwrFp": {
-      "type": "contact-form",
-      "name": "t:sections.contact-form.presets.name",
-      "settings": {
-        "heading": "Contact form",
-        "heading_size": "h1",
-        "color_scheme": "",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "multicolumn_rrCjMi": {
-      "type": "multicolumn",
-      "blocks": {
-        "column_gMJXtz": {
-          "type": "column",
-          "settings": {
-            "title": "",
-            "text": "<h3>The performance translates this emotional journey through movement, fabric, and form, creating an immersive visual narrative. The collection features natural textures, fluid silhouettes, and handcrafted details, reflecting the intimacy and depth of this transformation.</h3>",
-            "link_label": "",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "column_gMJXtz"
-      ],
-      "name": "t:sections.multicolumn.presets.name",
-      "settings": {
-        "title": "",
-        "heading_size": "h1",
-        "image_width": "full",
-        "image_ratio": "adapt",
-        "button_label": "",
-        "button_link": "",
-        "columns_desktop": 3,
-        "column_alignment": "left",
-        "background_style": "none",
-        "color_scheme": "",
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 72,
-        "padding_bottom": 56
       }
     },
     "vitals_7efc3a94_L98Xgk": {
@@ -464,6 +454,21 @@
         "section_background": "",
         "overlay_color": "#222222",
         "overlay_opacity": 0
+      }
+    },
+    "contact_form_UFwrFp": {
+      "type": "contact-form",
+      "custom_css": [
+        ".color-scheme-1{background:url(https://cdn.shopify.com/s/files/1/0673/9496/1455/files/image_47.png?v=1765359321) center/cover no-repeat; padding:80px 0;}",
+        ".contact{max-width:620px; margin:0 auto; background:#fff; padding:40px 32px; border-radius:0;}"
+      ],
+      "name": "t:sections.contact-form.presets.name",
+      "settings": {
+        "heading": "Invite me",
+        "heading_size": "h1",
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
       }
     },
     "image_banner_ggeQyU": {
@@ -726,10 +731,10 @@
     "multicolumn_hYjrTj",
     "multicolumn_YUEPQx",
     "image_banner_FEQANY",
-    "multicolumn_pHeppW",
-    "contact_form_UFwrFp",
     "multicolumn_rrCjMi",
+    "multicolumn_pHeppW",
     "vitals_7efc3a94_L98Xgk",
+    "contact_form_UFwrFp",
     "image_banner_ggeQyU",
     "multicolumn_x9eMcw",
     "image_banner_6XbekR",
