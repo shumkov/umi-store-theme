@@ -313,6 +313,11 @@
         "column_dMEREn",
         "column_Emm8AC"
       ],
+      "custom_css": [
+        ".multicolumn-card {position: relative;}",
+        ".multicolumn-card__info {position: absolute; inset: 0; padding: 60px; display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; color: #fff;}",
+        ".multicolumn-card__info * {color: inherit; }"
+      ],
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
         "title": "Multicolumn",
