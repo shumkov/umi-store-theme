@@ -470,7 +470,7 @@
     "contact_form_UFwrFp": {
       "type": "contact-form",
       "custom_css": [
-        ".color-scheme-1 {background: url(https://cdn.shopify.com/s/files/1/0673/9496/1455/files/image_47.png?v=1765359321) center/cover no-repeat; padding: 80px 0;}",
+        ".color-scheme-1 {background: url(https://cdn.shopify.com/s/files/1/0673/9496/1455/files/image_47.png?v=1765359321) center/cover no-repeat; padding: 120px 0;}",
         ".contact {max-width: 620px; margin: 0 auto; background: #fff; padding: 40px 32px; border-radius: 0;}"
       ],
       "name": "t:sections.contact-form.presets.name",
