@@ -341,11 +341,22 @@
             "link_label": "",
             "link": ""
           }
+        },
+        "column_eP6wfi": {
+          "type": "column",
+          "disabled": true,
+          "settings": {
+            "title": "Column",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "link_label": "",
+            "link": ""
+          }
         }
       },
       "block_order": [
         "column_dMEREn",
-        "column_Emm8AC"
+        "column_Emm8AC",
+        "column_eP6wfi"
       ],
       "disabled": true,
       "custom_css": [
@@ -377,7 +388,7 @@
         "caption_wEhJxD": {
           "type": "caption",
           "settings": {
-            "caption": "Add a tagline",
+            "caption": "",
             "caption_size": "16",
             "caption_weight": "400",
             "caption_color": "#222222",
@@ -388,7 +399,7 @@
         "heading_gmgJHT": {
           "type": "heading",
           "settings": {
-            "heading": "Map & Text",
+            "heading": "HOMA Cherngtalay",
             "heading_size": "32",
             "heading_style": "regular",
             "heading_color": "#222222",
@@ -399,8 +410,8 @@
         "text_jTDVXc": {
           "type": "text",
           "settings": {
-            "description": "<p>Add additional information that will be useful to your users. For example, store opening hours.</p>",
-            "description_size": "16",
+            "description": "<p>91 Soi Cherngtalay 4, Tambon Choeng Thale, Thalang District, Phuket 83110<br/><br/>Mobile/WhatsAPP:<br/>+66 80 005 3593</p>",
+            "description_size": "12",
             "description_color": "#222222",
             "description_alternative_font": false,
             "description_font": "sans_serif_n4"
@@ -409,8 +420,8 @@
         "buttons_n9YgaB": {
           "type": "buttons",
           "settings": {
-            "primary_button_label": "Button Label",
-            "primary_button_link": "",
+            "primary_button_label": "Directions",
+            "primary_button_link": "https://maps.app.goo.gl/hXW9z3N33oimmcs3A",
             "primary_button_style": "solid",
             "primary_text_color": "#ffffff",
             "primary_background_color": "#222222",
@@ -436,7 +447,7 @@
       ],
       "name": "🧡 Vitals: Map & Text",
       "settings": {
-        "map_address": "",
+        "map_address": "Homa Cherngtalay, 91 Soi Cherngtalay 4, Tambon Choeng Thale, Thalang District, Phuket 83110",
         "map_style": "default",
         "aspect_ratio": "landscape",
         "map_position_desktop": "left",
@@ -459,12 +470,12 @@
     "contact_form_UFwrFp": {
       "type": "contact-form",
       "custom_css": [
-        ".color-scheme-1{background:url(https://cdn.shopify.com/s/files/1/0673/9496/1455/files/image_47.png?v=1765359321) center/cover no-repeat; padding:80px 0;}",
-        ".contact{max-width:620px; margin:0 auto; background:#fff; padding:40px 32px; border-radius:0;}"
+        ".color-scheme-1 {background: url(https://cdn.shopify.com/s/files/1/0673/9496/1455/files/image_47.png?v=1765359321) center/cover no-repeat; padding: 80px 0;}",
+        ".contact {max-width: 620px; margin: 0 auto; background: #fff; padding: 40px 32px; border-radius: 0;}"
       ],
       "name": "t:sections.contact-form.presets.name",
       "settings": {
-        "heading": "Invite me",
+        "heading": "Contact us",
         "heading_size": "h1",
         "color_scheme": "",
         "padding_top": 36,
