@@ -119,7 +119,7 @@
           "type": "column",
           "settings": {
             "title": "",
-            "text": "<h2><strong>APPEARANCE</strong> tells the story of a woman’s emergence — an act of her second birth.</h2><p>It explores the moment when a woman finds the strength and courage to reveal herself to the world exactly as she is.</p><p>In this moment, she experiences a blend of powerful, overwhelming, vulnerable emotions — and ultimately accepts herself: real, imperfect, unique, and therefore beautiful.</p>",
+            "text": "<h2><strong>APPEARANCE</strong> tells the story of a woman’s emergence — an act of her second birth.</h2><p>It explores the moment when a woman finds the strength and courage to reveal herself to the world exactly as she isf: real, imperfect, unique, and therefore beautiful.</p>",
             "link_label": "",
             "link": ""
           }
@@ -303,7 +303,7 @@
           "type": "column",
           "settings": {
             "title": "",
-            "text": "<h2>The performance translates this emotional journey through movement, fabric, and form, creating an immersive visual narrative.</h2><h2>The collection features natural textures, fluid silhouettes, and handcrafted details, reflecting the intimacy and depth of this transformation.</h2>",
+            "text": "<h2>The collection features natural textures, fluid silhouettes, and handcrafted details, reflecting the intimacy and depth of this transformation.</h2>",
             "link_label": "",
             "link": ""
           }
@@ -314,9 +314,9 @@
         "column_Emm8AC"
       ],
       "custom_css": [
-        ".multicolumn-list__item:first-child .multicolumn-card{position:relative;padding:0}",
-        ".multicolumn-list__item:first-child .multicolumn-card__info{position:absolute;inset:0;padding:60px;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;color:#fff;background:rgba(0,0,0,.2)}",
-        ".multicolumn-list__item:first-child .multicolumn-card__info *{color:inherit}"
+        ".multicolumn-list__item:first-child .multicolumn-card {position: relative; padding: 0;}",
+        ".multicolumn-list__item:first-child .multicolumn-card__info {position: absolute; inset: 0; padding: 60px; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; color: #fff; background: rgba(0, 0, 0, 0.2);}",
+        ".multicolumn-list__item:first-child .multicolumn-card__info * {color: inherit;}"
       ],
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
@@ -324,7 +324,7 @@
         "heading_size": "h1",
         "image_width": "full",
         "image_ratio": "adapt",
-        "button_label": "Button label",
+        "button_label": "",
         "button_link": "",
         "columns_desktop": 2,
         "column_alignment": "left",
@@ -332,6 +332,17 @@
         "color_scheme": "",
         "columns_mobile": "1",
         "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "contact_form_UFwrFp": {
+      "type": "contact-form",
+      "name": "t:sections.contact-form.presets.name",
+      "settings": {
+        "heading": "Contact form",
+        "heading_size": "h1",
+        "color_scheme": "",
         "padding_top": 36,
         "padding_bottom": 36
       }
@@ -716,6 +727,7 @@
     "multicolumn_YUEPQx",
     "image_banner_FEQANY",
     "multicolumn_pHeppW",
+    "contact_form_UFwrFp",
     "multicolumn_rrCjMi",
     "vitals_7efc3a94_L98Xgk",
     "image_banner_ggeQyU",
