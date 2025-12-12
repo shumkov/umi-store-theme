@@ -302,6 +302,7 @@
       "block_order": [
         "column_7NmngR"
       ],
+      "disabled": true,
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
         "title": "",
@@ -318,6 +319,54 @@
         "swipe_on_mobile": false,
         "padding_top": 40,
         "padding_bottom": 8
+      }
+    },
+    "image_with_text_rtEqwr": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_YYTaJp": {
+          "type": "heading",
+          "settings": {
+            "heading": "",
+            "heading_size": "h1"
+          }
+        },
+        "text_aLHPaN": {
+          "type": "text",
+          "settings": {
+            "text": "<p>— the presentation of the APPEARANCE 2026 collection<br/>— a performance created exclusively for the show<br/>— small surprises and giveaways<br/>— a welcome drink upon arrival<br/>— the opportunity to explore and purchase pieces from the new collection<br/>— an after-party with music and sunset atmosphere</p>",
+            "text_style": "body"
+          }
+        },
+        "button_A63RJE": {
+          "type": "button",
+          "settings": {
+            "button_label": "",
+            "button_link": "",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_YYTaJp",
+        "text_aLHPaN",
+        "button_A63RJE"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/Copy_of_DJI_0729_copy.jpg",
+        "height": "medium",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "image_behavior": "none",
+        "content_layout": "overlap",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "",
+        "color_scheme": "",
+        "padding_top": 32,
+        "padding_bottom": 32
       }
     },
     "multicolumn_rrCjMi": {
@@ -710,6 +759,7 @@
     "multicolumn_WJLdic",
     "image_banner_FEQANY",
     "multicolumn_gdffwP",
+    "image_with_text_rtEqwr",
     "multicolumn_rrCjMi",
     "vitals_7efc3a94_L98Xgk",
     "contact_form_UFwrFp",
