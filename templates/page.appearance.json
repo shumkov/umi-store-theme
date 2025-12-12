@@ -367,15 +367,6 @@
             "link": ""
           }
         },
-        "column_xaUiYX": {
-          "type": "column",
-          "settings": {
-            "title": "",
-            "text": "<p>Entrance is free. The number of seats is limited, please join the wait list.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
         "column_qg639L": {
           "type": "column",
           "settings": {
@@ -384,12 +375,21 @@
             "link_label": "",
             "link": ""
           }
+        },
+        "column_xaUiYX": {
+          "type": "column",
+          "settings": {
+            "title": "",
+            "text": "<h3><strong>Entrance is free</strong>. The number of seats is limited, please <a href=\"#shopify-section-template--20175396241455__contact_form_UFwrFp\" title=\"Join the wait list\">join the wait list</a>.</h3>",
+            "link_label": "",
+            "link": ""
+          }
         }
       },
       "block_order": [
         "column_gMJXtz",
-        "column_xaUiYX",
-        "column_qg639L"
+        "column_qg639L",
+        "column_xaUiYX"
       ],
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
