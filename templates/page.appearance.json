@@ -128,6 +128,75 @@
       "block_order": [
         "column_y6QngL"
       ],
+      "disabled": true,
+      "name": "t:sections.multicolumn.presets.name",
+      "settings": {
+        "title": "",
+        "heading_size": "h1",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 1,
+        "column_alignment": "left",
+        "background_style": "none",
+        "color_scheme": "",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 56,
+        "padding_bottom": 36
+      }
+    },
+    "multicolumn_pJiqmg": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_yzGGcP": {
+          "type": "column",
+          "settings": {
+            "title": "",
+            "text": "<h3><strong>APPEARANCE</strong> is the launch show for UMI’s 2026 collection — a story about a woman’s moment of emergence. A moment when she steps into the world as she is: real, strong, vulnerable, and whole.</h3>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_yzGGcP"
+      ],
+      "name": "t:sections.multicolumn.presets.name",
+      "settings": {
+        "title": "",
+        "heading_size": "h1",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 1,
+        "column_alignment": "left",
+        "background_style": "none",
+        "color_scheme": "",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 56,
+        "padding_bottom": 36
+      }
+    },
+    "multicolumn_eXHRjX": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_LiKMgK": {
+          "type": "column",
+          "settings": {
+            "title": "",
+            "text": "<h3>The collection explores this unfolding — the inner shift when a woman returns to herself and allows her true form to appear.</h3>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_LiKMgK"
+      ],
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
         "title": "",
@@ -475,7 +544,7 @@
       ],
       "name": "t:sections.contact-form.presets.name",
       "settings": {
-        "heading": "Contact us",
+        "heading": "<strong>Join the waitlist</strong>",
         "heading_size": "h1",
         "color_scheme": "",
         "padding_top": 36,
@@ -738,6 +807,8 @@
     "vitals_2a48386f_FdXUiw",
     "main",
     "multicolumn_dTJMT8",
+    "multicolumn_pJiqmg",
+    "multicolumn_eXHRjX",
     "multicolumn_hYjrTj",
     "multicolumn_YUEPQx",
     "image_banner_FEQANY",
