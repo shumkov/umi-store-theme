@@ -362,14 +362,68 @@
           "type": "column",
           "settings": {
             "title": "",
-            "text": "<h2><strong>December 18</strong></h2><h3><strong>16:00 — Open Doors<br/>17:30 — Show<br/>18:30 — After-party</strong></h3>",
+            "text": "<h2><strong>December 18</strong></h2><h3><strong>16:00 — Guests arrival<br/>17:30 — Show begins<br/>18:30 — After-party</strong></h3>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_xaUiYX": {
+          "type": "column",
+          "settings": {
+            "title": "",
+            "text": "<p>Entrance is free. The number of seats is limited, please join the wait list.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_qg639L": {
+          "type": "column",
+          "settings": {
+            "title": "<strong>Dress code</strong>",
+            "text": "<h3>black or white, with pearl accents — as a gesture to the theme of appearance and natural beauty.</h3>",
             "link_label": "",
             "link": ""
           }
         }
       },
       "block_order": [
-        "column_gMJXtz"
+        "column_gMJXtz",
+        "column_xaUiYX",
+        "column_qg639L"
+      ],
+      "name": "t:sections.multicolumn.presets.name",
+      "settings": {
+        "title": "",
+        "heading_size": "h1",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 2,
+        "column_alignment": "left",
+        "background_style": "none",
+        "color_scheme": "",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 72,
+        "padding_bottom": 8
+      }
+    },
+    "multicolumn_WJLdic": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_FwamRp": {
+          "type": "column",
+          "settings": {
+            "title": "",
+            "text": "<p>The event will take place on the rooftop of <strong>HOMA Cherngtalay</strong>, at sunset — a moment when the light softens and everything becomes more alive.</p><p>— Free entrance. The number of seats is limited. <br/>— <br/>— the presentation of the APPEARANCE 2026 collection<br/>— a performance created exclusively for the show<br/>— small surprises and giveaways<br/>— a welcome drink upon arrival<br/>— the opportunity to explore and purchase pieces from the new collection<br/>— an after-party with music and sunset atmosphere</p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_FwamRp"
       ],
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
@@ -814,6 +868,7 @@
     "image_banner_FEQANY",
     "image_with_text_dwcYBj",
     "multicolumn_rrCjMi",
+    "multicolumn_WJLdic",
     "multicolumn_pHeppW",
     "vitals_7efc3a94_L98Xgk",
     "contact_form_UFwrFp",
