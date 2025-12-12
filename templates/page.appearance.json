@@ -217,6 +217,9 @@
         "heading_GVNeah",
         "text_eBK6eF"
       ],
+      "custom_css": [
+        "@media screen and (min-width: 990px){.page-width{padding-top:12rem; padding-bottom:12rem; }}"
+      ],
       "name": "t:sections.image-banner.presets.name",
       "settings": {
         "image": "shopify://shop_images/DSC00834.jpg",
