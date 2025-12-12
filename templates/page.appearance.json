@@ -112,41 +112,6 @@
         "padding_bottom": 28
       }
     },
-    "multicolumn_dTJMT8": {
-      "type": "multicolumn",
-      "blocks": {
-        "column_y6QngL": {
-          "type": "column",
-          "settings": {
-            "title": "",
-            "text": "<h2><strong>APPEARANCE</strong> tells the story of a woman’s emergence — an act of her second birth.</h2><h3>It explores the moment when a woman finds the strength and courage to reveal herself to the world exactly as she is: real, imperfect, unique, and therefore beautiful.</h3>",
-            "link_label": "",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "column_y6QngL"
-      ],
-      "disabled": true,
-      "name": "t:sections.multicolumn.presets.name",
-      "settings": {
-        "title": "",
-        "heading_size": "h1",
-        "image_width": "full",
-        "image_ratio": "adapt",
-        "button_label": "",
-        "button_link": "",
-        "columns_desktop": 1,
-        "column_alignment": "left",
-        "background_style": "none",
-        "color_scheme": "",
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 56,
-        "padding_bottom": 36
-      }
-    },
     "multicolumn_pJiqmg": {
       "type": "multicolumn",
       "blocks": {
@@ -181,21 +146,107 @@
         "padding_bottom": 36
       }
     },
-    "multicolumn_eXHRjX": {
+    "image_with_text_8BFMxJ": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_rDK4bK": {
+          "type": "heading",
+          "settings": {
+            "heading": "",
+            "heading_size": "h1"
+          }
+        },
+        "text_KWWcK9": {
+          "type": "text",
+          "settings": {
+            "text": "<p>The collection explores this unfolding — the inner shift when a woman returns to herself and allows her true form to appear.</p>",
+            "text_style": "subtitle"
+          }
+        },
+        "button_fydJEb": {
+          "type": "button",
+          "settings": {
+            "button_label": "",
+            "button_link": "",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_rDK4bK",
+        "text_KWWcK9",
+        "button_fydJEb"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/DSC00243.jpg",
+        "height": "medium",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "image_behavior": "none",
+        "content_layout": "overlap",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "",
+        "color_scheme": "",
+        "padding_top": 12,
+        "padding_bottom": 16
+      }
+    },
+    "image_banner_6XbekR": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_GVNeah": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "heading": "At the heart of the collection is the symbol of the baroque pearl. Each pearl carries its own shape, curves, lines, and imperfections — and all of it becomes part of its beauty.",
+            "heading_size": "h2"
+          }
+        },
+        "text_eBK6eF": {
+          "type": "text",
+          "settings": {
+            "text": "<strong>At the heart of the collection is the symbol of the baroque pearl. Each pearl carries its own shape, curves, lines, and imperfections — and all of it becomes part of its beauty.</strong>",
+            "text_style": "subtitle"
+          }
+        }
+      },
+      "block_order": [
+        "heading_GVNeah",
+        "text_eBK6eF"
+      ],
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/DSC00834_1.png",
+        "image_overlay_opacity": 20,
+        "image_height": "adapt",
+        "image_behavior": "none",
+        "desktop_content_position": "middle-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": false,
+        "color_scheme": "scheme-3",
+        "stack_images_on_mobile": true,
+        "mobile_content_alignment": "center",
+        "show_text_below": false
+      }
+    },
+    "multicolumn_WJLdic": {
       "type": "multicolumn",
       "blocks": {
-        "column_LiKMgK": {
+        "column_FwamRp": {
           "type": "column",
           "settings": {
             "title": "",
-            "text": "<h3>The collection explores this unfolding — the inner shift when a woman returns to herself and allows her true form to appear.</h3>",
+            "text": "<h3>The event will take place on the rooftop of <strong>HOMA Cherngtalay</strong>, at sunset — a moment when the light softens and everything becomes more alive.</h3>",
             "link_label": "",
             "link": ""
           }
         }
       },
       "block_order": [
-        "column_LiKMgK"
+        "column_FwamRp"
       ],
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
@@ -211,99 +262,8 @@
         "color_scheme": "",
         "columns_mobile": "1",
         "swipe_on_mobile": false,
-        "padding_top": 56,
-        "padding_bottom": 36
-      }
-    },
-    "multicolumn_hYjrTj": {
-      "type": "multicolumn",
-      "blocks": {
-        "column_waAmT4": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/217.jpg",
-            "title": "",
-            "text": "",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column_mBFi3P": {
-          "type": "column",
-          "settings": {
-            "title": "",
-            "text": "<p><strong>Founded</strong> by Dina Shumkova<strong> in 2024 in Phuket,</strong> the brand debuted with a knitwear collection that  introduced a new interpretation of the summer wardrobe. Each piece was designed to complement the others, remaining  versatile and enduring. </p><p><strong>Linen, Tencel, and Japanese cotton </strong>define the uniqueness of UMI’s fabrics</p><h3>— <strong>breathable, lightweight, and made for hot climates.</strong></h3>",
-            "link_label": "",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "column_waAmT4",
-        "column_mBFi3P"
-      ],
-      "disabled": true,
-      "name": "t:sections.multicolumn.presets.name",
-      "settings": {
-        "title": "",
-        "heading_size": "h1",
-        "image_width": "full",
-        "image_ratio": "adapt",
-        "button_label": "",
-        "button_link": "",
-        "columns_desktop": 2,
-        "column_alignment": "left",
-        "background_style": "none",
-        "color_scheme": "",
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "multicolumn_YUEPQx": {
-      "type": "multicolumn",
-      "blocks": {
-        "column_pDxRrJ": {
-          "type": "column",
-          "settings": {
-            "title": "",
-            "text": "<p>From the very beginning, <strong>UMI has embodied the values of slow fashion: small-scale production, meticulous attention to detail, and a careful use of resources.</strong> The garments are created to stay with a woman for a long time, revealing her individuality and emphasizing her  natural sensuality.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column_97jz39": {
-          "type": "column",
-          "settings": {
-            "title": "",
-            "text": "<p>UMI continues to evolve while preserving its distinctive voice: a brand that seeks to become the expression of a new  femininity</p><p></p><p></p><h3>—soft, confident, and at the same time as powerful as the ocean from which it takes its  name.</h3>",
-            "link_label": "",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "column_pDxRrJ",
-        "column_97jz39"
-      ],
-      "disabled": true,
-      "name": "t:sections.multicolumn.presets.name",
-      "settings": {
-        "title": "",
-        "heading_size": "h1",
-        "image_width": "full",
-        "image_ratio": "adapt",
-        "button_label": "",
-        "button_link": "",
-        "columns_desktop": 2,
-        "column_alignment": "left",
-        "background_style": "none",
-        "color_scheme": "",
-        "columns_mobile": "2",
-        "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
+        "padding_top": 52,
+        "padding_bottom": 20
       }
     },
     "image_banner_FEQANY": {
@@ -323,36 +283,38 @@
         "show_text_below": false
       }
     },
-    "image_with_text_dwcYBj": {
-      "type": "image-with-text",
+    "multicolumn_gdffwP": {
+      "type": "multicolumn",
       "blocks": {
-        "text_x9cpV6": {
-          "type": "text",
+        "column_7NmngR": {
+          "type": "column",
           "settings": {
-            "text": "<h2><strong>December 18</strong></h2><h3><strong>16:00 — Open Doors<br/>17:30 — Show<br/>18:30 — After-party</strong></h3>",
-            "text_style": "body"
+            "title": "",
+            "text": "<h4>— the presentation of the APPEARANCE 2026 collection<br/>— a performance created exclusively for the show<br/>— small surprises and giveaways<br/>— a welcome drink upon arrival<br/>— the opportunity to explore and purchase pieces from the new collection<br/>— an after-party with music and sunset atmosphere</h4>",
+            "link_label": "",
+            "link": ""
           }
         }
       },
       "block_order": [
-        "text_x9cpV6"
+        "column_7NmngR"
       ],
-      "disabled": true,
-      "name": "t:sections.image-with-text.presets.name",
+      "name": "t:sections.multicolumn.presets.name",
       "settings": {
-        "image": "shopify://shop_images/DSC00834_1.png",
-        "height": "small",
-        "desktop_image_width": "small",
-        "layout": "image_first",
-        "image_behavior": "none",
-        "content_layout": "no-overlap",
-        "desktop_content_position": "top",
-        "desktop_content_alignment": "left",
-        "mobile_content_alignment": "left",
-        "section_color_scheme": "",
+        "title": "",
+        "heading_size": "h1",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 1,
+        "column_alignment": "left",
+        "background_style": "none",
         "color_scheme": "",
-        "padding_top": 52,
-        "padding_bottom": 52
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 40,
+        "padding_bottom": 8
       }
     },
     "multicolumn_rrCjMi": {
@@ -361,8 +323,8 @@
         "column_gMJXtz": {
           "type": "column",
           "settings": {
-            "title": "",
-            "text": "<h2><strong>December 18</strong></h2><h3><strong>16:00 — Guests arrival<br/>17:30 — Show begins<br/>18:30 — After-party</strong></h3>",
+            "title": "<strong>December 18</strong>",
+            "text": "<h4>16:00 — Guests arrival<br/>17:30 — Show begins<br/>18:30 — After-party</h4>",
             "link_label": "",
             "link": ""
           }
@@ -371,7 +333,7 @@
           "type": "column",
           "settings": {
             "title": "<strong>Dress code</strong>",
-            "text": "<h3>black or white, with pearl accents — as a gesture to the theme of appearance and natural beauty.</h3>",
+            "text": "<h4>black or white, with pearl accents — as a gesture to the theme of appearance and natural beauty.</h4>",
             "link_label": "",
             "link": ""
           }
@@ -379,8 +341,8 @@
         "column_xaUiYX": {
           "type": "column",
           "settings": {
-            "title": "",
-            "text": "<h3><strong>Entrance is free</strong>. The number of seats is limited, please <a href=\"#shopify-section-template--20175396241455__contact_form_UFwrFp\" title=\"Join the wait list\">join the wait list</a>.</h3>",
+            "title": "<strong>Free Entrance</strong>",
+            "text": "<h4>The number of seats is limited, please <a href=\"#shopify-section-template--20175396241455__contact_form_UFwrFp\" title=\"Join the wait list\">join the wait list</a>.</h4>",
             "link_label": "",
             "link": ""
           }
@@ -405,104 +367,8 @@
         "color_scheme": "",
         "columns_mobile": "2",
         "swipe_on_mobile": false,
-        "padding_top": 72,
+        "padding_top": 32,
         "padding_bottom": 8
-      }
-    },
-    "multicolumn_WJLdic": {
-      "type": "multicolumn",
-      "blocks": {
-        "column_FwamRp": {
-          "type": "column",
-          "settings": {
-            "title": "",
-            "text": "<p>The event will take place on the rooftop of <strong>HOMA Cherngtalay</strong>, at sunset — a moment when the light softens and everything becomes more alive.</p><p><br/>— the presentation of the APPEARANCE 2026 collection<br/>— a performance created exclusively for the show<br/>— small surprises and giveaways<br/>— a welcome drink upon arrival<br/>— the opportunity to explore and purchase pieces from the new collection<br/>— an after-party with music and sunset atmosphere</p>",
-            "link_label": "",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "column_FwamRp"
-      ],
-      "name": "t:sections.multicolumn.presets.name",
-      "settings": {
-        "title": "",
-        "heading_size": "h1",
-        "image_width": "full",
-        "image_ratio": "adapt",
-        "button_label": "",
-        "button_link": "",
-        "columns_desktop": 3,
-        "column_alignment": "left",
-        "background_style": "none",
-        "color_scheme": "",
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 72,
-        "padding_bottom": 8
-      }
-    },
-    "multicolumn_pHeppW": {
-      "type": "multicolumn",
-      "blocks": {
-        "column_dMEREn": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/image_47.png",
-            "title": "",
-            "text": "<h1><strong>18 december</strong></h1><h2><strong>16:00 — Open Doors<br/>17:30 — Show<br/>18:30 — After-party</strong></h2>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column_Emm8AC": {
-          "type": "column",
-          "settings": {
-            "title": "",
-            "text": "<h2>The collection features natural textures, fluid silhouettes, and handcrafted details, reflecting the intimacy and depth of this transformation.</h2>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column_eP6wfi": {
-          "type": "column",
-          "disabled": true,
-          "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "column_dMEREn",
-        "column_Emm8AC",
-        "column_eP6wfi"
-      ],
-      "disabled": true,
-      "custom_css": [
-        ".multicolumn-list__item:first-child .multicolumn-card {position: relative; padding: 0;}",
-        ".multicolumn-list__item:first-child .multicolumn-card__info {position: absolute; inset: 0; padding: 60px; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; color: #fff; background: rgba(0, 0, 0, 0.2);}",
-        ".multicolumn-list__item:first-child .multicolumn-card__info * {color: inherit;}"
-      ],
-      "name": "t:sections.multicolumn.presets.name",
-      "settings": {
-        "title": "",
-        "heading_size": "h1",
-        "image_width": "full",
-        "image_ratio": "adapt",
-        "button_label": "",
-        "button_link": "",
-        "columns_desktop": 2,
-        "column_alignment": "left",
-        "background_style": "none",
-        "color_scheme": "",
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
       }
     },
     "vitals_7efc3a94_L98Xgk": {
@@ -605,6 +471,68 @@
         "padding_bottom": 36
       }
     },
+    "multicolumn_pHeppW": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_dMEREn": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/image_47.png",
+            "title": "",
+            "text": "<h1><strong>18 december</strong></h1><h2><strong>16:00 — Open Doors<br/>17:30 — Show<br/>18:30 — After-party</strong></h2>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_Emm8AC": {
+          "type": "column",
+          "settings": {
+            "title": "",
+            "text": "<h2>The collection features natural textures, fluid silhouettes, and handcrafted details, reflecting the intimacy and depth of this transformation.</h2>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_eP6wfi": {
+          "type": "column",
+          "disabled": true,
+          "settings": {
+            "title": "Column",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_dMEREn",
+        "column_Emm8AC",
+        "column_eP6wfi"
+      ],
+      "disabled": true,
+      "custom_css": [
+        ".multicolumn-list__item:first-child .multicolumn-card {position: relative; padding: 0;}",
+        ".multicolumn-list__item:first-child .multicolumn-card__info {position: absolute; inset: 0; padding: 60px; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; color: #fff; background: rgba(0, 0, 0, 0.2);}",
+        ".multicolumn-list__item:first-child .multicolumn-card__info * {color: inherit;}"
+      ],
+      "name": "t:sections.multicolumn.presets.name",
+      "settings": {
+        "title": "",
+        "heading_size": "h1",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 2,
+        "column_alignment": "left",
+        "background_style": "none",
+        "color_scheme": "",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "image_banner_ggeQyU": {
       "type": "image-banner",
       "blocks": {
@@ -682,44 +610,6 @@
         "padding_bottom": 80
       }
     },
-    "image_banner_6XbekR": {
-      "type": "image-banner",
-      "blocks": {
-        "heading_GVNeah": {
-          "type": "heading",
-          "settings": {
-            "heading": "At the heart of UMI lies the search for fabrics that fuse aesthetics with functionality.",
-            "heading_size": "h2"
-          }
-        },
-        "text_eBK6eF": {
-          "type": "text",
-          "settings": {
-            "text": "",
-            "text_style": "body"
-          }
-        }
-      },
-      "block_order": [
-        "heading_GVNeah",
-        "text_eBK6eF"
-      ],
-      "disabled": true,
-      "name": "t:sections.image-banner.presets.name",
-      "settings": {
-        "image": "shopify://shop_images/073_79acdb5f-f5bc-416d-b150-9334219aceca.jpg",
-        "image_overlay_opacity": 0,
-        "image_height": "adapt",
-        "image_behavior": "none",
-        "desktop_content_position": "middle-center",
-        "desktop_content_alignment": "center",
-        "show_text_box": false,
-        "color_scheme": "scheme-3",
-        "stack_images_on_mobile": true,
-        "mobile_content_alignment": "center",
-        "show_text_below": false
-      }
-    },
     "multicolumn_MY8aCU": {
       "type": "multicolumn",
       "blocks": {
@@ -763,55 +653,6 @@
         "swipe_on_mobile": false,
         "padding_top": 80,
         "padding_bottom": 64
-      }
-    },
-    "image_with_text_8BFMxJ": {
-      "type": "image-with-text",
-      "blocks": {
-        "heading_rDK4bK": {
-          "type": "heading",
-          "settings": {
-            "heading": "",
-            "heading_size": "h1"
-          }
-        },
-        "text_KWWcK9": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Every fabric at UMI is chosen with care and precision — not only to meet the highest standards of quality, but also to embody the brand’s philosophy: comfort, lightness, and respect for nature.</p>",
-            "text_style": "body"
-          }
-        },
-        "button_fydJEb": {
-          "type": "button",
-          "settings": {
-            "button_label": "",
-            "button_link": "",
-            "button_style_secondary": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_rDK4bK",
-        "text_KWWcK9",
-        "button_fydJEb"
-      ],
-      "disabled": true,
-      "name": "t:sections.image-with-text.presets.name",
-      "settings": {
-        "image": "shopify://shop_images/002_e4242629-84e9-4a24-abb3-b9621f43a231.jpg",
-        "height": "adapt",
-        "desktop_image_width": "medium",
-        "layout": "image_first",
-        "image_behavior": "none",
-        "content_layout": "no-overlap",
-        "desktop_content_position": "top",
-        "desktop_content_alignment": "left",
-        "mobile_content_alignment": "left",
-        "section_color_scheme": "",
-        "color_scheme": "",
-        "padding_top": 36,
-        "padding_bottom": 36
       }
     },
     "collection_list_8hpU9p": {
@@ -860,23 +701,19 @@
   "order": [
     "vitals_2a48386f_FdXUiw",
     "main",
-    "multicolumn_dTJMT8",
     "multicolumn_pJiqmg",
-    "multicolumn_eXHRjX",
-    "multicolumn_hYjrTj",
-    "multicolumn_YUEPQx",
-    "image_banner_FEQANY",
-    "image_with_text_dwcYBj",
-    "multicolumn_rrCjMi",
+    "image_with_text_8BFMxJ",
+    "image_banner_6XbekR",
     "multicolumn_WJLdic",
-    "multicolumn_pHeppW",
+    "image_banner_FEQANY",
+    "multicolumn_gdffwP",
+    "multicolumn_rrCjMi",
     "vitals_7efc3a94_L98Xgk",
     "contact_form_UFwrFp",
+    "multicolumn_pHeppW",
     "image_banner_ggeQyU",
     "multicolumn_x9eMcw",
-    "image_banner_6XbekR",
     "multicolumn_MY8aCU",
-    "image_with_text_8BFMxJ",
     "collection_list_8hpU9p"
   ]
 }
