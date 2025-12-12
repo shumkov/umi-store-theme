@@ -218,7 +218,7 @@
         "text_eBK6eF"
       ],
       "custom_css": [
-        "@media screen and (min-width: 990px){.page-width{padding-top:12rem; padding-bottom:12rem; }}"
+        "@media screen and (min-width: 990px) {.page-width {padding-top: 15rem; padding-bottom: 15rem; }}"
       ],
       "name": "t:sections.image-banner.presets.name",
       "settings": {
