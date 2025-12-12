@@ -219,7 +219,7 @@
       ],
       "name": "t:sections.image-banner.presets.name",
       "settings": {
-        "image": "shopify://shop_images/DSC00834_1.png",
+        "image": "shopify://shop_images/DSC00834.jpg",
         "image_overlay_opacity": 20,
         "image_height": "adapt",
         "image_behavior": "none",
