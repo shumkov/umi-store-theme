@@ -499,7 +499,7 @@
         "section_max_width": "",
         "vertical_padding": 50,
         "vertical_margin": 0,
-        "vertical_padding_mobile": 24,
+        "vertical_padding_mobile": 10,
         "vertical_margin_mobile": 0,
         "text_box_background": "",
         "section_background_style": "color",
