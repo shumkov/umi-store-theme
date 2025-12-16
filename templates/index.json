@@ -47,14 +47,13 @@
         },
         "buttons_ftLJ7p": {
           "type": "buttons",
-          "disabled": true,
           "settings": {
-            "primary_button_label": "BUTTON LABEL",
-            "primary_button_link": "",
-            "primary_button_style": "solid",
+            "primary_button_label": "Join",
+            "primary_button_link": "shopify://pages/appearance",
+            "primary_button_style": "outline",
             "primary_text_color": "#ffffff",
             "primary_background_color": "#222222",
-            "primary_border_color": "#222222",
+            "primary_border_color": "#ffffff",
             "primary_button_corner": 0,
             "primary_new_tab": false,
             "secondary_button_label": "",
