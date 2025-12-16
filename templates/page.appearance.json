@@ -420,7 +420,7 @@
         "columns_mobile": "2",
         "swipe_on_mobile": false,
         "padding_top": 32,
-        "padding_bottom": 8
+        "padding_bottom": 32
       }
     },
     "vitals_7efc3a94_L98Xgk": {
@@ -497,9 +497,9 @@
         "text_box_width": 50,
         "section_width": 100,
         "section_max_width": "",
-        "vertical_padding": 70,
+        "vertical_padding": 50,
         "vertical_margin": 0,
-        "vertical_padding_mobile": 44,
+        "vertical_padding_mobile": 24,
         "vertical_margin_mobile": 0,
         "text_box_background": "",
         "section_background_style": "color",
