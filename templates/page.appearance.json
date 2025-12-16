@@ -580,6 +580,9 @@
         "column_8wcE8r",
         "column_caLi6b"
       ],
+      "custom_css": [
+        ".multicolumn-list__item:nth-child(n+4) {margin-top: 40px;}"
+      ],
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
         "title": "",
