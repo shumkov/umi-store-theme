@@ -9,6 +9,96 @@
  */
 {
   "sections": {
+    "vitals_2a48386f_NhJEwp": {
+      "type": "vitals-2a48386f",
+      "blocks": {
+        "caption_gfjCXd": {
+          "type": "caption",
+          "settings": {
+            "caption": "",
+            "caption_size": "16",
+            "caption_weight": "400",
+            "caption_color": "#222222",
+            "caption_alternative_font": false,
+            "caption_font": "sans_serif_n4"
+          }
+        },
+        "heading_NLqJkz": {
+          "type": "heading",
+          "settings": {
+            "heading": "APPEARANCE",
+            "heading_size": "48",
+            "heading_style": "bold",
+            "heading_color": "#ffffff",
+            "heading_alternative_font": false,
+            "heading_font": "sans_serif_n4"
+          }
+        },
+        "text_YCtejp": {
+          "type": "text",
+          "settings": {
+            "description": "<p><strong>NEW COLLECTION 2026</strong></p>",
+            "description_size": "16",
+            "description_color": "#ffffff",
+            "description_alternative_font": false,
+            "description_font": "sans_serif_n4"
+          }
+        },
+        "buttons_ftLJ7p": {
+          "type": "buttons",
+          "disabled": true,
+          "settings": {
+            "primary_button_label": "BUTTON LABEL",
+            "primary_button_link": "",
+            "primary_button_style": "solid",
+            "primary_text_color": "#ffffff",
+            "primary_background_color": "#222222",
+            "primary_border_color": "#222222",
+            "primary_button_corner": 0,
+            "primary_new_tab": false,
+            "secondary_button_label": "",
+            "secondary_button_link": "",
+            "secondary_button_style": "link",
+            "secondary_text_color": "#222222",
+            "secondary_background_color": "#222222",
+            "secondary_border_color": "#222222",
+            "secondary_button_corner": 0,
+            "secondary_new_tab": false
+          }
+        }
+      },
+      "block_order": [
+        "caption_gfjCXd",
+        "heading_NLqJkz",
+        "text_YCtejp",
+        "buttons_ftLJ7p"
+      ],
+      "name": "🧡 Vitals: Text Box & Video",
+      "settings": {
+        "video_type": "upload",
+        "video_desktop": "shopify://files/videos/IMG_9113.MOV",
+        "autoplay": true,
+        "loop": true,
+        "show_video_controls": false,
+        "desktop_banner_height": "700",
+        "mobile_banner_height": "650",
+        "overlay_color": "#222222",
+        "overlay_opacity": 0,
+        "section_background": "",
+        "text_box_height": "default",
+        "desktop_content_position": "bottom-center",
+        "mobile_content_position": "center",
+        "text_box_background": "#ffffff",
+        "text_box_opacity": 0,
+        "text_box_border_radius": 0,
+        "section_width": 100,
+        "section_max_width": "",
+        "vertical_padding": 0,
+        "vertical_margin": 0,
+        "vertical_padding_mobile": 0,
+        "vertical_margin_mobile": 0
+      }
+    },
     "image_banner": {
       "type": "image-banner",
       "blocks": {
@@ -43,6 +133,7 @@
         "text_fJKc3i",
         "button"
       ],
+      "disabled": true,
       "custom_css": [
         "h2 {text-transform: uppercase; font-size: 36px;}",
         "@media (max-width: 768px) {h2 {display: none; } .banner__text {display: none; }}"
@@ -382,6 +473,7 @@
     }
   },
   "order": [
+    "vitals_2a48386f_NhJEwp",
     "image_banner",
     "image_banner_6AczN9",
     "vitals_dc22295c_dJp6w6",
