@@ -581,7 +581,8 @@
         "column_caLi6b"
       ],
       "custom_css": [
-        ".multicolumn-list__item:nth-child(n+4) {margin-top: 40px;}"
+        "/* Desktop: 3 columns, spacing after 3rd item (row 2+) */.multicolumn-list__item:nth-child(n+4) {margin-top: 40px;}",
+        "/* Mobile: 2 columns, spacing after 2nd item (row 2+) */@media screen and (max-width: 749px) {.multicolumn-list__item:nth-child(n+4) {margin-top: 0; } .multicolumn-list__item:nth-child(n+3) {margin-top: 40px; }}"
       ],
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
