@@ -580,10 +580,7 @@
         "column_8wcE8r",
         "column_caLi6b"
       ],
-      "custom_css": [
-        "/* Desktop: 3 columns, add gap between rows */.multicolumn-list__item:nth-child(3n+4) {margin-top: 40px;}",
-        "/* Mobile: 2 columns, add gap between rows */@media screen and (max-width: 749px) {.multicolumn-list__item:nth-child(3n+4) {margin-top: 0; } .multicolumn-list__item:nth-child(2n+3) {margin-top: 40px; }}"
-      ],
+      "custom_css": [],
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
         "title": "",
