@@ -73,6 +73,9 @@
         "text_YCtejp",
         "buttons_ftLJ7p"
       ],
+      "custom_css": [
+        "h1, h2, h3, h4, h5, h6, p, span, div {word-break: keep-all !important; overflow-wrap: normal !important;}"
+      ],
       "name": "🧡 Vitals: Text Box & Video",
       "settings": {
         "video_type": "upload",
