@@ -508,21 +508,6 @@
         "overlay_opacity": 0
       }
     },
-    "contact_form_UFwrFp": {
-      "type": "contact-form",
-      "custom_css": [
-        ".color-scheme-1 {background: url(https://cdn.shopify.com/s/files/1/0673/9496/1455/files/DSC00906_1.png?v=1765368349) center/cover no-repeat; padding: 120px 0;}",
-        ".contact {max-width: 620px; margin: 0 auto; background: #fff; padding: 40px 32px; border-radius: 0;}"
-      ],
-      "name": "t:sections.contact-form.presets.name",
-      "settings": {
-        "heading": "<strong>Join the waitlist</strong>",
-        "heading_size": "h1",
-        "color_scheme": "",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
     "multicolumn_caDgRb": {
       "type": "multicolumn",
       "blocks": {
@@ -609,6 +594,21 @@
         "color_scheme": "",
         "columns_mobile": "2",
         "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "contact_form_UFwrFp": {
+      "type": "contact-form",
+      "custom_css": [
+        ".color-scheme-1 {background: url(https://cdn.shopify.com/s/files/1/0673/9496/1455/files/DSC00906_1.png?v=1765368349) center/cover no-repeat; padding: 120px 0;}",
+        ".contact {max-width: 620px; margin: 0 auto; background: #fff; padding: 40px 32px; border-radius: 0;}"
+      ],
+      "name": "t:sections.contact-form.presets.name",
+      "settings": {
+        "heading": "<strong>Join the waitlist</strong>",
+        "heading_size": "h1",
+        "color_scheme": "",
         "padding_top": 36,
         "padding_bottom": 36
       }
@@ -852,8 +852,8 @@
     "image_with_text_rtEqwr",
     "multicolumn_rrCjMi",
     "vitals_7efc3a94_L98Xgk",
-    "contact_form_UFwrFp",
     "multicolumn_caDgRb",
+    "contact_form_UFwrFp",
     "multicolumn_pHeppW",
     "image_banner_ggeQyU",
     "multicolumn_x9eMcw",
