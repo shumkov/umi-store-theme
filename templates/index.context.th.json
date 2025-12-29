@@ -12,20 +12,5 @@
   "context": {
     "market": "th"
   },
-  "sections": {
-    "vitals_2a48386f_NhJEwp": {
-      "custom_css": [
-        "h1,h2,h3,h4,h5,h6,p,span,div {word-break: keep-all !important; overflow-wrap: normal !important;}",
-        ".VtlsTextBoxVideoButtons {padding-top: 15px !important;}"
-      ],
-      "settings": {},
-      "blocks": {
-        "buttons_ftLJ7p": {
-          "settings": {
-            "primary_button_label": "join the presentation"
-          }
-        }
-      }
-    }
-  }
+  "sections": {}
 }
