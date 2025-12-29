@@ -48,8 +48,8 @@
         "buttons_ftLJ7p": {
           "type": "buttons",
           "settings": {
-            "primary_button_label": "Join",
-            "primary_button_link": "shopify://pages/appearance",
+            "primary_button_label": "Explore",
+            "primary_button_link": "shopify://collections/appearance",
             "primary_button_style": "outline",
             "primary_text_color": "#ffffff",
             "primary_background_color": "#222222",
