@@ -12,5 +12,14 @@
   "context": {
     "market": "th"
   },
-  "sections": {}
+  "sections": {
+    "vitals_2a48386f_NhJEwp": {
+      "custom_css": [
+        "h1,h2,h3,h4,h5,h6,p,span,div {word-break: keep-all !important; overflow-wrap: normal !important;}",
+        ".VtlsTextBoxVideoButtons {margin-top: 15px;}"
+      ],
+      "settings": {},
+      "blocks": {}
+    }
+  }
 }
