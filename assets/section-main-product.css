@@ -1358,9 +1358,9 @@ a.product__text {
 }
 
 .product-media-container.constrain-height {
-  /* offset for mobile: reduced to ~240px to give ~70% viewport height for product images
+  /* offset for mobile: ~300px gives ~60% viewport height for product images
      while keeping title and price visible below */
-  --viewport-offset: 240px;
+  --viewport-offset: 300px;
   --constrained-min-height: 300px;
   --constrained-height: max(var(--constrained-min-height), calc(100vh - var(--viewport-offset)));
   margin-right: auto;
