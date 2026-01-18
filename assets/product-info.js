@@ -248,10 +248,18 @@ if (!customElements.get('product-info')) {
       }
 
       updateMedia(html, variantFeaturedMediaId) {
-        if (!variantFeaturedMediaId) return;
-
         const mediaGallerySource = this.querySelector('media-gallery ul');
         const mediaGalleryDestination = html.querySelector(`media-gallery ul`);
+
+        // Check if media is from metafield files (uses integer indices like "section-1", "section-2")
+        // vs product.media (uses actual media IDs like "section-29012345678")
+        const isMetafieldMedia = (gallery) => {
+          const firstItem = gallery?.querySelector('li[data-media-id]');
+          if (!firstItem) return false;
+          const mediaIdPart = firstItem.dataset.mediaId.split('-').pop();
+          // Metafield files use small integers (1, 2, 3...), product media uses large IDs
+          return /^\d+$/.test(mediaIdPart) && parseInt(mediaIdPart, 10) < 1000;
+        };
 
         const refreshSourceData = () => {
           if (this.hasAttribute('data-zoom-on-hover')) enableZoomOnHover(2);
@@ -264,46 +272,81 @@ if (!customElements.get('product-info')) {
         };
 
         if (mediaGallerySource && mediaGalleryDestination) {
-          let [mediaGallerySourceItems, sourceSet, sourceMap] = refreshSourceData();
-          const mediaGalleryDestinationItems = Array.from(
-            mediaGalleryDestination.querySelectorAll('li[data-media-id]')
-          );
-          const destinationSet = new Set(mediaGalleryDestinationItems.map(({ dataset }) => dataset.mediaId));
-          let shouldRefresh = false;
+          // For metafield-based media, always replace the entire gallery content
+          // because media IDs are just indices (1, 2, 3) that stay the same across variants
+          // but the actual images are different
+          if (isMetafieldMedia(mediaGalleryDestination) || isMetafieldMedia(mediaGallerySource)) {
+            mediaGallerySource.innerHTML = mediaGalleryDestination.innerHTML;
+            if (this.hasAttribute('data-zoom-on-hover')) enableZoomOnHover(2);
 
-          // add items from new data not present in DOM
-          for (let i = mediaGalleryDestinationItems.length - 1; i >= 0; i--) {
-            if (!sourceSet.has(mediaGalleryDestinationItems[i].dataset.mediaId)) {
-              mediaGallerySource.prepend(mediaGalleryDestinationItems[i]);
-              shouldRefresh = true;
+            // Also update thumbnails for metafield media
+            const thumbnailsSource = this.querySelector('media-gallery [id^="Slider-Thumbnails-"]');
+            const thumbnailsDestination = html.querySelector('media-gallery [id^="Slider-Thumbnails-"]');
+            if (thumbnailsSource && thumbnailsDestination) {
+              thumbnailsSource.innerHTML = thumbnailsDestination.innerHTML;
             }
+
+            // Update slider counter
+            const counterSource = this.querySelector('media-gallery .slider-counter--total');
+            const counterDestination = html.querySelector('media-gallery .slider-counter--total');
+            if (counterSource && counterDestination) {
+              counterSource.textContent = counterDestination.textContent;
+            }
+
+            // Reset slider counter current to 1
+            const counterCurrent = this.querySelector('media-gallery .slider-counter--current');
+            if (counterCurrent) {
+              counterCurrent.textContent = '1';
+            }
+
+            // Set first media as active for metafield media
+            this.querySelector('media-gallery')?.setActiveMedia?.(`${this.dataset.section}-1`, false);
+            return;
+          } else {
+            // Original diffing logic for product.media
+            if (!variantFeaturedMediaId) return;
+
+            let [mediaGallerySourceItems, sourceSet, sourceMap] = refreshSourceData();
+            const mediaGalleryDestinationItems = Array.from(
+              mediaGalleryDestination.querySelectorAll('li[data-media-id]')
+            );
+            const destinationSet = new Set(mediaGalleryDestinationItems.map(({ dataset }) => dataset.mediaId));
+            let shouldRefresh = false;
+
+            // add items from new data not present in DOM
+            for (let i = mediaGalleryDestinationItems.length - 1; i >= 0; i--) {
+              if (!sourceSet.has(mediaGalleryDestinationItems[i].dataset.mediaId)) {
+                mediaGallerySource.prepend(mediaGalleryDestinationItems[i]);
+                shouldRefresh = true;
+              }
+            }
+
+            // remove items from DOM not present in new data
+            for (let i = 0; i < mediaGallerySourceItems.length; i++) {
+              if (!destinationSet.has(mediaGallerySourceItems[i].dataset.mediaId)) {
+                mediaGallerySourceItems[i].remove();
+                shouldRefresh = true;
+              }
+            }
+
+            // refresh
+            if (shouldRefresh) [mediaGallerySourceItems, sourceSet, sourceMap] = refreshSourceData();
+
+            // if media galleries don't match, sort to match new data order
+            mediaGalleryDestinationItems.forEach((destinationItem, destinationIndex) => {
+              const sourceData = sourceMap.get(destinationItem.dataset.mediaId);
+
+              if (sourceData && sourceData.index !== destinationIndex) {
+                mediaGallerySource.insertBefore(
+                  sourceData.item,
+                  mediaGallerySource.querySelector(`li:nth-of-type(${destinationIndex + 1})`)
+                );
+
+                // refresh source now that it has been modified
+                [mediaGallerySourceItems, sourceSet, sourceMap] = refreshSourceData();
+              }
+            });
           }
-
-          // remove items from DOM not present in new data
-          for (let i = 0; i < mediaGallerySourceItems.length; i++) {
-            if (!destinationSet.has(mediaGallerySourceItems[i].dataset.mediaId)) {
-              mediaGallerySourceItems[i].remove();
-              shouldRefresh = true;
-            }
-          }
-
-          // refresh
-          if (shouldRefresh) [mediaGallerySourceItems, sourceSet, sourceMap] = refreshSourceData();
-
-          // if media galleries don't match, sort to match new data order
-          mediaGalleryDestinationItems.forEach((destinationItem, destinationIndex) => {
-            const sourceData = sourceMap.get(destinationItem.dataset.mediaId);
-
-            if (sourceData && sourceData.index !== destinationIndex) {
-              mediaGallerySource.insertBefore(
-                sourceData.item,
-                mediaGallerySource.querySelector(`li:nth-of-type(${destinationIndex + 1})`)
-              );
-
-              // refresh source now that it has been modified
-              [mediaGallerySourceItems, sourceSet, sourceMap] = refreshSourceData();
-            }
-          });
         }
 
         // set featured media as active in the media gallery
