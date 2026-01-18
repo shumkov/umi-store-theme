@@ -1,13 +1,12 @@
 {% comment %}
-  Renders infinite scroll loader with pagination data.
-  SEO-friendly: includes visible pagination links that are hidden by JS.
+  Renders infinite scroll using Ajaxinate library.
+  SEO-friendly: includes visible pagination links that work without JS.
 
   Usage:
-  {% render 'infinite-scroll-loader', paginate: paginate, section_id: section.id %}
+  {% render 'infinite-scroll-loader', paginate: paginate %}
 
   Accepts:
   - paginate: {Object} Pagination object
-  - section_id: {String} Section ID for fetching pages
 {% endcomment %}
 
 {%- comment -%}
@@ -20,40 +19,50 @@
   <link rel="next" href="{{ paginate.next.url }}">
 {%- endif -%}
 
-<infinite-scroll
-  class="infinite-scroll"
-  data-current-page="{{ paginate.current_page }}"
-  data-total-pages="{{ paginate.pages }}"
-  data-section-id="{{ section_id }}"
->
-  <div class="infinite-scroll__spinner hidden" aria-label="{{ 'accessibility.loading' | t }}">
-    <svg
-      aria-hidden="true"
-      focusable="false"
-      class="spinner"
-      viewBox="0 0 66 66"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <circle class="spinner-path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
-    </svg>
-  </div>
+{%- comment -%}
+  Ajaxinate pagination - contains just the next page link for infinite scroll.
+  Hidden when there are no more pages.
+{%- endcomment -%}
+<div id="AjaxinatePagination" class="infinite-scroll">
+  {%- if paginate.next -%}
+    <a href="{{ paginate.next.url }}" class="infinite-scroll__link visually-hidden">
+      {{ 'general.pagination.next' | t }}
+    </a>
+    <div class="infinite-scroll__spinner" aria-label="{{ 'accessibility.loading' | t }}">
+      <svg
+        aria-hidden="true"
+        focusable="false"
+        class="spinner"
+        viewBox="0 0 66 66"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle class="spinner-path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+      </svg>
+    </div>
+  {%- else -%}
+    <p class="infinite-scroll__complete">
+      {{ 'sections.collection_template.no_more_products' | t }}
+    </p>
+  {%- endif -%}
+</div>
 
-  <div class="infinite-scroll__complete hidden">
-    <span class="infinite-scroll__complete-text">{{ 'sections.collection_template.no_more_products' | t | default: "You've seen all products" }}</span>
-  </div>
+{%- comment -%}
+  SEO & Accessibility: Full pagination for crawlers and no-JS users.
+  Hidden visually when JS runs but remains in DOM for SEO.
+{%- endcomment -%}
+<noscript>
+  {% render 'pagination', paginate: paginate, anchor: '' %}
+</noscript>
 
-  <div class="infinite-scroll__error hidden">
-    <span class="infinite-scroll__error-text">{{ 'sections.collection_template.load_error' | t | default: 'Failed to load products' }}</span>
-    <button type="button" class="infinite-scroll__retry button button--secondary">
-      {{ 'sections.collection_template.retry' | t | default: 'Retry' }}
-    </button>
-  </div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (typeof Ajaxinate === 'undefined') return;
 
-  {%- comment -%}
-    SEO: Pagination links are rendered in DOM for crawlers but hidden by JS.
-    This ensures Googlebot can discover all paginated URLs.
-  {%- endcomment -%}
-  <div class="infinite-scroll__pagination">
-    {% render 'pagination', paginate: paginate, anchor: '' %}
-  </div>
-</infinite-scroll>
+    new Ajaxinate({
+      container: '#product-grid',
+      pagination: '#AjaxinatePagination',
+      offset: 300,
+      loadingText: '{{ "accessibility.loading" | t }}'
+    });
+  });
+</script>
