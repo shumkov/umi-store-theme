@@ -1,0 +1,117 @@
+{% comment %}
+  Renders a product media item from a metafield file (image or video)
+
+  Accepts:
+  - file: {Object} File object from metafield (image or video)
+  - media_count: {Number} Number of media objects
+  - position: {Number} Position of the media. Used for accessible label.
+  - desktop_layout: {String} Layout of the media for desktop.
+  - mobile_layout: {String} Layout of the media for mobile.
+  - loop: {Boolean} Enable video looping (optional)
+  - modal_id: {String} The product modal that will be shown by clicking the thumbnail
+  - constrain_to_viewport: {Boolean} Force media height to fit within viewport
+  - media_fit: {String} Method ("contain" or "cover") to fit image into container
+  - media_width: {Float} The width percentage that the media column occupies on desktop.
+  - lazy_load: {Boolean} Image should be lazy loaded. Default: true (optional)
+
+  Usage:
+  {% render 'product-metafield-media',
+    file: file,
+    position: forloop.index,
+    loop: section.settings.enable_video_looping,
+    modal_id: section.id
+  %}
+{% endcomment %}
+
+{%- liquid
+  unless lazy_load == false
+    assign lazy = 'lazy'
+  endunless
+
+  assign desktop_columns = 1
+  assign mobile_columns = 1
+
+  assign is_video = false
+  if file.media_type == 'video'
+    assign is_video = true
+  endif
+
+  if is_video == false
+    assign image_class = 'image-magnify-' | append: section.settings.image_zoom
+  endif
+
+  assign aspect_ratio = file.aspect_ratio | default: 1.0
+-%}
+
+{%- capture sizes -%}
+  (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | times: media_width | divided_by: desktop_columns | round }}px, (min-width: 990px) calc({{ media_width | times: 100 | divided_by: desktop_columns }}vw - 10rem), (min-width: 750px) calc((100vw - 11.5rem) / 2), calc(100vw / {{ mobile_columns }} - 4rem)
+{%- endcapture -%}
+
+<lazy-media
+  class="product-media-container media-type-{{ file.media_type | default: 'image' }} media-fit-{{ media_fit }} global-media-settings gradient{% if constrain_to_viewport %} constrain-height{% endif %}"
+  style="--ratio: {{ aspect_ratio }}; --preview-ratio: {{ aspect_ratio }};"
+  data-media-type="{{ file.media_type | default: 'image' }}"
+>
+  {%- if is_video -%}
+    <div class="media media--transparent lazy-media__placeholder" data-media-id="{{ position }}">
+      <img
+        class="lazy-media__poster"
+        src="{{ file.preview_image | image_url: width: 1946 }}"
+        alt="{{ file.alt | escape }}"
+        loading="lazy"
+      >
+      <div class="lazy-media__play-icon">
+        <span class="svg-wrapper">
+          {{- 'icon-play.svg' | inline_asset_content -}}
+        </span>
+      </div>
+    </div>
+    <template data-lazy-video>
+      <video
+        data-src="{{ file.sources[0].url }}"
+        muted
+        playsinline
+        loop
+        preload="none"
+        poster="{{ file.preview_image | image_url: width: 1946 }}"
+        onclick="if(this.requestFullscreen) this.requestFullscreen(); else if(this.webkitEnterFullscreen) this.webkitEnterFullscreen();"
+        style="cursor: pointer;"
+      ></video>
+    </template>
+  {%- else -%}
+    <modal-opener
+      class="product__modal-opener product__modal-opener--image"
+      data-modal="#ProductModal-{{ modal_id }}"
+    >
+      <span
+        class="product__media-icon motion-reduce quick-add-hidden product__media-icon--{{ section.settings.image_zoom }}"
+        aria-hidden="true"
+      >
+        <span class="svg-wrapper">
+          {{- 'icon-zoom.svg' | inline_asset_content -}}
+        </span>
+      </span>
+      {%- render 'loading-spinner' -%}
+      <div class="product__media media media--transparent">
+        <img
+          class="{{ image_class }}"
+          src="{{ file | image_url: width: 1946 }}"
+          loading="lazy"
+          sizes="{{ sizes }}"
+          width="1946"
+          alt="{{ file.alt | escape }}"
+        >
+      </div>
+      <button
+        class="product__media-toggle quick-add-hidden product__media-zoom-{{ section.settings.image_zoom }}"
+        type="button"
+        aria-haspopup="dialog"
+        data-media-id="{{ position }}"
+      >
+        <span class="visually-hidden">
+          {{ 'products.product.media.open_media' | t: index: position }}
+        </span>
+      </button>
+    </modal-opener>
+  {%- endif -%}
+</lazy-media>

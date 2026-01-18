@@ -1,0 +1,65 @@
+{% comment %}
+  Renders product media from a metafield file for the modal view
+
+  Accepts:
+  - file: {Object} File object from metafield (image or video)
+  - loop: {Boolean} Enable video looping (optional)
+  - position: {Number} Position of the media
+
+  Usage:
+  {% render 'product-metafield-modal-media',
+    file: file,
+    position: forloop.index,
+    loop: section.settings.enable_video_looping
+  %}
+{% endcomment %}
+
+{%- liquid
+  assign is_video = false
+  if file.media_type == 'video'
+    assign is_video = true
+  endif
+
+  assign aspect_ratio = file.aspect_ratio | default: 1.0
+-%}
+
+{%- if is_video -%}
+  <deferred-media
+    class="deferred-media media global-media-settings global-media-settings--no-shadow"
+    style="padding-top: min(calc(100vh - 12rem), {{ 1 | divided_by: aspect_ratio | times: 100 }}%)"
+    data-media-id="{{ position }}"
+  >
+    <button id="Deferred-Poster-Modal-{{ position }}" class="deferred-media__poster" type="button">
+      <span class="deferred-media__poster-button motion-reduce">
+        <span class="svg-wrapper">{{ 'icon-play.svg' | inline_asset_content }}</span>
+      </span>
+      <img
+        src="{{ file.preview_image | image_url: width: 1100 }}"
+        loading="lazy"
+        sizes="(min-width: 750px) calc(100vw - 22rem), 1100px"
+        width="1100"
+        alt="{{ file.alt | escape }}"
+      >
+    </button>
+    <template>
+      <video
+        src="{{ file.sources[0].url }}"
+        autoplay
+        playsinline
+        {% if loop %}loop{% endif %}
+        controls
+        preload="none"
+      ></video>
+    </template>
+  </deferred-media>
+{%- else -%}
+  <img
+    class="global-media-settings global-media-settings--no-shadow"
+    src="{{ file | image_url: width: 2200 }}"
+    sizes="(min-width: 750px) calc(100vw - 22rem), 1100px"
+    loading="lazy"
+    width="2200"
+    alt="{{ file.alt | escape }}"
+    data-media-id="{{ position }}"
+  >
+{%- endif -%}

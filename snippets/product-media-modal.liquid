@@ -35,43 +35,40 @@
       {%- liquid
         assign selected_variant = selected_variant | default: product.selected_or_first_available_variant
 
-        if selected_variant and selected_variant.featured_media != null
-          assign media = selected_variant.featured_media
-          render 'product-media', media: media, loop: section.settings.enable_video_looping, variant_image: section.settings.hide_variants
-        endif
-
-        assign selected_variant_images = ''
+        assign selected_variant_files = ''
         if selected_variant
-          assign selected_variant_images = selected_variant.metafields.custom_image.additional_image_link.value | default: ""
+          assign selected_variant_files = selected_variant.metafields.custom_image.additional_image_link.value | default: ""
         endif
       -%}
 
-      {%- for media in product.media -%}
+      {%- if selected_variant_files.size > 0 -%}
+        {%- comment -%} Render files from additional_image_link metafield {%- endcomment -%}
+        {%- for file in selected_variant_files -%}
+          {%- render 'product-metafield-modal-media', file: file, position: forloop.index, loop: section.settings.enable_video_looping -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- comment -%} Fallback to product.media {%- endcomment -%}
         {%- liquid
-          if section.settings.hide_variants and variant_images contains media.src or variant_images contains media.id
-            assign variant_image = true
-          else
-            assign variant_image = false
+          if selected_variant and selected_variant.featured_media != null
+            assign media = selected_variant.featured_media
+            render 'product-media', media: media, loop: section.settings.enable_video_looping, variant_image: section.settings.hide_variants
           endif
+        -%}
 
-          if selected_variant_images.count > 0
-            assign is_selected_variant_image = false
+        {%- for media in product.media -%}
+          {%- liquid
+            if section.settings.hide_variants and variant_images contains media.src or variant_images contains media.id
+              assign variant_image = true
+            else
+              assign variant_image = false
+            endif
 
-            for link in selected_variant_images
-              if link == media.src
-                assign is_selected_variant_image = true
-                break
-              endif
-            endfor
-          endif
-
-          if selected_variant_images.count == 0 or is_selected_variant_image
             unless media.id == selected_variant.featured_media.id
               render 'product-media', media: media, loop: section.settings.enable_video_looping, variant_image: variant_image
             endunless
-          endif
-        -%}
-      {%- endfor -%}
+          -%}
+        {%- endfor -%}
+      {%- endif -%}
     </div>
   </div>
 </product-modal>
