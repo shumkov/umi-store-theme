@@ -45,7 +45,7 @@
         "kiwi_size_chart_recommender_kiwi_sizing_xWxDHV": {
           "type": "shopify://apps/kiwi-size-chart-recommender/blocks/kiwiSizing/b7369922-bf15-44ce-a121-a22a8fcbc4b0",
           "settings": {
-            "product": "{{product}}",
+            "fallbackToBlockPosition": false,
             "waitForElementSelector": "",
             "waitForElementDelay": 5
           }
@@ -146,7 +146,7 @@
         "media_position": "left",
         "image_zoom": "lightbox",
         "hide_variants": true,
-        "enable_video_looping": false,
+        "enable_video_looping": true,
         "padding_top": 36,
         "padding_bottom": 12
       }
