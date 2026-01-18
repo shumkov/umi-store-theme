@@ -19,8 +19,11 @@ class InfiniteScroll extends HTMLElement {
     this.totalPages = parseInt(this.dataset.totalPages) || 1;
     this.sectionId = this.dataset.sectionId;
 
+    console.log('[InfiniteScroll] Init:', { currentPage: this.currentPage, totalPages: this.totalPages, sectionId: this.sectionId });
+
     // Don't initialize if there's only one page
     if (this.totalPages <= 1) {
+      console.log('[InfiniteScroll] Only one page, removing element');
       this.remove();
       return;
     }
@@ -35,6 +38,7 @@ class InfiniteScroll extends HTMLElement {
     this.setupBeforeUnload();
 
     this.setupObserver();
+    console.log('[InfiniteScroll] Observer set up');
   }
 
   setupBeforeUnload() {
@@ -185,6 +189,7 @@ class InfiniteScroll extends HTMLElement {
 
     this.observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
+        console.log('[InfiniteScroll] Observer triggered:', { isIntersecting: entry.isIntersecting, loading: this.loading, currentPage: this.currentPage, totalPages: this.totalPages });
         if (entry.isIntersecting && !this.loading && this.currentPage < this.totalPages) {
           this.loadMore();
         }
@@ -284,15 +289,10 @@ class InfiniteScroll extends HTMLElement {
 customElements.define('infinite-scroll', InfiniteScroll);
 
 // Hook into facets.js to reset infinite scroll when filters change
-const originalRenderProductGridContainer = FacetFiltersForm.renderProductGridContainer;
-FacetFiltersForm.renderProductGridContainer = function(html) {
-  originalRenderProductGridContainer.call(this, html);
-
-  const infiniteScroll = document.querySelector('infinite-scroll');
-  if (infiniteScroll) {
-    const newInfiniteScroll = document.querySelector('infinite-scroll');
-    if (newInfiniteScroll && newInfiniteScroll !== infiniteScroll) {
-      // New element will auto-initialize via constructor
-    }
-  }
-};
+if (typeof FacetFiltersForm !== 'undefined' && FacetFiltersForm.renderProductGridContainer) {
+  const originalRenderProductGridContainer = FacetFiltersForm.renderProductGridContainer;
+  FacetFiltersForm.renderProductGridContainer = function(html) {
+    originalRenderProductGridContainer.call(this, html);
+    // New infinite-scroll element will auto-initialize via constructor
+  };
+}
