@@ -466,6 +466,11 @@ a.product__text {
   .product--mobile-columns .product__media-item {
     width: calc(50% - 1.5rem - var(--grid-mobile-horizontal-spacing));
   }
+
+  .js .product__media-wrapper .slider-buttons,
+  .js .product__media-wrapper .slider-counter {
+    display: none;
+  }
 }
 
 @media screen and (min-width: 750px) {
