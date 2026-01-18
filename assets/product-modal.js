@@ -33,7 +33,7 @@ if (!customElements.get('product-modal')) {
         if (
           activeMedia.nodeName == 'DEFERRED-MEDIA' &&
           activeMediaContent &&
-          activeMediaContent.querySelector('.js-youtube')
+          (activeMediaContent.querySelector('.js-youtube') || activeMediaContent.querySelector('video'))
         )
           activeMedia.loadContent();
       }

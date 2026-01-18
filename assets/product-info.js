@@ -301,6 +301,11 @@ if (!customElements.get('product-info')) {
 
             // Set first media as active for metafield media
             this.querySelector('media-gallery')?.setActiveMedia?.(`${this.dataset.section}-1`, false);
+
+            // Update media modal for metafield media
+            const modalContent = this.productModal?.querySelector(`.product-media-modal__content`);
+            const newModalContent = html.querySelector(`product-modal .product-media-modal__content`);
+            if (modalContent && newModalContent) modalContent.innerHTML = newModalContent.innerHTML;
             return;
           } else {
             // Original diffing logic for product.media

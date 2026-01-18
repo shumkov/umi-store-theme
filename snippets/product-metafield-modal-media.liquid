@@ -45,9 +45,9 @@
       <video
         src="{{ file.sources[0].url }}"
         autoplay
+        muted
         playsinline
-        {% if loop %}loop{% endif %}
-        controls
+        loop
         preload="none"
       ></video>
     </template>
