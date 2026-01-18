@@ -467,8 +467,8 @@ a.product__text {
     width: calc(50% - 1.5rem - var(--grid-mobile-horizontal-spacing));
   }
 
-  .js .product__media-container .slider-buttons,
-  .js .product__media-container .slider-counter {
+  .js .product__media-wrapper .slider-buttons,
+  .js .product__media-wrapper .slider-counter {
     display: none;
   }
 }
