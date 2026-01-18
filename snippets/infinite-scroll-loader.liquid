@@ -1,0 +1,59 @@
+{% comment %}
+  Renders infinite scroll loader with pagination data.
+  SEO-friendly: includes visible pagination links that are hidden by JS.
+
+  Usage:
+  {% render 'infinite-scroll-loader', paginate: paginate, section_id: section.id %}
+
+  Accepts:
+  - paginate: {Object} Pagination object
+  - section_id: {String} Section ID for fetching pages
+{% endcomment %}
+
+{%- comment -%}
+  SEO: Add rel="next" and rel="prev" link tags for search engines
+{%- endcomment -%}
+{%- if paginate.previous -%}
+  <link rel="prev" href="{{ paginate.previous.url }}">
+{%- endif -%}
+{%- if paginate.next -%}
+  <link rel="next" href="{{ paginate.next.url }}">
+{%- endif -%}
+
+<infinite-scroll
+  class="infinite-scroll"
+  data-current-page="{{ paginate.current_page }}"
+  data-total-pages="{{ paginate.pages }}"
+  data-section-id="{{ section_id }}"
+>
+  <div class="infinite-scroll__spinner hidden" aria-label="{{ 'accessibility.loading' | t }}">
+    <svg
+      aria-hidden="true"
+      focusable="false"
+      class="spinner"
+      viewBox="0 0 66 66"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle class="spinner-path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+    </svg>
+  </div>
+
+  <div class="infinite-scroll__complete hidden">
+    <span class="infinite-scroll__complete-text">{{ 'sections.collection_template.no_more_products' | t | default: "You've seen all products" }}</span>
+  </div>
+
+  <div class="infinite-scroll__error hidden">
+    <span class="infinite-scroll__error-text">{{ 'sections.collection_template.load_error' | t | default: 'Failed to load products' }}</span>
+    <button type="button" class="infinite-scroll__retry button button--secondary">
+      {{ 'sections.collection_template.retry' | t | default: 'Retry' }}
+    </button>
+  </div>
+
+  {%- comment -%}
+    SEO: Pagination links are rendered in DOM for crawlers but hidden by JS.
+    This ensures Googlebot can discover all paginated URLs.
+  {%- endcomment -%}
+  <div class="infinite-scroll__pagination">
+    {% render 'pagination', paginate: paginate, anchor: '' %}
+  </div>
+</infinite-scroll>
