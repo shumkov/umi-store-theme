@@ -1,6 +1,7 @@
 /**
  * Infinite Scroll for Collection Pages
  * Uses Intersection Observer to load more products as user scrolls
+ * Supports scroll position restoration on back/forward navigation
  */
 class InfiniteScroll extends HTMLElement {
   constructor() {
@@ -8,6 +9,7 @@ class InfiniteScroll extends HTMLElement {
     this.productGrid = document.getElementById('product-grid');
     this.loading = false;
     this.observer = null;
+    this.storageKey = `infinite-scroll-${window.location.pathname}`;
     this.init();
   }
 
@@ -23,13 +25,158 @@ class InfiniteScroll extends HTMLElement {
       return;
     }
 
+    // Check if we need to restore state from back/forward navigation
+    this.restoreStateIfNeeded();
+
+    // Save state before user leaves the page
+    this.setupBeforeUnload();
+
     this.setupObserver();
+  }
+
+  setupBeforeUnload() {
+    // Save scroll position and page state when leaving
+    window.addEventListener('beforeunload', () => {
+      this.saveState();
+    });
+
+    // Also save when clicking on links (for SPA-like navigation)
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('a');
+      if (link && link.href && !link.href.startsWith('javascript:')) {
+        this.saveState();
+      }
+    });
+
+    // Handle visibility change (mobile tab switching)
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') {
+        this.saveState();
+      }
+    });
+  }
+
+  saveState() {
+    const state = {
+      page: this.currentPage,
+      scrollY: window.scrollY,
+      timestamp: Date.now(),
+      search: window.location.search // Include filters/sorting
+    };
+    sessionStorage.setItem(this.storageKey, JSON.stringify(state));
+  }
+
+  async restoreStateIfNeeded() {
+    const savedState = sessionStorage.getItem(this.storageKey);
+    if (!savedState) return;
+
+    try {
+      const state = JSON.parse(savedState);
+
+      // Only restore if:
+      // 1. State is less than 30 minutes old
+      // 2. Filters/sorting match (same search params)
+      // 3. We're navigating back (not a fresh page load)
+      const isRecent = Date.now() - state.timestamp < 30 * 60 * 1000;
+      const sameFilters = state.search === window.location.search;
+      const isBackNavigation = this.isBackNavigation();
+
+      if (isRecent && sameFilters && isBackNavigation && state.page > 1) {
+        // Disable observer during restoration
+        this.loading = true;
+        this.showLoader();
+
+        // Load all pages up to the saved page
+        await this.loadPagesUpTo(state.page);
+
+        // Restore scroll position after a brief delay to allow DOM to settle
+        requestAnimationFrame(() => {
+          window.scrollTo(0, state.scrollY);
+          this.loading = false;
+          this.hideLoader();
+        });
+      }
+    } catch (e) {
+      console.error('Failed to restore infinite scroll state:', e);
+      sessionStorage.removeItem(this.storageKey);
+    }
+  }
+
+  isBackNavigation() {
+    // Check if this is a back/forward navigation using Performance API
+    const navEntries = performance.getEntriesByType('navigation');
+    if (navEntries.length > 0) {
+      return navEntries[0].type === 'back_forward';
+    }
+
+    // Fallback: check if page was loaded from bfcache
+    if (window.performance && window.performance.navigation) {
+      return window.performance.navigation.type === 2; // TYPE_BACK_FORWARD
+    }
+
+    return false;
+  }
+
+  async loadPagesUpTo(targetPage) {
+    // Load pages sequentially from current to target
+    for (let page = 2; page <= targetPage && page <= this.totalPages; page++) {
+      await this.loadPage(page, false); // Don't update URL during restoration
+    }
+  }
+
+  async loadPage(page, updateUrl = true) {
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.set('page', page);
+      url.searchParams.set('section_id', this.sectionId);
+
+      const response = await fetch(url.toString());
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const html = await response.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+
+      const newProducts = doc.querySelectorAll('#product-grid > li');
+
+      if (newProducts.length > 0) {
+        newProducts.forEach((product) => {
+          product.querySelectorAll('.scroll-trigger').forEach((el) => {
+            el.classList.add('scroll-trigger--cancel');
+          });
+          this.productGrid.appendChild(product);
+        });
+
+        this.currentPage = page;
+        this.dataset.currentPage = page;
+
+        if (updateUrl) {
+          this.updateURL(page);
+        }
+
+        if (typeof initializeScrollAnimationTrigger === 'function') {
+          initializeScrollAnimationTrigger();
+        }
+      }
+
+      if (this.currentPage >= this.totalPages) {
+        this.complete();
+      }
+
+      return true;
+    } catch (error) {
+      console.error('Infinite scroll error:', error);
+      return false;
+    }
   }
 
   setupObserver() {
     const options = {
       root: null,
-      rootMargin: '200px', // Start loading 200px before reaching the element
+      rootMargin: '200px',
       threshold: 0
     };
 
@@ -51,61 +198,14 @@ class InfiniteScroll extends HTMLElement {
     this.showLoader();
 
     const nextPage = this.currentPage + 1;
+    const success = await this.loadPage(nextPage, true);
 
-    try {
-      // Build URL with current search params (for filters/sorting)
-      const url = new URL(window.location.href);
-      url.searchParams.set('page', nextPage);
-      url.searchParams.set('section_id', this.sectionId);
-
-      const response = await fetch(url.toString());
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const html = await response.text();
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
-
-      // Get new products from the response
-      const newProducts = doc.querySelectorAll('#product-grid > li');
-
-      if (newProducts.length > 0) {
-        // Append new products to the grid
-        newProducts.forEach((product) => {
-          // Remove scroll animation triggers for appended items
-          product.querySelectorAll('.scroll-trigger').forEach((el) => {
-            el.classList.add('scroll-trigger--cancel');
-          });
-          this.productGrid.appendChild(product);
-        });
-
-        // Update current page
-        this.currentPage = nextPage;
-        this.dataset.currentPage = nextPage;
-
-        // Update URL without page reload (optional - for better UX)
-        this.updateURL(nextPage);
-
-        // Initialize any scroll animations for new content
-        if (typeof initializeScrollAnimationTrigger === 'function') {
-          initializeScrollAnimationTrigger();
-        }
-      }
-
-      // Check if we've loaded all pages
-      if (this.currentPage >= this.totalPages) {
-        this.complete();
-      }
-
-    } catch (error) {
-      console.error('Infinite scroll error:', error);
+    if (!success) {
       this.showError();
-    } finally {
-      this.loading = false;
-      this.hideLoader();
     }
+
+    this.loading = false;
+    this.hideLoader();
   }
 
   showLoader() {
@@ -124,7 +224,6 @@ class InfiniteScroll extends HTMLElement {
     const errorEl = this.querySelector('.infinite-scroll__error');
     if (errorEl) {
       errorEl.classList.remove('hidden');
-      // Add retry button functionality
       const retryBtn = errorEl.querySelector('.infinite-scroll__retry');
       if (retryBtn) {
         retryBtn.addEventListener('click', () => {
@@ -136,7 +235,6 @@ class InfiniteScroll extends HTMLElement {
   }
 
   complete() {
-    // Stop observing when all pages are loaded
     if (this.observer) {
       this.observer.disconnect();
     }
@@ -156,16 +254,17 @@ class InfiniteScroll extends HTMLElement {
     } else {
       url.searchParams.delete('page');
     }
-    // Use replaceState to update URL without adding to history
     history.replaceState({ page }, '', url.toString());
   }
 
-  // Reset infinite scroll (called when filters change)
   reset() {
     this.currentPage = 1;
     this.dataset.currentPage = 1;
     this.loading = false;
     this.classList.remove('complete');
+
+    // Clear saved state when filters change
+    sessionStorage.removeItem(this.storageKey);
 
     const completeEl = this.querySelector('.infinite-scroll__complete');
     if (completeEl) completeEl.classList.add('hidden');
@@ -173,7 +272,6 @@ class InfiniteScroll extends HTMLElement {
     const errorEl = this.querySelector('.infinite-scroll__error');
     if (errorEl) errorEl.classList.add('hidden');
 
-    // Re-setup observer if it was disconnected
     if (!this.observer) {
       this.setupObserver();
     }
@@ -187,10 +285,8 @@ const originalRenderProductGridContainer = FacetFiltersForm.renderProductGridCon
 FacetFiltersForm.renderProductGridContainer = function(html) {
   originalRenderProductGridContainer.call(this, html);
 
-  // After rendering new content, reinitialize infinite scroll
   const infiniteScroll = document.querySelector('infinite-scroll');
   if (infiniteScroll) {
-    // The infinite scroll element will be replaced, so we need to let the new one initialize
     const newInfiniteScroll = document.querySelector('infinite-scroll');
     if (newInfiniteScroll && newInfiniteScroll !== infiniteScroll) {
       // New element will auto-initialize via constructor
