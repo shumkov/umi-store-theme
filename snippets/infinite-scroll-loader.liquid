@@ -1,5 +1,6 @@
 {% comment %}
   Renders infinite scroll loader with pagination data.
+  SEO-friendly: includes visible pagination links that are hidden by JS.
 
   Usage:
   {% render 'infinite-scroll-loader', paginate: paginate, section_id: section.id %}
@@ -9,13 +10,23 @@
   - section_id: {String} Section ID for fetching pages
 {% endcomment %}
 
+{%- comment -%}
+  SEO: Add rel="next" and rel="prev" link tags for search engines
+{%- endcomment -%}
+{%- if paginate.previous -%}
+  <link rel="prev" href="{{ paginate.previous.url }}">
+{%- endif -%}
+{%- if paginate.next -%}
+  <link rel="next" href="{{ paginate.next.url }}">
+{%- endif -%}
+
 <infinite-scroll
   class="infinite-scroll"
   data-current-page="{{ paginate.current_page }}"
   data-total-pages="{{ paginate.pages }}"
   data-section-id="{{ section_id }}"
 >
-  <div class="infinite-scroll__spinner" aria-label="{{ 'accessibility.loading' | t }}">
+  <div class="infinite-scroll__spinner hidden" aria-label="{{ 'accessibility.loading' | t }}">
     <svg
       aria-hidden="true"
       focusable="false"
@@ -37,11 +48,12 @@
       {{ 'sections.collection_template.retry' | t | default: 'Retry' }}
     </button>
   </div>
-</infinite-scroll>
 
-{%- comment -%}
-  Keep traditional pagination as fallback for no-JS and for screen readers
-{%- endcomment -%}
-<noscript>
-  {% render 'pagination', paginate: paginate, anchor: '' %}
-</noscript>
+  {%- comment -%}
+    SEO: Pagination links are rendered in DOM for crawlers but hidden by JS.
+    This ensures Googlebot can discover all paginated URLs.
+  {%- endcomment -%}
+  <div class="infinite-scroll__pagination">
+    {% render 'pagination', paginate: paginate, anchor: '' %}
+  </div>
+</infinite-scroll>

@@ -99,3 +99,22 @@
 .infinite-scroll.loading .infinite-scroll__spinner {
   opacity: 1;
 }
+
+/* SEO: Pagination is visible by default for crawlers/no-JS users */
+/* JS hides it by adding .js-enabled class */
+.infinite-scroll__pagination {
+  width: 100%;
+}
+
+.infinite-scroll.js-enabled .infinite-scroll__pagination {
+  /* Visually hidden but still in DOM for SEO */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

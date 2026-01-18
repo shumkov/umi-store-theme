@@ -25,6 +25,9 @@ class InfiniteScroll extends HTMLElement {
       return;
     }
 
+    // Mark as JS-enabled to hide pagination (SEO: pagination stays in DOM)
+    this.classList.add('js-enabled');
+
     // Check if we need to restore state from back/forward navigation
     this.restoreStateIfNeeded();
 
