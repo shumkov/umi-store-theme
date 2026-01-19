@@ -494,15 +494,9 @@ a.product__text {
     width: calc(100% + 3rem);
   }
 
-  .product__media-item .media {
+  .product__media-item {
     max-height: 60vh;
-  }
-
-  .product__media-item .media img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
+    overflow: hidden;
   }
 
   .slider.product__media-list::-webkit-scrollbar {
