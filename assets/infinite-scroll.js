@@ -37,13 +37,16 @@ class InfiniteScroll extends HTMLElement {
   }
 
   saveScrollPosition() {
+    // Only save state if we have loaded additional pages
+    if (!this.loadedHtml || this.loadedHtml.length === 0) return;
+
     // Debounce: only save every 100ms
     if (this.scrollSaveTimeout) return;
     this.scrollSaveTimeout = setTimeout(() => {
       const state = {
         scrollY: window.scrollY,
         currentPage: this.currentPage,
-        loadedHtml: this.loadedHtml || [],
+        loadedHtml: this.loadedHtml,
         paginationHtml: this.innerHTML,
       };
       sessionStorage.setItem(this.storageKey, JSON.stringify(state));
@@ -55,10 +58,14 @@ class InfiniteScroll extends HTMLElement {
    * Restore scroll position and loaded pages from sessionStorage
    * This handles back button navigation from product pages
    */
-  async restoreState() {
+  restoreState() {
+    // Check if this is a back/forward navigation
+    const navType = performance.getEntriesByType('navigation')[0]?.type;
+    const isBackNavigation = navType === 'back_forward';
+
     const savedState = sessionStorage.getItem(this.storageKey);
 
-    if (savedState) {
+    if (savedState && isBackNavigation) {
       try {
         const state = JSON.parse(savedState);
 
@@ -89,6 +96,9 @@ class InfiniteScroll extends HTMLElement {
       } catch (e) {
         console.error('Failed to restore infinite scroll state:', e);
       }
+    } else {
+      // Fresh page load - clear any old state
+      sessionStorage.removeItem(this.storageKey);
     }
 
     this.initialize();
