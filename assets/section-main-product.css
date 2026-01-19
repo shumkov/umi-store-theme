@@ -436,14 +436,21 @@ a.product__text {
 
 @media screen and (max-width: 749px) {
   .product__media-list {
-    margin-left: -2.5rem;
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
     margin-bottom: 3rem;
-    width: calc(100% + 4rem);
+    width: calc(100% + 3rem);
   }
 
   .product__media-wrapper slider-component:not(.thumbnail-slider--no-slide) {
     margin-left: -1.5rem;
     margin-right: -1.5rem;
+  }
+
+  .product__media-wrapper {
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+    width: calc(100% + 3rem);
   }
 
   .slider.product__media-list::-webkit-scrollbar {
