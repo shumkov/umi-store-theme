@@ -479,7 +479,7 @@ a.product__text {
   .product__media-list {
     margin-left: -1.5rem;
     margin-right: -1.5rem;
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
     width: calc(100% + 3rem);
   }
 
@@ -492,6 +492,17 @@ a.product__text {
     margin-left: -1.5rem;
     margin-right: -1.5rem;
     width: calc(100% + 3rem);
+  }
+
+  .product__media-item .media {
+    max-height: 65vh;
+  }
+
+  .product__media-item .media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
   }
 
   .slider.product__media-list::-webkit-scrollbar {
