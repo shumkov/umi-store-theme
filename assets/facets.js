@@ -80,9 +80,10 @@ class FacetFiltersForm extends HTMLElement {
   }
 
   static renderProductGridContainer(html) {
-    document.getElementById('ProductGridContainer').innerHTML = new DOMParser()
-      .parseFromString(html, 'text/html')
-      .getElementById('ProductGridContainer').innerHTML;
+    const parsedHTML = new DOMParser().parseFromString(html, 'text/html');
+
+    document.getElementById('ProductGridContainer').innerHTML =
+      parsedHTML.getElementById('ProductGridContainer').innerHTML;
 
     document
       .getElementById('ProductGridContainer')
@@ -90,6 +91,15 @@ class FacetFiltersForm extends HTMLElement {
       .forEach((element) => {
         element.classList.add('scroll-trigger--cancel');
       });
+
+    // Update infinite scroll pagination element with new filtered content
+    const newPagination = parsedHTML.getElementById('InfiniteScroll');
+    const currentPagination = document.getElementById('InfiniteScroll');
+    if (newPagination && currentPagination) {
+      currentPagination.innerHTML = newPagination.innerHTML;
+      // Reinitialize infinite scroll after filter update
+      currentPagination.reinitialize();
+    }
   }
 
   static renderProductCount(html) {

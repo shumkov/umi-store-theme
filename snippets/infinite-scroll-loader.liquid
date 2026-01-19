@@ -1,12 +1,15 @@
 {% comment %}
-  Renders infinite scroll using Ajaxinate library.
+  Renders infinite scroll using custom IntersectionObserver + Section Rendering API.
   SEO-friendly: includes visible pagination links that work without JS.
+  No-JS friendly: full pagination in noscript tag.
+  Browser history: updates URL with page number.
 
   Usage:
-  {% render 'infinite-scroll-loader', paginate: paginate %}
+  {% render 'infinite-scroll-loader', paginate: paginate, section_id: section.id %}
 
   Accepts:
   - paginate: {Object} Pagination object
+  - section_id: {String} Section ID for Section Rendering API
 {% endcomment %}
 
 {%- comment -%}
@@ -20,10 +23,16 @@
 {%- endif -%}
 
 {%- comment -%}
-  Ajaxinate pagination - contains just the next page link for infinite scroll.
-  Hidden when there are no more pages.
+  Infinite scroll custom element.
+  Uses IntersectionObserver to detect when user scrolls near bottom.
+  Fetches only section HTML via Section Rendering API (efficient).
 {%- endcomment -%}
-<div id="AjaxinatePagination" class="infinite-scroll">
+<infinite-scroll
+  id="InfiniteScroll"
+  class="infinite-scroll"
+  data-section-id="{{ section_id }}"
+  data-container="#product-grid"
+>
   {%- if paginate.next -%}
     <a href="{{ paginate.next.url }}" class="infinite-scroll__link visually-hidden">
       {{ 'general.pagination.next' | t }}
@@ -44,7 +53,7 @@
       {{ 'sections.collection_template.no_more_products' | t }}
     </p>
   {%- endif -%}
-</div>
+</infinite-scroll>
 
 {%- comment -%}
   SEO & Accessibility: Full pagination for crawlers and no-JS users.
@@ -53,16 +62,3 @@
 <noscript>
   {% render 'pagination', paginate: paginate, anchor: '' %}
 </noscript>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    if (typeof Ajaxinate === 'undefined') return;
-
-    new Ajaxinate({
-      container: '#product-grid',
-      pagination: '#AjaxinatePagination',
-      offset: 300,
-      loadingText: '{{ "accessibility.loading" | t }}'
-    });
-  });
-</script>

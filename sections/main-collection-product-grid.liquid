@@ -101,7 +101,7 @@
     <div class="{% if section.settings.filter_type == 'vertical' %} facets-vertical page-width{% endif %}">
       {{ 'component-facets.css' | asset_url | stylesheet_tag }}
       <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
-      <script src="{{ 'ajaxinate.js' | asset_url }}" defer="defer"></script>
+      <script src="{{ 'infinite-scroll.js' | asset_url }}" defer="defer"></script>
       {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
         <aside
           aria-labelledby="verticalTitle"
@@ -192,13 +192,13 @@
                 {%- assign skip_card_product_styles = true -%}
               {%- endfor -%}
             </ul>
-
-            {%- if paginate.pages > 1 -%}
-              {% render 'infinite-scroll-loader', paginate: paginate, section_id: section.id %}
-            {%- endif -%}
           </div>
         {%- endif -%}
       </div>
+
+      {%- if paginate.pages > 1 -%}
+        {% render 'infinite-scroll-loader', paginate: paginate, section_id: section.id %}
+      {%- endif -%}
     </div>
   {%- endpaginate -%}
   {% if section.settings.image_shape == 'arch' %}

@@ -1,8 +1,16 @@
 /**
  * Infinite Scroll Custom Element
- * Uses IntersectionObserver + Shopify Section Rendering API
- * Re-initializes automatically when filters/sorting update the grid
- * Preserves scroll position on back/forward navigation
+ *
+ * Uses IntersectionObserver + Section Rendering API for efficient infinite scroll.
+ * - SEO-friendly: Real pagination links in DOM, no URL changes during scroll
+ * - No-JS friendly: Falls back to standard pagination
+ * - Browser history: Saves state to sessionStorage, restores on back navigation
+ *
+ * Usage:
+ * <infinite-scroll data-section-id="main-collection" data-container="#product-grid">
+ *   <a href="/collections/all?page=2">Load more</a>
+ *   <div class="infinite-scroll__spinner">...</div>
+ * </infinite-scroll>
  */
 
 class InfiniteScroll extends HTMLElement {
@@ -10,247 +18,194 @@ class InfiniteScroll extends HTMLElement {
     super();
     this.observer = null;
     this.loading = false;
-    this.storageKey = `infinite-scroll:${window.location.pathname}`;
+    this.sectionId = this.dataset.sectionId;
+    this.containerSelector = this.dataset.container || '#product-grid';
+    this.paginationId = this.id || 'InfiniteScroll';
+    this.currentPage = 1;
+    this.loadedHtml = [];
   }
 
   connectedCallback() {
-    this.container = document.getElementById(this.dataset.container);
-    this.nextLink = this.querySelector('a');
-    this.spinner = this.querySelector('.infinite-scroll__spinner');
-    this.completeMessage = this.querySelector('.infinite-scroll__complete');
-    this.sectionId = this.dataset.sectionId;
+    this.storageKey = `infiniteScroll_${window.location.pathname}`;
 
-    // Disable browser's automatic scroll restoration - we handle it manually
-    if ('scrollRestoration' in history) {
-      history.scrollRestoration = 'manual';
-    }
+    // Save scroll position on scroll for restoration after back navigation
+    this.saveScrollPosition = this.saveScrollPosition.bind(this);
+    window.addEventListener('scroll', this.saveScrollPosition, { passive: true });
 
-    // Check if returning via back/forward navigation
+    // Restore scroll position and loaded pages if coming back
     this.restoreState();
+  }
 
-    if (!this.container) {
-      return;
+  saveScrollPosition() {
+    // Debounce: only save every 100ms
+    if (this.scrollSaveTimeout) return;
+    this.scrollSaveTimeout = setTimeout(() => {
+      const state = {
+        scrollY: window.scrollY,
+        currentPage: this.currentPage,
+        loadedHtml: this.loadedHtml || [],
+        paginationHtml: this.innerHTML,
+      };
+      sessionStorage.setItem(this.storageKey, JSON.stringify(state));
+      this.scrollSaveTimeout = null;
+    }, 100);
+  }
+
+  /**
+   * Restore scroll position and loaded pages from sessionStorage
+   * This handles back button navigation from product pages
+   */
+  async restoreState() {
+    const savedState = sessionStorage.getItem(this.storageKey);
+
+    if (savedState) {
+      try {
+        const state = JSON.parse(savedState);
+
+        // Only restore if we have loaded additional pages
+        if (state.loadedHtml && state.loadedHtml.length > 0 && state.paginationHtml) {
+          const container = document.querySelector(this.containerSelector);
+          if (container) {
+            // Append previously loaded pages
+            container.insertAdjacentHTML('beforeend', state.loadedHtml.join(''));
+
+            // Cancel scroll animations
+            container.querySelectorAll('.scroll-trigger').forEach((el) => {
+              el.classList.add('scroll-trigger--cancel');
+            });
+
+            // Restore pagination state (so it points to correct next page)
+            this.innerHTML = state.paginationHtml;
+
+            this.currentPage = state.currentPage;
+            this.loadedHtml = state.loadedHtml;
+
+            // Restore scroll position after DOM update
+            requestAnimationFrame(() => {
+              window.scrollTo(0, state.scrollY);
+            });
+          }
+        }
+      } catch (e) {
+        console.error('Failed to restore infinite scroll state:', e);
+      }
     }
 
-    // Save scroll position before leaving the page
-    window.addEventListener('beforeunload', this.saveState.bind(this));
-    window.addEventListener('pagehide', this.saveState.bind(this));
-
-    if (!this.nextLink) {
-      return;
-    }
-
-    this.initObserver();
+    this.initialize();
   }
 
   disconnectedCallback() {
-    this.destroyObserver();
-    window.removeEventListener('beforeunload', this.saveState.bind(this));
-    window.removeEventListener('pagehide', this.saveState.bind(this));
+    this.destroy();
   }
 
-  saveState() {
-    // Only save if we've loaded additional pages
-    if (!this.container) return;
+  initialize() {
+    // Clean up any existing observer
+    this.destroy();
 
-    const state = {
-      scrollY: window.scrollY,
-      html: this.container.innerHTML,
-      nextUrl: this.nextLink?.href || null,
-      timestamp: Date.now(),
-    };
+    const nextLink = this.querySelector('a');
+    if (!nextLink) return; // No more pages
 
-    try {
-      sessionStorage.setItem(this.storageKey, JSON.stringify(state));
-    } catch (e) {
-      // Storage full or unavailable - silently fail
-    }
-  }
-
-  restoreState() {
-    // Restore on back/forward navigation OR page reload
-    const navEntry = performance.getEntriesByType('navigation')[0];
-    const navType = navEntry?.type;
-    const isBackForward = navType === 'back_forward';
-    const isReload = navType === 'reload';
-
-    if (!isBackForward && !isReload) {
-      // Fresh navigation - clear old state
-      sessionStorage.removeItem(this.storageKey);
-      return;
-    }
-
-    try {
-      const saved = sessionStorage.getItem(this.storageKey);
-      if (!saved) return;
-
-      const state = JSON.parse(saved);
-
-      // Don't restore if state is older than 30 minutes
-      if (Date.now() - state.timestamp > 30 * 60 * 1000) {
-        sessionStorage.removeItem(this.storageKey);
-        return;
-      }
-
-      // Restore the grid content
-      if (this.container && state.html) {
-        this.container.innerHTML = state.html;
-      }
-
-      // Restore the next link
-      if (state.nextUrl && this.nextLink) {
-        this.nextLink.href = state.nextUrl;
-      } else if (!state.nextUrl) {
-        // No more pages - show complete message
-        this.showComplete();
-      }
-
-      // Restore scroll position - wait for images to load for accurate positioning
-      this.restoreScrollPosition(state.scrollY);
-
-      // Keep state for potential refresh, but clear on next fresh navigation
-    } catch (e) {
-      // Parse error or other issue - silently fail
-    }
-  }
-
-  restoreScrollPosition(targetY) {
-    // Try to scroll immediately
-    window.scrollTo(0, targetY);
-
-    // Wait for images to load and try again
-    const images = this.container?.querySelectorAll('img') || [];
-    let loadedCount = 0;
-    const totalImages = images.length;
-
-    if (totalImages === 0) {
-      // No images, just do a delayed scroll to be safe
-      setTimeout(() => window.scrollTo(0, targetY), 100);
-      return;
-    }
-
-    const checkAllLoaded = () => {
-      loadedCount++;
-      if (loadedCount >= totalImages) {
-        // All images loaded, scroll to position
-        window.scrollTo(0, targetY);
-      }
-    };
-
-    images.forEach((img) => {
-      if (img.complete) {
-        checkAllLoaded();
-      } else {
-        img.addEventListener('load', checkAllLoaded, { once: true });
-        img.addEventListener('error', checkAllLoaded, { once: true });
-      }
-    });
-
-    // Fallback: scroll after timeout even if images haven't loaded
-    setTimeout(() => window.scrollTo(0, targetY), 500);
-  }
-
-  initObserver() {
+    // Set up IntersectionObserver with 300px offset
     this.observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting && !this.loading) {
-            this.loadNextPage();
+            this.loadMore();
           }
         });
       },
       {
-        rootMargin: '300px',
-        threshold: 0,
+        rootMargin: '0px 0px 300px 0px', // Trigger 300px before element is visible
       }
     );
 
     this.observer.observe(this);
   }
 
-  destroyObserver() {
+  destroy() {
     if (this.observer) {
       this.observer.disconnect();
       this.observer = null;
     }
   }
 
-  async loadNextPage() {
-    if (this.loading || !this.nextLink) return;
+  async loadMore() {
+    const nextLink = this.querySelector('a');
+    if (!nextLink || this.loading) return;
 
     this.loading = true;
-    this.showSpinner();
+    this.classList.add('loading');
 
     try {
-      const nextUrl = new URL(this.nextLink.href);
-      // Use Section Rendering API - fetch only the section, not the full page
+      const nextUrl = new URL(nextLink.href);
+
+      // Add section_id for Section Rendering API (fetches only section, not full page)
       nextUrl.searchParams.set('section_id', this.sectionId);
 
       const response = await fetch(nextUrl.toString());
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
       const html = await response.text();
-      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
 
-      // Extract new products from the response
-      const newContainer = doc.getElementById(this.dataset.container);
-      if (newContainer) {
-        // Append new products to existing grid
-        const newItems = newContainer.querySelectorAll(':scope > *');
-        newItems.forEach((item) => {
-          // Clone to avoid moving the node
-          this.container.appendChild(item.cloneNode(true));
+      // Extract new products from fetched section
+      const newContainer = doc.querySelector(this.containerSelector);
+      const currentContainer = document.querySelector(this.containerSelector);
+
+      if (newContainer && currentContainer) {
+        // Append new product items
+        const newItems = newContainer.innerHTML;
+        currentContainer.insertAdjacentHTML('beforeend', newItems);
+
+        // Save loaded HTML for session restoration
+        if (!this.loadedHtml) this.loadedHtml = [];
+        this.loadedHtml.push(newItems);
+
+        // Cancel scroll animations for newly added items
+        currentContainer.querySelectorAll('.scroll-trigger').forEach((el) => {
+          el.classList.add('scroll-trigger--cancel');
         });
-
-        // Trigger scroll animations if available
-        if (typeof initializeScrollAnimationTrigger === 'function') {
-          initializeScrollAnimationTrigger();
-        }
       }
 
-      // Check for next pagination link in the response
-      const newPagination = doc.querySelector('infinite-scroll');
-      const newNextLink = newPagination?.querySelector('a');
+      // Update pagination element with new content
+      const newPagination = doc.getElementById(this.paginationId);
+      if (newPagination) {
+        this.innerHTML = newPagination.innerHTML;
+      }
 
-      if (newNextLink) {
-        // Update the next link for subsequent loads
-        this.nextLink.href = newNextLink.href;
-        this.loading = false;
-      } else {
-        // No more pages
-        this.showComplete();
-        this.destroyObserver();
+      // Update current page (no URL change for SEO)
+      this.currentPage++;
+
+      // Re-initialize observer for next page (if there is one)
+      this.loading = false;
+      this.classList.remove('loading');
+      this.initialize();
+
+      // Trigger callback for any listeners (e.g., scroll animations)
+      if (typeof initializeScrollAnimationTrigger === 'function') {
+        initializeScrollAnimationTrigger();
       }
     } catch (error) {
       console.error('Infinite scroll error:', error);
       this.loading = false;
-      // On error, show the link so users can click manually
-      this.nextLink.classList.remove('visually-hidden');
-      this.hideSpinner();
+      this.classList.remove('loading');
+      // On error, the link remains clickable as fallback
     }
   }
 
-  showSpinner() {
-    if (this.spinner) this.spinner.style.display = 'flex';
-    if (this.completeMessage) this.completeMessage.style.display = 'none';
-  }
-
-  hideSpinner() {
-    if (this.spinner) this.spinner.style.display = 'none';
-  }
-
-  showComplete() {
-    this.hideSpinner();
-    if (this.nextLink) this.nextLink.style.display = 'none';
-    if (this.completeMessage) {
-      this.completeMessage.style.display = 'block';
-    } else {
-      // Create complete message if not present
-      const message = document.createElement('p');
-      message.className = 'infinite-scroll__complete';
-      message.textContent = this.dataset.completeText || 'No more products';
-      this.appendChild(message);
-    }
+  /**
+   * Reinitialize after filter/sort changes
+   * Called by facets.js after updating the product grid
+   */
+  reinitialize() {
+    this.currentPage = 1;
+    this.loadedHtml = [];
+    this.loading = false;
+    this.classList.remove('loading');
+    // Clear saved state when filters change
+    sessionStorage.removeItem(this.storageKey);
+    this.initialize();
   }
 }
 
