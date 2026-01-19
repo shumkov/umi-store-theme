@@ -495,7 +495,7 @@ a.product__text {
   }
 
   .product__media-item .media {
-    max-height: 65vh;
+    max-height: 60vh;
   }
 
   .product__media-item .media img {
