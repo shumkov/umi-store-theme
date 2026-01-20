@@ -20,7 +20,9 @@ jobs:
       contents: read
       pull-requests: write
     steps:
-      - uses: Brand-Boosting-GmbH/shopify-theme-preview@v1.2.2
+      - uses: Brand-Boosting-GmbH/shopify-theme-preview@main
+        env:
+          SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
         with:
           shopify_flag_store: ${{ secrets.SHOPIFY_FLAG_STORE }}
           shopify_cli_theme_token: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
