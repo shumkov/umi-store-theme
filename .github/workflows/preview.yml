@@ -1,0 +1,26 @@
+name: Shopify Theme Preview
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    # Only run for PR comments containing !preview from repo collaborators/members/owners
+    if: |
+      github.event.issue.pull_request &&
+      contains(github.event.comment.body, '!preview') &&
+      (
+        github.event.comment.author_association == 'COLLABORATOR' ||
+        github.event.comment.author_association == 'MEMBER' ||
+        github.event.comment.author_association == 'OWNER'
+      )
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: Brand-Boosting-GmbH/shopify-theme-preview@v1.2.2
+        with:
+          shopify_flag_store: ${{ secrets.SHOPIFY_FLAG_STORE }}
+          shopify_cli_theme_token: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
