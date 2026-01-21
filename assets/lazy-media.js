@@ -135,41 +135,34 @@ class LazyMedia extends HTMLElement {
       videoElement.removeAttribute('data-src');
     }
 
-    // Create a wrapper div for the video
-    const wrapper = document.createElement('div');
-    wrapper.className = 'media media--transparent';
-    wrapper.dataset.mediaId = placeholder.dataset.mediaId;
-
-    // Initially hide the video until it's ready to prevent gray loading artifact
-    videoElement.style.opacity = '0';
-    wrapper.appendChild(videoElement);
-
-    // Insert video wrapper after placeholder (keep placeholder visible for now)
-    placeholder.after(wrapper);
-
     this.video = videoElement;
 
-    // Wait for video to have loaded enough data before showing it
+    // Wait for video to be ready before adding to DOM (prevents gray artifact)
     const showVideo = () => {
-      videoElement.style.opacity = '1';
-      placeholder.remove();
+      if (this.isLoaded) return; // Prevent double execution
+
+      // Create a wrapper div for the video
+      const wrapper = document.createElement('div');
+      wrapper.className = 'media media--transparent';
+      wrapper.dataset.mediaId = placeholder.dataset.mediaId;
+      wrapper.appendChild(videoElement);
+
+      // Replace placeholder with video
+      placeholder.replaceWith(wrapper);
+
       this.isLoaded = true;
       this.tryAutoplay();
     };
 
-    // Use loadeddata event to ensure video has frames ready before showing
-    if (videoElement.readyState >= 2) {
-      // Video already has enough data
-      showVideo();
-    } else {
-      videoElement.addEventListener('loadeddata', showVideo, { once: true });
-      // Fallback timeout in case loadeddata doesn't fire
-      setTimeout(() => {
-        if (!this.isLoaded) {
-          showVideo();
-        }
-      }, 2000);
-    }
+    // Use canplay event - fires when video can start playing (more reliable than loadeddata)
+    videoElement.addEventListener('canplay', showVideo, { once: true });
+
+    // Fallback timeout in case canplay doesn't fire
+    setTimeout(() => {
+      if (!this.isLoaded) {
+        showVideo();
+      }
+    }, 3000);
   }
 }
 
