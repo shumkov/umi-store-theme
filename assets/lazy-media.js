@@ -2,6 +2,7 @@
  * Lazy Media Component
  * Loads videos only when they come into view using Intersection Observer.
  * Videos autoplay when visible and pause when scrolled out of view.
+ * Shows a play button if autoplay fails (e.g., due to browser restrictions).
  */
 class LazyMedia extends HTMLElement {
   constructor() {
@@ -9,6 +10,7 @@ class LazyMedia extends HTMLElement {
     this.video = null;
     this.isLoaded = false;
     this.observer = null;
+    this.playButton = null;
   }
 
   connectedCallback() {
@@ -39,7 +41,7 @@ class LazyMedia extends HTMLElement {
           if (!this.isLoaded) {
             this.loadVideo();
           } else if (this.video) {
-            this.video.play().catch(() => {});
+            this.tryAutoplay();
           }
         } else if (this.video && this.isLoaded) {
           this.video.pause();
@@ -48,6 +50,71 @@ class LazyMedia extends HTMLElement {
     }, options);
 
     this.observer.observe(this);
+  }
+
+  /**
+   * Attempts to autoplay the video and shows play button if it fails
+   */
+  tryAutoplay() {
+    if (!this.video) return;
+
+    this.video.play().then(() => {
+      this.hidePlayButton();
+    }).catch(() => {
+      this.showPlayButton();
+    });
+  }
+
+  /**
+   * Creates and shows a play button overlay when autoplay fails
+   */
+  showPlayButton() {
+    if (this.playButton) {
+      this.playButton.style.display = 'flex';
+      return;
+    }
+
+    // Create play button
+    this.playButton = document.createElement('button');
+    this.playButton.className = 'lazy-media__video-play-button';
+    this.playButton.setAttribute('aria-label', 'Play video');
+    this.playButton.innerHTML = `
+      <span class="svg-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="icon icon-play" viewBox="0 0 10 14">
+          <path fill="currentColor" fill-rule="evenodd" d="M1.482.815A1 1 0 0 0 0 1.69v10.517a1 1 0 0 0 1.525.851L10.54 7.5a1 1 0 0 0-.043-1.728z" clip-rule="evenodd"/>
+        </svg>
+      </span>
+    `;
+
+    // Add click handler
+    this.playButton.addEventListener('click', () => {
+      if (this.video) {
+        this.video.play().then(() => {
+          this.hidePlayButton();
+        }).catch(() => {});
+      }
+    });
+
+    // Insert play button into the video wrapper
+    const wrapper = this.video?.parentElement;
+    if (wrapper) {
+      wrapper.style.position = 'relative';
+      wrapper.appendChild(this.playButton);
+    }
+
+    // Hide play button when video starts playing (e.g., user clicks on video itself)
+    this.video?.addEventListener('play', () => {
+      this.hidePlayButton();
+    });
+  }
+
+  /**
+   * Hides the play button overlay
+   */
+  hidePlayButton() {
+    if (this.playButton) {
+      this.playButton.style.display = 'none';
+    }
   }
 
   loadVideo() {
@@ -87,7 +154,7 @@ class LazyMedia extends HTMLElement {
       videoElement.style.opacity = '1';
       placeholder.remove();
       this.isLoaded = true;
-      this.video.play().catch(() => {});
+      this.tryAutoplay();
     };
 
     // Use loadeddata event to ensure video has frames ready before showing
