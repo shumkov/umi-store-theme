@@ -72,16 +72,37 @@ class LazyMedia extends HTMLElement {
     const wrapper = document.createElement('div');
     wrapper.className = 'media media--transparent';
     wrapper.dataset.mediaId = placeholder.dataset.mediaId;
+
+    // Initially hide the video until it's ready to prevent gray loading artifact
+    videoElement.style.opacity = '0';
     wrapper.appendChild(videoElement);
 
-    // Replace placeholder with the video
-    placeholder.replaceWith(wrapper);
+    // Insert video wrapper after placeholder (keep placeholder visible for now)
+    placeholder.after(wrapper);
 
     this.video = videoElement;
-    this.isLoaded = true;
 
-    // Start playing
-    this.video.play().catch(() => {});
+    // Wait for video to have loaded enough data before showing it
+    const showVideo = () => {
+      videoElement.style.opacity = '1';
+      placeholder.remove();
+      this.isLoaded = true;
+      this.video.play().catch(() => {});
+    };
+
+    // Use loadeddata event to ensure video has frames ready before showing
+    if (videoElement.readyState >= 2) {
+      // Video already has enough data
+      showVideo();
+    } else {
+      videoElement.addEventListener('loadeddata', showVideo, { once: true });
+      // Fallback timeout in case loadeddata doesn't fire
+      setTimeout(() => {
+        if (!this.isLoaded) {
+          showVideo();
+        }
+      }, 2000);
+    }
   }
 }
 
