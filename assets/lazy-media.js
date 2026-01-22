@@ -188,8 +188,8 @@ class LazyMedia extends HTMLElement {
       if (this.isLoaded) return;
 
       this.hidePreloader();
-      // Hide placeholder to reveal video underneath
-      this.placeholder.style.display = 'none';
+      // Use visibility:hidden to keep layout intact while revealing video
+      this.placeholder.style.visibility = 'hidden';
 
       this.isLoaded = true;
       this.tryAutoplay();
