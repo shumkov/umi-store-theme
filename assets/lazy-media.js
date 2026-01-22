@@ -1,12 +1,12 @@
 /**
  * Lazy Media Component
  * Loads videos only when they come into view using Intersection Observer.
+ * Uses native video poster for smooth loading experience.
  *
- * Loading flow:
- * 1. Poster image visible (bottom layer)
- * 2. Preloader shown on top of poster during loading
- * 3. Video shown on top when ready (hides poster & preloader)
- * 4. Play button shown if autoplay fails
+ * Flow:
+ * 1. Video element with native poster (no src yet)
+ * 2. When visible: set src, hide preloader when can play
+ * 3. Autoplay, show play button if fails
  */
 class LazyMedia extends HTMLElement {
   constructor() {
@@ -16,13 +16,14 @@ class LazyMedia extends HTMLElement {
     this.observer = null;
     this.playButton = null;
     this.preloader = null;
-    this.placeholder = null;
   }
 
   connectedCallback() {
     const mediaType = this.dataset.mediaType;
 
     if (mediaType === 'video') {
+      this.video = this.querySelector('video');
+      this.preloader = this.querySelector('.lazy-media__preloader');
       this.initVideoObserver();
     }
   }
@@ -57,34 +58,6 @@ class LazyMedia extends HTMLElement {
     this.observer.observe(this);
   }
 
-  /**
-   * Shows preloader on top of poster
-   */
-  showPreloader() {
-    if (this.preloader) return;
-
-    this.preloader = document.createElement('div');
-    this.preloader.className = 'lazy-media__preloader';
-    this.preloader.innerHTML = `
-      <div class="lazy-media__spinner">
-        <svg xmlns="http://www.w3.org/2000/svg" class="spinner" viewBox="0 0 66 66">
-          <circle stroke-width="6" cx="33" cy="33" r="30" fill="none" class="path"/>
-        </svg>
-      </div>
-    `;
-
-    // Hide the play icon while loading
-    const playIcon = this.placeholder?.querySelector('.lazy-media__play-icon');
-    if (playIcon) {
-      playIcon.style.display = 'none';
-    }
-
-    this.placeholder?.appendChild(this.preloader);
-  }
-
-  /**
-   * Hides preloader
-   */
   hidePreloader() {
     if (this.preloader) {
       this.preloader.remove();
@@ -92,9 +65,6 @@ class LazyMedia extends HTMLElement {
     }
   }
 
-  /**
-   * Attempts to autoplay the video and shows play button if it fails
-   */
   tryAutoplay() {
     if (!this.video) return;
 
@@ -105,10 +75,10 @@ class LazyMedia extends HTMLElement {
     });
   }
 
-  /**
-   * Creates and shows a play button overlay when autoplay fails
-   */
   showPlayButton() {
+    // Hide preloader first
+    this.hidePreloader();
+
     if (this.playButton) {
       this.playButton.style.display = 'flex';
       return;
@@ -143,9 +113,6 @@ class LazyMedia extends HTMLElement {
     });
   }
 
-  /**
-   * Hides the play button overlay
-   */
   hidePlayButton() {
     if (this.playButton) {
       this.playButton.style.display = 'none';
@@ -153,32 +120,19 @@ class LazyMedia extends HTMLElement {
   }
 
   loadVideo() {
-    const template = this.querySelector('template[data-lazy-video]');
-    this.placeholder = this.querySelector('.lazy-media__placeholder');
+    if (!this.video) return;
 
-    if (!template || !this.placeholder) return;
-
-    // Clone the template content
-    const videoElement = template.content.cloneNode(true).querySelector('video');
-    if (!videoElement) return;
-
-    // Set the src from data-src
-    const src = videoElement.dataset.src;
+    // Set src from data-src
+    const src = this.video.dataset.src;
     if (src) {
-      videoElement.src = src;
-      videoElement.removeAttribute('data-src');
+      this.video.src = src;
+      this.video.removeAttribute('data-src');
     }
 
-    this.video = videoElement;
-
-    // Create wrapper for video (video has native poster attribute for smooth transition)
-    const wrapper = document.createElement('div');
-    wrapper.className = 'media media--transparent lazy-media__video-wrapper';
-    wrapper.dataset.mediaId = this.placeholder.dataset.mediaId;
-    wrapper.appendChild(videoElement);
-
-    // Replace placeholder with video - browser's native poster handles the transition
-    this.placeholder.replaceWith(wrapper);
+    // Hide preloader when video can play
+    this.video.addEventListener('canplay', () => {
+      this.hidePreloader();
+    }, { once: true });
 
     this.isLoaded = true;
     this.tryAutoplay();
