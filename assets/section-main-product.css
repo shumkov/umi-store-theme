@@ -96,6 +96,28 @@ lazy-media {
   height: 100%;
 }
 
+/* Video wrapper positioned underneath poster */
+.lazy-media__video-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.lazy-media__video-wrapper video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: transparent;
+}
+
+/* Poster stays on top until video is ready */
+.lazy-media__placeholder {
+  position: relative;
+  z-index: 1;
+}
+
 lazy-media video {
   width: 100%;
   height: auto;

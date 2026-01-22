@@ -174,20 +174,22 @@ class LazyMedia extends HTMLElement {
 
     this.video = videoElement;
 
-    // When video is ready, show it on top (replacing poster & preloader)
+    // Create wrapper for video
+    const wrapper = document.createElement('div');
+    wrapper.className = 'media media--transparent lazy-media__video-wrapper';
+    wrapper.dataset.mediaId = this.placeholder.dataset.mediaId;
+    wrapper.appendChild(videoElement);
+
+    // Insert video wrapper BEFORE placeholder (so video is underneath)
+    this.placeholder.insertAdjacentElement('beforebegin', wrapper);
+
+    // When video is ready, hide poster to reveal video underneath
     const showVideo = () => {
       if (this.isLoaded) return;
 
       this.hidePreloader();
-
-      // Create wrapper and add video
-      const wrapper = document.createElement('div');
-      wrapper.className = 'media media--transparent';
-      wrapper.dataset.mediaId = this.placeholder.dataset.mediaId;
-      wrapper.appendChild(videoElement);
-
-      // Replace placeholder with video
-      this.placeholder.replaceWith(wrapper);
+      // Hide placeholder to reveal video underneath
+      this.placeholder.style.display = 'none';
 
       this.isLoaded = true;
       this.tryAutoplay();
