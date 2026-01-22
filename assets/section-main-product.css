@@ -96,21 +96,19 @@ lazy-media {
   height: 100%;
 }
 
-/* Video wrapper - replaces placeholder, stays in document flow */
+/* Video wrapper - follows theme's .media pattern with padding-top aspect ratio */
 .lazy-media__video-wrapper {
   position: relative;
   width: 100%;
 }
 
-/* Override the padding-top aspect ratio from .media class */
-.lazy-media__video-wrapper.media {
-  padding-top: 0 !important;
-}
-
 .lazy-media__video-wrapper video {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: auto;
-  display: block;
+  height: 100%;
+  object-fit: cover;
   background: transparent;
 }
 
