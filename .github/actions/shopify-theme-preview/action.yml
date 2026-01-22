@@ -74,9 +74,10 @@ runs:
       env:
         SHOPIFY_FLAG_STORE: ${{ inputs.shopify_flag_store }}
         SHOPIFY_CLI_THEME_TOKEN: ${{ inputs.shopify_cli_theme_token }}
+        PR_NUMBER: ${{ github.event.issue.number || github.event.pull_request.number }}
       run: |
         echo 'JSON_RESPONSE<<EOF' >> $GITHUB_OUTPUT
-        shopify theme push --json --development --path ${{ inputs.dir}} >> $GITHUB_OUTPUT || true
+        shopify theme push --json --unpublished --theme "Preview PR #${PR_NUMBER}" --path ${{ inputs.dir}} >> $GITHUB_OUTPUT || true
         echo 'EOF' >> $GITHUB_OUTPUT
     - name: Format Data
       run: |
