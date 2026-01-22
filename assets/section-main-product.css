@@ -122,7 +122,8 @@ lazy-media video {
 }
 
 /* Play button overlay shown when autoplay fails */
-.lazy-media__video-play-button {
+/* Override base.css .media > * rule */
+.media.lazy-media__video-wrapper > .lazy-media__video-play-button {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -140,7 +141,7 @@ lazy-media video {
   transition: background 0.2s ease, transform 0.2s ease;
 }
 
-.lazy-media__video-play-button:hover {
+.media.lazy-media__video-wrapper > .lazy-media__video-play-button:hover {
   background: rgba(0, 0, 0, 0.8);
   transform: translate(-50%, -50%) scale(1.1);
 }
