@@ -154,15 +154,16 @@ class LazyMedia extends HTMLElement {
       this.tryAutoplay();
     };
 
+    // TEMPORARY: Don't load video so user can inspect artifact
     // Use canplay event - fires when video can start playing (more reliable than loadeddata)
-    videoElement.addEventListener('canplay', showVideo, { once: true });
+    // videoElement.addEventListener('canplay', showVideo, { once: true });
 
     // Fallback timeout in case canplay doesn't fire
-    setTimeout(() => {
-      if (!this.isLoaded) {
-        showVideo();
-      }
-    }, 3000);
+    // setTimeout(() => {
+    //   if (!this.isLoaded) {
+    //     showVideo();
+    //   }
+    // }, 3000);
   }
 }
 
