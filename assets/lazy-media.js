@@ -1,8 +1,12 @@
 /**
  * Lazy Media Component
  * Loads videos only when they come into view using Intersection Observer.
- * Videos autoplay when visible and pause when scrolled out of view.
- * Shows a play button if autoplay fails (e.g., due to browser restrictions).
+ *
+ * Loading flow:
+ * 1. Poster image visible (bottom layer)
+ * 2. Preloader shown on top of poster during loading
+ * 3. Video shown on top when ready (hides poster & preloader)
+ * 4. Play button shown if autoplay fails
  */
 class LazyMedia extends HTMLElement {
   constructor() {
@@ -11,6 +15,8 @@ class LazyMedia extends HTMLElement {
     this.isLoaded = false;
     this.observer = null;
     this.playButton = null;
+    this.preloader = null;
+    this.placeholder = null;
   }
 
   connectedCallback() {
@@ -28,10 +34,9 @@ class LazyMedia extends HTMLElement {
   }
 
   initVideoObserver() {
-    // Options for the observer - preload video 300px before it enters viewport
     const options = {
       root: null,
-      rootMargin: '300px 0px', // Start loading 300px before entering viewport for smoother experience
+      rootMargin: '300px 0px',
       threshold: 0
     };
 
@@ -50,6 +55,41 @@ class LazyMedia extends HTMLElement {
     }, options);
 
     this.observer.observe(this);
+  }
+
+  /**
+   * Shows preloader on top of poster
+   */
+  showPreloader() {
+    if (this.preloader) return;
+
+    this.preloader = document.createElement('div');
+    this.preloader.className = 'lazy-media__preloader';
+    this.preloader.innerHTML = `
+      <div class="lazy-media__spinner">
+        <svg xmlns="http://www.w3.org/2000/svg" class="spinner" viewBox="0 0 66 66">
+          <circle stroke-width="6" cx="33" cy="33" r="30" fill="none" class="path"/>
+        </svg>
+      </div>
+    `;
+
+    // Hide the play icon while loading
+    const playIcon = this.placeholder?.querySelector('.lazy-media__play-icon');
+    if (playIcon) {
+      playIcon.style.display = 'none';
+    }
+
+    this.placeholder?.appendChild(this.preloader);
+  }
+
+  /**
+   * Hides preloader
+   */
+  hidePreloader() {
+    if (this.preloader) {
+      this.preloader.remove();
+      this.preloader = null;
+    }
   }
 
   /**
@@ -74,7 +114,6 @@ class LazyMedia extends HTMLElement {
       return;
     }
 
-    // Create play button
     this.playButton = document.createElement('button');
     this.playButton.className = 'lazy-media__video-play-button';
     this.playButton.setAttribute('aria-label', 'Play video');
@@ -86,7 +125,6 @@ class LazyMedia extends HTMLElement {
       </span>
     `;
 
-    // Add click handler
     this.playButton.addEventListener('click', () => {
       if (this.video) {
         this.video.play().then(() => {
@@ -95,14 +133,11 @@ class LazyMedia extends HTMLElement {
       }
     });
 
-    // Insert play button into the video wrapper
     const wrapper = this.video?.parentElement;
     if (wrapper) {
-      wrapper.style.position = 'relative';
       wrapper.appendChild(this.playButton);
     }
 
-    // Hide play button when video starts playing (e.g., user clicks on video itself)
     this.video?.addEventListener('play', () => {
       this.hidePlayButton();
     });
@@ -119,13 +154,15 @@ class LazyMedia extends HTMLElement {
 
   loadVideo() {
     const template = this.querySelector('template[data-lazy-video]');
-    const placeholder = this.querySelector('.lazy-media__placeholder');
+    this.placeholder = this.querySelector('.lazy-media__placeholder');
 
-    if (!template || !placeholder) return;
+    if (!template || !this.placeholder) return;
+
+    // Show preloader on top of poster
+    this.showPreloader();
 
     // Clone the template content
     const videoElement = template.content.cloneNode(true).querySelector('video');
-
     if (!videoElement) return;
 
     // Set the src from data-src
@@ -137,32 +174,34 @@ class LazyMedia extends HTMLElement {
 
     this.video = videoElement;
 
-    // Wait for video to be ready before adding to DOM (prevents gray artifact)
+    // When video is ready, show it on top (replacing poster & preloader)
     const showVideo = () => {
-      if (this.isLoaded) return; // Prevent double execution
+      if (this.isLoaded) return;
 
-      // Create a wrapper div for the video
+      this.hidePreloader();
+
+      // Create wrapper and add video
       const wrapper = document.createElement('div');
       wrapper.className = 'media media--transparent';
-      wrapper.dataset.mediaId = placeholder.dataset.mediaId;
+      wrapper.dataset.mediaId = this.placeholder.dataset.mediaId;
       wrapper.appendChild(videoElement);
 
       // Replace placeholder with video
-      placeholder.replaceWith(wrapper);
+      this.placeholder.replaceWith(wrapper);
 
       this.isLoaded = true;
       this.tryAutoplay();
     };
 
-    // Use canplay event - fires when video can start playing (more reliable than loadeddata)
+    // Use canplay event - fires when video can start playing
     videoElement.addEventListener('canplay', showVideo, { once: true });
 
-    // Fallback timeout in case canplay doesn't fire
+    // Fallback timeout
     setTimeout(() => {
       if (!this.isLoaded) {
         showVideo();
       }
-    }, 3000);
+    }, 5000);
   }
 }
 
