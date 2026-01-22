@@ -12,6 +12,7 @@ class LazyMedia extends HTMLElement {
   constructor() {
     super();
     this.video = null;
+    this.isLoading = false;
     this.isLoaded = false;
     this.observer = null;
     this.playButton = null;
@@ -120,7 +121,9 @@ class LazyMedia extends HTMLElement {
   }
 
   loadVideo() {
-    if (!this.video) return;
+    if (!this.video || this.isLoading || this.isLoaded) return;
+
+    this.isLoading = true;
 
     // Set src from data-src
     const src = this.video.dataset.src;
@@ -131,11 +134,18 @@ class LazyMedia extends HTMLElement {
 
     // Hide preloader when video can play
     this.video.addEventListener('canplay', () => {
+      this.isLoading = false;
+      this.isLoaded = true;
       this.hidePreloader();
+      this.tryAutoplay();
     }, { once: true });
 
-    this.isLoaded = true;
-    this.tryAutoplay();
+    // Handle load errors
+    this.video.addEventListener('error', () => {
+      this.isLoading = false;
+      this.hidePreloader();
+      this.showPlayButton();
+    }, { once: true });
   }
 }
 

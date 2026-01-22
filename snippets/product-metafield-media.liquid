@@ -66,9 +66,10 @@
       ></video>
       <div class="lazy-media__preloader">
         <div class="lazy-media__spinner">
-          <svg xmlns="http://www.w3.org/2000/svg" class="spinner" viewBox="0 0 66 66">
+          <svg xmlns="http://www.w3.org/2000/svg" class="spinner" viewBox="0 0 66 66" aria-hidden="true">
             <circle stroke-width="6" cx="33" cy="33" r="30" fill="none" class="path"/>
           </svg>
+          <span class="visually-hidden">{{ 'accessibility.loading' | t }}</span>
         </div>
       </div>
     </div>
