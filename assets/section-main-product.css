@@ -60,7 +60,7 @@ lazy-media {
 }
 
 .lazy-media__spinner .path {
-  stroke: rgba(0, 0, 0, 0.6);
+  stroke: rgba(128, 128, 128, 0.8);
   stroke-dasharray: 180;
   stroke-dashoffset: 0;
   transform-origin: center;

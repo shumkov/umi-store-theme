@@ -158,9 +158,6 @@ class LazyMedia extends HTMLElement {
 
     if (!template || !this.placeholder) return;
 
-    // Show preloader on top of poster
-    this.showPreloader();
-
     // Clone the template content
     const videoElement = template.content.cloneNode(true).querySelector('video');
     if (!videoElement) return;
@@ -174,36 +171,17 @@ class LazyMedia extends HTMLElement {
 
     this.video = videoElement;
 
-    // Create wrapper for video
+    // Create wrapper for video (video has native poster attribute for smooth transition)
     const wrapper = document.createElement('div');
     wrapper.className = 'media media--transparent lazy-media__video-wrapper';
     wrapper.dataset.mediaId = this.placeholder.dataset.mediaId;
     wrapper.appendChild(videoElement);
 
-    // Insert video wrapper BEFORE placeholder (so video is underneath)
-    this.placeholder.insertAdjacentElement('beforebegin', wrapper);
+    // Replace placeholder with video - browser's native poster handles the transition
+    this.placeholder.replaceWith(wrapper);
 
-    // When video is ready, hide poster to reveal video underneath
-    const showVideo = () => {
-      if (this.isLoaded) return;
-
-      this.hidePreloader();
-      // Use visibility:hidden to keep layout intact while revealing video
-      this.placeholder.style.visibility = 'hidden';
-
-      this.isLoaded = true;
-      this.tryAutoplay();
-    };
-
-    // Use canplay event - fires when video can start playing
-    videoElement.addEventListener('canplay', showVideo, { once: true });
-
-    // Fallback timeout
-    setTimeout(() => {
-      if (!this.isLoaded) {
-        showVideo();
-      }
-    }, 5000);
+    this.isLoaded = true;
+    this.tryAutoplay();
   }
 }
 
