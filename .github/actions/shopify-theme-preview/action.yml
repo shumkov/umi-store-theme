@@ -39,19 +39,13 @@ runs:
       id: create-comment
       uses: peter-evans/create-or-update-comment@v4
       with:
-        issue-number: ${{ github.event.issue.number || github.event.pull_request.number }}
+        issue-number: ${{ github.event.pull_request.number }}
         body: |
           **Shopify Theme Preview**
 
           | Name | Status | Preview | Editor | Date | Time |
           | :--- | :----- | :------ | :------ | :------ | :----- |
           | ${{ inputs.shopify_flag_store }} | :hourglass_flowing_sand: Loading |  |  | ${{ steps.date.outputs.date }} | ${{ steps.time.outputs.time }}
-    - uses: actions/checkout@v4
-    - name: Checkout Pull Request
-      run: gh pr checkout ${{ github.event.issue.number || github.event.pull_request.number }}
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
-      shell: bash
     - uses: actions/setup-node@v4
       with:
         node-version: 18
@@ -74,7 +68,7 @@ runs:
       env:
         SHOPIFY_FLAG_STORE: ${{ inputs.shopify_flag_store }}
         SHOPIFY_CLI_THEME_TOKEN: ${{ inputs.shopify_cli_theme_token }}
-        PR_NUMBER: ${{ github.event.issue.number || github.event.pull_request.number }}
+        PR_NUMBER: ${{ github.event.pull_request.number }}
       run: |
         echo 'JSON_RESPONSE<<EOF' >> $GITHUB_OUTPUT
         shopify theme push --json --unpublished --theme "Preview PR #${PR_NUMBER}" --path ${{ inputs.dir}} >> $GITHUB_OUTPUT || true
@@ -104,7 +98,7 @@ runs:
       uses: peter-evans/create-or-update-comment@v4
       with:
         comment-id: ${{ steps.create-comment.outputs.comment-id }}
-        issue-number: ${{ github.event.issue.number || github.event.pull_request.number }}
+        issue-number: ${{ github.event.pull_request.number }}
         body: |
           **Shopify Theme Preview**
 
