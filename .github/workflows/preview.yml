@@ -20,7 +20,8 @@ jobs:
       contents: read
       pull-requests: write
     steps:
-      - uses: Brand-Boosting-GmbH/shopify-theme-preview@main
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/shopify-theme-preview
         with:
           shopify_flag_store: ${{ secrets.SHOPIFY_FLAG_STORE }}
           shopify_cli_theme_token: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
