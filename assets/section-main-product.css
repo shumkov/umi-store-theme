@@ -102,6 +102,43 @@ lazy-media {
   object-fit: cover;
 }
 
+/* Fullscreen video should show full content without cropping */
+.lazy-media__video-wrapper video:fullscreen {
+  object-fit: contain;
+  background: #000;
+}
+
+/* Play button - black transparent circle with white arrow */
+.lazy-media__play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 6rem;
+  height: 6rem;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  padding: 0;
+  transition: background 0.2s ease;
+}
+
+.lazy-media__play-button:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.lazy-media__play-button svg {
+  width: 2.4rem;
+  height: 2.4rem;
+  fill: #fff;
+  margin-left: 0.3rem;
+}
+
 /* Placeholder with poster and preloader */
 .lazy-media__placeholder {
   position: relative;

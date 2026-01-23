@@ -6,8 +6,8 @@
  * Flow:
  * 1. Video element with native poster and fallback img (no src yet)
  * 2. When visible: set src, hide preloader when can play
- * 3. Autoplay if possible, otherwise click anywhere to play
- * 4. Click on playing video to toggle fullscreen
+ * 3. Autoplay if possible, otherwise show play button
+ * 4. Click anywhere to play, click playing video for fullscreen
  */
 class LazyMedia extends HTMLElement {
   constructor() {
@@ -17,6 +17,7 @@ class LazyMedia extends HTMLElement {
     this.isLoaded = false;
     this.observer = null;
     this.preloader = null;
+    this.playButton = null;
   }
 
   connectedCallback() {
@@ -66,10 +67,17 @@ class LazyMedia extends HTMLElement {
     // Click anywhere on video: paused -> play, playing -> fullscreen
     this.video.addEventListener('click', () => {
       if (this.video.paused) {
-        this.video.play().catch(() => {});
+        this.video.play().then(() => {
+          this.hidePlayButton();
+        }).catch(() => {});
       } else {
         this.toggleFullscreen();
       }
+    });
+
+    // Hide play button when video starts playing
+    this.video.addEventListener('play', () => {
+      this.hidePlayButton();
     });
   }
 
@@ -96,10 +104,49 @@ class LazyMedia extends HTMLElement {
     }
   }
 
+  showPlayButton() {
+    if (this.playButton) {
+      this.playButton.style.display = 'flex';
+      return;
+    }
+
+    this.playButton = document.createElement('button');
+    this.playButton.className = 'lazy-media__play-button';
+    this.playButton.setAttribute('aria-label', 'Play video');
+    this.playButton.innerHTML = `
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M8 5v14l11-7z"/>
+      </svg>
+    `;
+
+    this.playButton.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (this.video) {
+        this.video.play().then(() => {
+          this.hidePlayButton();
+        }).catch(() => {});
+      }
+    });
+
+    const wrapper = this.video?.parentElement;
+    if (wrapper) {
+      wrapper.appendChild(this.playButton);
+    }
+  }
+
+  hidePlayButton() {
+    if (this.playButton) {
+      this.playButton.style.display = 'none';
+    }
+  }
+
   tryAutoplay() {
     if (!this.video) return;
-    this.video.play().catch(() => {
-      // Autoplay failed - user can click to play
+    this.video.play().then(() => {
+      this.hidePlayButton();
+    }).catch(() => {
+      // Autoplay failed - show play button
+      this.showPlayButton();
     });
   }
 
@@ -131,6 +178,7 @@ class LazyMedia extends HTMLElement {
     this.video.addEventListener('error', () => {
       this.isLoading = false;
       this.hidePreloader();
+      this.showPlayButton();
     }, { once: true });
   }
 }
