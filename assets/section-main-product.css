@@ -893,9 +893,16 @@ a.product__text {
 
 /* Constrain images in lightbox modal to fit viewport */
 .product-media-modal__content>img {
-  width: 100%;
+  width: 100vw;
+  max-width: none;
   height: auto;
   object-fit: contain;
+}
+
+@media screen and (min-width: 750px) {
+  .product-media-modal__content>img {
+    margin-left: -11rem;
+  }
 }
 
 @media screen and (max-width: 749px) {
@@ -904,9 +911,8 @@ a.product__text {
   }
 
   .product-media-modal__content>img {
-    width: 150vw;
-    max-width: none;
-    margin-left: -25vw;
+    width: 200vw;
+    margin-left: -50vw;
   }
 }
 
