@@ -41,6 +41,11 @@ function createOverlay(image) {
 
   overlayImage.onload = () => {
     toggleLoadingSpinner(image);
+    // Check if this overlay is still the active one (user may have closed it before image loaded)
+    if (currentOverlay !== overlay || currentImage !== image) {
+      image.style.opacity = '100%';
+      return;
+    }
     image.parentElement.insertBefore(overlay, image);
     image.style.opacity = '100%';
   };
