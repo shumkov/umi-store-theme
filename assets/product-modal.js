@@ -18,6 +18,7 @@ if (!customElements.get('product-modal')) {
         this.initialPinchZoom = 1;
         this.currentTouchImg = null;
         this.currentTouchWrapper = null;
+        this.pinchCenter = { x: 0, y: 0 };
       }
 
       hide() {
@@ -78,6 +79,39 @@ if (!customElements.get('product-modal')) {
         super.show(opener);
         this.showActiveMedia();
         this.initZoomHandlers();
+        this.applyInitialZoom();
+      }
+
+      applyInitialZoom() {
+        // On mobile, if we have a click position, start zoomed in on that point
+        if (!this.clickPosition) return;
+
+        const isMobile = window.matchMedia('(hover: none)').matches ||
+                         window.matchMedia('(max-width: 749px)').matches;
+        if (!isMobile) return;
+
+        // Wait for modal to render
+        setTimeout(() => {
+          const activeMedia = this.querySelector('[data-media-id].active');
+          if (!activeMedia) return;
+
+          const img = activeMedia.querySelector('img');
+          if (!img) return;
+
+          const wrapper = img.closest('.product-media-modal__content');
+          if (!wrapper) return;
+
+          // Apply 2x zoom centered on click position
+          const initialZoom = 2;
+          const state = { zoom: initialZoom, panX: 0, panY: 0 };
+          this.zoomState.set(img, state);
+
+          const originX = this.clickPosition.clickX * 100;
+          const originY = this.clickPosition.clickY * 100;
+
+          img.style.transformOrigin = `${originX}% ${originY}%`;
+          img.style.transform = `scale(${initialZoom})`;
+        }, 100);
       }
 
       initZoomHandlers() {
@@ -233,6 +267,15 @@ if (!customElements.get('product-modal')) {
           this.currentTouchImg = img;
           this.currentTouchWrapper = wrapper;
 
+          // Calculate pinch center relative to image
+          const centerX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+          const centerY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+          const imgRect = img.getBoundingClientRect();
+          this.pinchCenter = {
+            x: ((centerX - imgRect.left) / imgRect.width) * 100,
+            y: ((centerY - imgRect.top) / imgRect.height) * 100
+          };
+
           // Get or initialize zoom state
           let state = this.zoomState.get(img);
           if (!state) {
@@ -272,8 +315,8 @@ if (!customElements.get('product-modal')) {
           }
           state.zoom = newZoom;
 
-          // Apply zoom transform
-          img.style.transformOrigin = 'top left';
+          // Apply zoom transform centered on pinch point
+          img.style.transformOrigin = `${this.pinchCenter.x}% ${this.pinchCenter.y}%`;
           img.style.transform = `scale(${newZoom})`;
         } else if (e.touches.length === 1 && this.isDragging && this.currentWrapper) {
           // Single touch pan when zoomed
