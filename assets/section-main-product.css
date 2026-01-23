@@ -109,9 +109,6 @@ lazy-media {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  background-image: var(--poster-url);
-  background-size: cover;
-  background-position: center;
 }
 
 /* Placeholder with poster and preloader */
@@ -123,9 +120,6 @@ lazy-media video {
   width: 100%;
   height: auto;
   display: block;
-  background-image: var(--poster-url);
-  background-size: cover;
-  background-position: center;
 }
 
 /* Play button overlay shown when autoplay fails */

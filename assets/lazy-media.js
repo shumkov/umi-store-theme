@@ -125,18 +125,22 @@ class LazyMedia extends HTMLElement {
 
     this.isLoading = true;
 
-    // Set src from data-src
-    const src = this.video.dataset.src;
-    if (src) {
-      this.video.src = src;
-      this.video.removeAttribute('data-src');
+    // Set src on source element (matches working video pattern)
+    const source = this.video.querySelector('source[data-src]');
+    if (source) {
+      source.src = source.dataset.src;
+      source.removeAttribute('data-src');
+      this.video.load();
     }
 
-    // Hide preloader when video can play
+    // Hide preloader and fallback img when video can play
     this.video.addEventListener('canplay', () => {
       this.isLoading = false;
       this.isLoaded = true;
       this.hidePreloader();
+      // Remove fallback img inside video
+      const fallbackImg = this.video.querySelector('img');
+      if (fallbackImg) fallbackImg.remove();
       this.tryAutoplay();
     }, { once: true });
 

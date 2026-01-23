@@ -56,14 +56,16 @@
     <div class="media media--transparent lazy-media__video-wrapper" data-media-id="{{ position }}">
       <video
         class="lazy-media__video"
-        data-src="{{ file.sources[0].url }}"
         muted
         playsinline
         {% if loop %}loop{% endif %}
         preload="none"
         poster="{{ file.preview_image | image_url: width: 1946 }}"
-        style="cursor: pointer; --poster-url: url('{{ file.preview_image | image_url: width: 1946 }}');"
-      ></video>
+        style="cursor: pointer;"
+      >
+        <source data-src="{{ file.sources[0].url }}" type="video/mp4">
+        <img src="{{ file.preview_image | image_url: width: 1946 }}" alt="">
+      </video>
       <div class="lazy-media__preloader">
         <div class="lazy-media__spinner">
           <svg xmlns="http://www.w3.org/2000/svg" class="spinner" viewBox="0 0 66 66" aria-hidden="true">
