@@ -134,10 +134,10 @@ lazy-media {
 }
 
 .media.lazy-media__video-wrapper > .lazy-media__play-button svg {
-  width: 2.4rem;
-  height: 2.4rem;
+  width: 3.2rem;
+  height: 3.2rem;
   fill: #fff;
-  margin-left: 0.3rem;
+  margin-left: 0.4rem;
 }
 
 /* Placeholder with poster and preloader */

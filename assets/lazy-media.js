@@ -79,6 +79,16 @@ class LazyMedia extends HTMLElement {
     this.video.addEventListener('play', () => {
       this.hidePlayButton();
     });
+
+    // Resume playback after exiting fullscreen (mobile browsers pause on exit)
+    this.video.addEventListener('webkitendfullscreen', () => {
+      this.video.play().catch(() => {});
+    });
+    this.video.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement) {
+        this.video.play().catch(() => {});
+      }
+    });
   }
 
   toggleFullscreen() {
