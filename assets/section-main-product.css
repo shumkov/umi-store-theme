@@ -35,7 +35,8 @@ lazy-media {
 }
 
 /* Preloader shown on top of poster during video loading */
-.media.lazy-media__placeholder > .lazy-media__preloader {
+.media.lazy-media__placeholder > .lazy-media__preloader,
+.media.lazy-media__video-wrapper > .lazy-media__preloader {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -46,6 +47,7 @@ lazy-media {
   align-items: center;
   justify-content: center;
   pointer-events: none;
+  z-index: 2;
 }
 
 .lazy-media__spinner {
@@ -84,17 +86,6 @@ lazy-media {
   }
 }
 
-.lazy-media__play-icon .svg-wrapper {
-  width: 2.4rem;
-  height: 2.4rem;
-  margin-left: 0.4rem;
-}
-
-.lazy-media__play-icon svg {
-  fill: #fff;
-  width: 100%;
-  height: 100%;
-}
 
 /* Video wrapper - follows theme's .media pattern with padding-top aspect ratio */
 .lazy-media__video-wrapper {
@@ -122,42 +113,6 @@ lazy-media video {
   display: block;
 }
 
-/* Play button overlay shown when autoplay fails */
-/* Override base.css .media > * rule */
-.media.lazy-media__video-wrapper > .lazy-media__video-play-button {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 6rem;
-  height: 6rem;
-  background: rgba(0, 0, 0, 0.6);
-  border-radius: 50%;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
-  transition: background 0.2s ease, transform 0.2s ease;
-}
-
-.media.lazy-media__video-wrapper > .lazy-media__video-play-button:hover {
-  background: rgba(0, 0, 0, 0.8);
-  transform: translate(-50%, -50%) scale(1.1);
-}
-
-.lazy-media__video-play-button .svg-wrapper {
-  width: 2.4rem;
-  height: 2.4rem;
-  margin-left: 0.4rem;
-}
-
-.lazy-media__video-play-button svg {
-  fill: #fff;
-  width: 100%;
-  height: 100%;
-}
 
 .product {
   margin: 0;
