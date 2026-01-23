@@ -30,7 +30,7 @@ runs:
     - name: Get Date
       id: date
       shell: bash
-      run: echo "date=$(date +'%d-%m-%Y ')" >> $GITHUB_OUTPUT
+      run: echo "date=$(date +'%d-%m-%Y')" >> $GITHUB_OUTPUT
     - name: Get Time
       id: time
       run: echo "time=$(date +'%H:%M:%S')" >> $GITHUB_OUTPUT
@@ -70,17 +70,44 @@ runs:
         SHOPIFY_CLI_THEME_TOKEN: ${{ inputs.shopify_cli_theme_token }}
         PR_NUMBER: ${{ github.event.pull_request.number }}
       run: |
-        echo 'JSON_RESPONSE<<EOF' >> $GITHUB_OUTPUT
-        shopify theme push --json --unpublished --theme "Preview PR #${PR_NUMBER}" --path ${{ inputs.dir}} >> $GITHUB_OUTPUT || true
-        echo 'EOF' >> $GITHUB_OUTPUT
+        set -o pipefail
+        output=$(shopify theme push --json --unpublished --theme "Preview PR #${PR_NUMBER}" --path ${{ inputs.dir }})
+        exit_code=$?
+        if [ $exit_code -ne 0 ]; then
+          echo "Shopify theme push failed with exit code $exit_code"
+          exit $exit_code
+        fi
+        echo "JSON_RESPONSE<<EOF" >> $GITHUB_OUTPUT
+        echo "$output" >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
     - name: Format Data
-      run: |
-        echo '${{ steps.link.outputs.JSON_RESPONSE }}' > 'temp.txt'
-        echo 'LINK<<DEL' >> $GITHUB_OUTPUT
-        tail -n1 temp.txt >> $GITHUB_OUTPUT
-        echo 'DEL' >> $GITHUB_OUTPUT
       id: temp
       shell: bash
+      env:
+        JSON_RESPONSE: ${{ steps.link.outputs.JSON_RESPONSE }}
+      run: |
+        echo "$JSON_RESPONSE" > temp.txt
+        link_json=$(tail -n1 temp.txt)
+        if [ -z "$link_json" ]; then
+          echo "Error: Empty response from theme push"
+          exit 1
+        fi
+        echo "LINK<<EOF" >> $GITHUB_OUTPUT
+        echo "$link_json" >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+    - name: Validate Preview Link
+      id: validate
+      shell: bash
+      env:
+        LINK: ${{ steps.temp.outputs.LINK }}
+      run: |
+        if ! echo "$LINK" | jq -e '.theme.preview_url and .theme.editor_url' > /dev/null 2>&1; then
+          echo "Error: Invalid or missing preview URLs in response"
+          echo "$LINK"
+          exit 1
+        fi
+        echo "preview_url=$(echo "$LINK" | jq -r '.theme.preview_url')" >> $GITHUB_OUTPUT
+        echo "editor_url=$(echo "$LINK" | jq -r '.theme.editor_url')" >> $GITHUB_OUTPUT
     - name: Comment Link
       uses: peter-evans/create-or-update-comment@v4
       with:
@@ -90,7 +117,7 @@ runs:
 
           | Name | Status | Preview | Editor | Date | Time |
           | :--- | :----- | :------ | :------ | :------ | :----- |
-          | ${{ inputs.shopify_flag_store }} | :white_check_mark: Ready | <a href="${{ fromJSON(steps.temp.outputs.LINK).theme.preview_url }}" target="_blank">Preview</a> | [Editor](${{ fromJSON(steps.temp.outputs.LINK).theme.editor_url }}) | ${{ steps.date.outputs.date }} | ${{ steps.time.outputs.time }}
+          | ${{ inputs.shopify_flag_store }} | :white_check_mark: Ready | <a href="${{ steps.validate.outputs.preview_url }}" target="_blank">Preview</a> | [Editor](${{ steps.validate.outputs.editor_url }}) | ${{ steps.date.outputs.date }} | ${{ steps.time.outputs.time }}
         reactions: hooray
         edit-mode: replace
     - name: Output Step Failed
@@ -98,7 +125,6 @@ runs:
       uses: peter-evans/create-or-update-comment@v4
       with:
         comment-id: ${{ steps.create-comment.outputs.comment-id }}
-        issue-number: ${{ github.event.pull_request.number }}
         body: |
           **Shopify Theme Preview**
 
