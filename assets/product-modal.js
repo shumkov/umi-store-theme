@@ -9,14 +9,15 @@ if (!customElements.get('product-modal')) {
       }
 
       hide() {
-        super.hide();
         // Restore scroll position after modal is hidden
-        if (this.savedScrollPosition !== null) {
+        const scrollPos = this.savedScrollPosition;
+        super.hide();
+        if (scrollPos !== null) {
           setTimeout(() => {
-            window.scrollTo(0, this.savedScrollPosition);
-            this.savedScrollPosition = null;
+            window.scrollTo(0, scrollPos);
           }, 50);
         }
+        this.savedScrollPosition = null;
       }
 
       show(opener, clickPosition = null) {
@@ -40,37 +41,10 @@ if (!customElements.get('product-modal')) {
 
         const container = this.querySelector('[role="document"]');
 
-        // Scroll to clicked position if available
-        if (this.clickPosition && activeMedia.tagName === 'IMG') {
-          const scrollToClick = () => {
-            // Use setTimeout to ensure layout is complete
-            setTimeout(() => {
-              const imgWidth = activeMedia.offsetWidth;
-              const imgHeight = activeMedia.offsetHeight;
-              const containerWidth = container.clientWidth;
-              const containerHeight = container.clientHeight;
-
-              // Calculate scroll position to center the clicked point
-              const scrollX = (imgWidth * this.clickPosition.clickX) - (containerWidth / 2);
-              const scrollY = (imgHeight * this.clickPosition.clickY) - (containerHeight / 2);
-
-              container.scrollTo({
-                left: Math.max(0, scrollX),
-                top: Math.max(0, scrollY),
-                behavior: 'instant'
-              });
-            }, 100);
-          };
-
-          if (activeMedia.complete && activeMedia.naturalWidth > 0) {
-            scrollToClick();
-          } else {
-            activeMedia.addEventListener('load', scrollToClick, { once: true });
-          }
-        } else {
-          activeMedia.scrollIntoView();
-          container.scrollLeft = (activeMedia.width - container.clientWidth) / 2;
-        }
+        // Scroll to the clicked image after a short delay to ensure modal is rendered
+        setTimeout(() => {
+          activeMedia.scrollIntoView({ behavior: 'instant', block: 'start' });
+        }, 50);
 
         if (
           activeMedia.nodeName == 'DEFERRED-MEDIA' &&
