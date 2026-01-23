@@ -59,7 +59,7 @@
         data-src="{{ file.sources[0].url }}"
         muted
         playsinline
-        loop
+        {% if loop %}loop{% endif %}
         preload="none"
         poster="{{ file.preview_image | image_url: width: 1946 }}"
         style="cursor: pointer; --poster-url: url('{{ file.preview_image | image_url: width: 1946 }}');"
