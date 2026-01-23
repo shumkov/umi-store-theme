@@ -1261,7 +1261,8 @@ a.product__text {
 }
 
 .product__modal-opener--image .product__media-zoom-none,
-.product__media-icon--none {
+.product__media-icon--none,
+.product__media-icon--lightbox {
   display: none;
 }
 

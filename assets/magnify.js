@@ -6,7 +6,10 @@ const DESKTOP_INITIAL_ZOOM = 2;
 const MOBILE_INITIAL_ZOOM = 1.2;
 
 function isMobile() {
-  return window.innerWidth <= 749;
+  // Check for touch-primary device (no hover capability) OR small screen
+  const noHover = window.matchMedia('(hover: none)').matches;
+  const smallScreen = window.matchMedia('(max-width: 749px)').matches;
+  return noHover || smallScreen;
 }
 
 function getInitialZoom() {
