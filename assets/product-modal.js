@@ -56,9 +56,9 @@ if (!customElements.get('product-modal')) {
         // Scroll product page to the image that was visible in the lightbox
         if (visibleMediaId) {
           setTimeout(() => {
-            // Find the corresponding image on the product page
-            // Product page images have IDs like "template--...--main-N" where N is the media ID
-            const gallery = document.querySelector('[role="region"][aria-label="Gallery Viewer"]');
+            // Find the corresponding image on the product page using media-gallery element
+            // This selector works across all locales (aria-label is localized)
+            const gallery = document.querySelector('media-gallery');
             if (gallery) {
               const productImage = gallery.querySelector(`[data-media-id$="-${visibleMediaId}"]`);
               if (productImage) {
@@ -244,6 +244,7 @@ if (!customElements.get('product-modal')) {
           // Single touch - check if zoomed for panning
           const state = this.zoomState.get(img);
           if (state && state.zoom > 1) {
+            e.preventDefault(); // Prevent page scroll while panning zoomed image
             this.isDragging = true;
             this.dragStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
             this.scrollStart = { x: wrapper.scrollLeft, y: wrapper.scrollTop };
@@ -276,6 +277,7 @@ if (!customElements.get('product-modal')) {
           img.style.transform = `scale(${newZoom})`;
         } else if (e.touches.length === 1 && this.isDragging && this.currentWrapper) {
           // Single touch pan when zoomed
+          e.preventDefault(); // Prevent page scroll while panning
           const dx = e.touches[0].clientX - this.dragStart.x;
           const dy = e.touches[0].clientY - this.dragStart.y;
 
@@ -321,8 +323,6 @@ if (!customElements.get('product-modal')) {
         const activeMediaTemplate = activeMedia.querySelector('template');
         const activeMediaContent = activeMediaTemplate ? activeMediaTemplate.content : null;
         activeMedia.classList.add('active');
-
-        const container = this.querySelector('[role="document"]');
 
         // Scroll to the clicked image after a short delay to ensure modal is rendered
         setTimeout(() => {
