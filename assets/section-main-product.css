@@ -893,17 +893,20 @@ a.product__text {
 
 /* Constrain images in lightbox modal to fit viewport */
 .product-media-modal__content>img {
-  max-width: 100%;
-  max-height: calc(100vh - 4rem);
-  width: auto;
+  width: 100%;
   height: auto;
   object-fit: contain;
 }
 
 @media screen and (max-width: 749px) {
+  .product-media-modal__dialog {
+    align-items: flex-start;
+  }
+
   .product-media-modal__content>img {
-    max-height: calc(100vh - 6rem);
-    max-width: 100vw;
+    width: 150vw;
+    max-width: none;
+    margin-left: -25vw;
   }
 }
 
