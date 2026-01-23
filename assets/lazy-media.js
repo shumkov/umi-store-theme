@@ -18,9 +18,6 @@ class LazyMedia extends HTMLElement {
     this.observer = null;
     this.preloader = null;
     this.playButton = null;
-    this.justExitedFullscreen = false;
-    this._onFullscreenChange = this.onFullscreenChange.bind(this);
-    this._wasFullscreen = false;
   }
 
   connectedCallback() {
@@ -38,7 +35,6 @@ class LazyMedia extends HTMLElement {
     if (this.observer) {
       this.observer.disconnect();
     }
-    document.removeEventListener('fullscreenchange', this._onFullscreenChange);
   }
 
   initVideoObserver() {
@@ -56,7 +52,7 @@ class LazyMedia extends HTMLElement {
           } else if (this.video) {
             this.tryAutoplay();
           }
-        } else if (this.video && this.isLoaded && !this.justExitedFullscreen) {
+        } else if (this.video && this.isLoaded) {
           this.video.pause();
         }
       });
@@ -90,39 +86,6 @@ class LazyMedia extends HTMLElement {
         this.showPlayButton();
       }
     });
-
-    // iOS Safari - resume playback after exiting fullscreen
-    this.video.addEventListener('webkitendfullscreen', () => {
-      this.justExitedFullscreen = true;
-      setTimeout(() => {
-        this.justExitedFullscreen = false;
-      }, 500);
-      this.video.play().catch(() => {
-        this.showPlayButton();
-      });
-    });
-
-    // Standard browsers - use bound handler for proper cleanup
-    document.addEventListener('fullscreenchange', this._onFullscreenChange);
-  }
-
-  onFullscreenChange() {
-    // Track when THIS video enters fullscreen
-    if (document.fullscreenElement === this.video) {
-      this._wasFullscreen = true;
-      return;
-    }
-    // Only resume if THIS video was in fullscreen
-    if (this._wasFullscreen && !document.fullscreenElement) {
-      this._wasFullscreen = false;
-      this.justExitedFullscreen = true;
-      setTimeout(() => {
-        this.justExitedFullscreen = false;
-      }, 500);
-      this.video?.play().catch(() => {
-        this.showPlayButton();
-      });
-    }
   }
 
   toggleFullscreen() {
