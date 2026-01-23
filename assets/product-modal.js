@@ -8,6 +8,7 @@ if (!customElements.get('product-modal')) {
         this.savedScrollPosition = null;
         this.zoomState = new Map(); // Track zoom state per image
         this.isDragging = false;
+        this.didDrag = false; // Track if actual drag movement occurred
         this.dragStart = { x: 0, y: 0 };
         this.scrollStart = { x: 0, y: 0 };
         // Touch pinch-to-zoom state
@@ -92,6 +93,11 @@ if (!customElements.get('product-modal')) {
         container.addEventListener('mouseup', () => this.handleMouseUp());
         container.addEventListener('mouseleave', () => this.handleMouseUp());
 
+        // Prevent click and pointerup events when dragging (to avoid closing lightbox)
+        // ModalDialog uses pointerup to close media-modal, so we need to intercept it
+        container.addEventListener('click', (e) => this.handleClick(e), true);
+        container.addEventListener('pointerup', (e) => this.handlePointerUp(e), true);
+
         // Touch events for pinch-to-zoom (mobile)
         container.addEventListener('touchstart', (e) => this.handleTouchStart(e), { passive: false });
         container.addEventListener('touchmove', (e) => this.handleTouchMove(e), { passive: false });
@@ -173,8 +179,30 @@ if (!customElements.get('product-modal')) {
         const dx = e.clientX - this.dragStart.x;
         const dy = e.clientY - this.dragStart.y;
 
+        // Mark as actual drag if moved more than 5 pixels
+        if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
+          this.didDrag = true;
+        }
+
         this.currentWrapper.scrollLeft = this.scrollStart.x - dx;
         this.currentWrapper.scrollTop = this.scrollStart.y - dy;
+      }
+
+      handleClick(e) {
+        // Prevent click events when dragging occurred
+        if (this.didDrag) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }
+
+      handlePointerUp(e) {
+        // Prevent pointerup events when dragging occurred
+        // This prevents ModalDialog from closing the modal on drag release
+        if (this.didDrag) {
+          e.stopPropagation();
+          this.didDrag = false;
+        }
       }
 
       handleMouseUp() {
