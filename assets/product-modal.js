@@ -11,6 +11,8 @@ if (!customElements.get('product-modal')) {
         this.didDrag = false; // Track if actual drag movement occurred
         this.dragStart = { x: 0, y: 0 };
         this.scrollStart = { x: 0, y: 0 };
+        this.currentWrapper = null;
+        this.currentDragImg = null; // Track the image being dragged for cursor reset
         // Touch pinch-to-zoom state
         this.initialPinchDistance = null;
         this.initialPinchZoom = 1;
@@ -169,6 +171,7 @@ if (!customElements.get('product-modal')) {
         this.dragStart = { x: e.clientX, y: e.clientY };
         this.scrollStart = { x: wrapper.scrollLeft, y: wrapper.scrollTop };
         this.currentWrapper = wrapper;
+        this.currentDragImg = img;
         img.style.cursor = 'grabbing';
         e.preventDefault();
       }
@@ -206,15 +209,13 @@ if (!customElements.get('product-modal')) {
       }
 
       handleMouseUp() {
-        if (this.isDragging && this.currentWrapper) {
-          const img = this.currentWrapper.querySelector('img');
-          if (img) {
-            const state = this.zoomState.get(img);
-            img.style.cursor = state && state.zoom > 1 ? 'grab' : 'default';
-          }
+        if (this.isDragging && this.currentDragImg) {
+          const state = this.zoomState.get(this.currentDragImg);
+          this.currentDragImg.style.cursor = state && state.zoom > 1 ? 'grab' : 'default';
         }
         this.isDragging = false;
         this.currentWrapper = null;
+        this.currentDragImg = null;
       }
 
       // Touch handlers for pinch-to-zoom
