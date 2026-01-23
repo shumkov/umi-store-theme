@@ -262,7 +262,7 @@ if (!customElements.get('product-info')) {
         };
 
         const refreshSourceData = () => {
-          if (this.hasAttribute('data-zoom-on-hover')) enableZoomOnHover(2);
+          if (this.hasAttribute('data-zoom-on-hover')) enableZoomOnHover();
           const mediaGallerySourceItems = Array.from(mediaGallerySource.querySelectorAll('li[data-media-id]'));
           const sourceSet = new Set(mediaGallerySourceItems.map((item) => item.dataset.mediaId));
           const sourceMap = new Map(
@@ -277,7 +277,7 @@ if (!customElements.get('product-info')) {
           // but the actual images are different
           if (isMetafieldMedia(mediaGalleryDestination) || isMetafieldMedia(mediaGallerySource)) {
             mediaGallerySource.innerHTML = mediaGalleryDestination.innerHTML;
-            if (this.hasAttribute('data-zoom-on-hover')) enableZoomOnHover(2);
+            if (this.hasAttribute('data-zoom-on-hover')) enableZoomOnHover();
 
             // Also update thumbnails for metafield media
             const thumbnailsSource = this.querySelector('media-gallery [id^="Slider-Thumbnails-"]');

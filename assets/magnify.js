@@ -2,9 +2,19 @@
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 4;
 const ZOOM_STEP = 0.5;
+const DESKTOP_INITIAL_ZOOM = 2;
+const MOBILE_INITIAL_ZOOM = 1.2;
+
+function isMobile() {
+  return window.innerWidth <= 749;
+}
+
+function getInitialZoom() {
+  return isMobile() ? MOBILE_INITIAL_ZOOM : DESKTOP_INITIAL_ZOOM;
+}
 
 // State for current zoom session
-let currentZoomRatio = 2;
+let currentZoomRatio = getInitialZoom();
 let currentOverlay = null;
 let currentImage = null;
 
@@ -152,15 +162,15 @@ function cleanupOverlay() {
     currentOverlay.remove();
     currentOverlay = null;
     currentImage = null;
-    currentZoomRatio = 2;
+    currentZoomRatio = getInitialZoom();
     backgroundPosX = 50;
     backgroundPosY = 50;
   }
 }
 
-function magnify(image, zoomRatio) {
+function magnify(image) {
   // Reset state for new zoom session
-  currentZoomRatio = zoomRatio;
+  currentZoomRatio = getInitialZoom();
   currentImage = image;
   backgroundPosX = 50;
   backgroundPosY = 50;
@@ -185,11 +195,11 @@ function magnify(image, zoomRatio) {
   overlay.addEventListener('touchend', handleTouchEnd, { passive: false });
 }
 
-function enableZoomOnHover(zoomRatio) {
+function enableZoomOnHover() {
   const images = document.querySelectorAll('.image-magnify-hover');
   images.forEach((image) => {
     image.onclick = (event) => {
-      magnify(image, zoomRatio);
+      magnify(image);
       moveWithHover(image, event, currentZoomRatio);
     };
 
@@ -197,8 +207,7 @@ function enableZoomOnHover(zoomRatio) {
     image.addEventListener('touchend', (event) => {
       if (event.changedTouches.length === 1) {
         event.preventDefault();
-        const touch = event.changedTouches[0];
-        magnify(image, zoomRatio);
+        magnify(image);
         // Set initial position to center
         backgroundPosX = 50;
         backgroundPosY = 50;
@@ -208,4 +217,4 @@ function enableZoomOnHover(zoomRatio) {
   });
 }
 
-enableZoomOnHover(2);
+enableZoomOnHover();

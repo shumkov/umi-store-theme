@@ -1293,7 +1293,7 @@ a.product__text {
 
   .product__media-zoom-hover,
   .product__media-icon--hover {
-    display: flex;
+    display: none;
   }
 }
 
