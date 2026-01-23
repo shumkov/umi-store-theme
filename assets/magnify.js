@@ -24,6 +24,7 @@ let lastTouchX = 0;
 let lastTouchY = 0;
 let backgroundPosX = 50;
 let backgroundPosY = 50;
+let touchStartTime = 0;
 
 // create a container and set the full-size image as its background
 function createOverlay(image) {
@@ -54,6 +55,7 @@ function prepareOverlay(container, image) {
 
 function toggleLoadingSpinner(image) {
   const loadingSpinner = image.parentElement.parentElement.querySelector(`.loading__spinner`);
+  if (!loadingSpinner) return;
   loadingSpinner.classList.toggle('hidden');
 }
 
@@ -149,12 +151,13 @@ function handleTouchMove(event) {
 function handleTouchEnd(event) {
   if (event.touches.length === 0 && event.changedTouches.length === 1) {
     // Check if it was a tap (not a pan or pinch)
-    const touchDuration = event.timeStamp - (event.target.touchStartTime || 0);
+    const touchDuration = event.timeStamp - touchStartTime;
     if (touchDuration < 200) {
       cleanupOverlay();
     }
   }
   initialPinchDistance = 0;
+  touchStartTime = 0;
 }
 
 function cleanupOverlay() {
@@ -188,7 +191,7 @@ function magnify(image) {
 
   // Touch events
   overlay.addEventListener('touchstart', (event) => {
-    event.target.touchStartTime = event.timeStamp;
+    touchStartTime = event.timeStamp;
     handleTouchStart(event);
   }, { passive: false });
   overlay.addEventListener('touchmove', handleTouchMove, { passive: false });
@@ -198,6 +201,10 @@ function magnify(image) {
 function enableZoomOnHover() {
   const images = document.querySelectorAll('.image-magnify-hover');
   images.forEach((image) => {
+    // Skip if already initialized
+    if (image.dataset.zoomInitialized) return;
+    image.dataset.zoomInitialized = 'true';
+
     image.onclick = (event) => {
       magnify(image);
       moveWithHover(image, event, currentZoomRatio);
