@@ -116,18 +116,14 @@ class LazyMedia extends HTMLElement {
 
   showPlayButton() {
     if (this.playButton) {
-      this.playButton.style.display = 'flex';
+      this.playButton.style.display = 'block';
       return;
     }
 
     this.playButton = document.createElement('button');
     this.playButton.className = 'lazy-media__play-button';
     this.playButton.setAttribute('aria-label', 'Play video');
-    this.playButton.innerHTML = `
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M8 5v14l11-7z"/>
-      </svg>
-    `;
+    // No innerHTML - CSS ::before/::after handle the icon
 
     this.playButton.addEventListener('click', (e) => {
       e.stopPropagation();

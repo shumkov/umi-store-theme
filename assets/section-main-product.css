@@ -108,36 +108,66 @@ lazy-media {
   background: #000;
 }
 
-/* Play button - black transparent circle with white arrow */
-/* Override base.css .media > * rule */
+/* Play button - vitals style */
 .media.lazy-media__video-wrapper > .lazy-media__play-button {
+  all: unset;
   position: absolute;
-  top: 50%;
   left: 50%;
+  top: 50%;
   transform: translate(-50%, -50%);
-  width: 6rem;
-  height: 6rem;
-  background: rgba(0, 0, 0, 0.6);
-  border-radius: 50%;
-  border: none;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   z-index: 2;
-  padding: 0;
-  transition: background 0.2s ease;
-}
-
-.media.lazy-media__video-wrapper > .lazy-media__play-button:hover {
-  background: rgba(0, 0, 0, 0.8);
-}
-
-.media.lazy-media__video-wrapper > .lazy-media__play-button svg {
   width: 3.2rem;
   height: 3.2rem;
-  fill: #fff;
-  margin-left: 0.4rem;
+}
+
+/* Play icon via ::before with SVG mask */
+.media.lazy-media__video-wrapper > .lazy-media__play-button::before {
+  content: "";
+  position: absolute;
+  width: 1.2rem;
+  height: 1.2rem;
+  z-index: 2;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  mask-image: url("data:image/svg+xml;utf8,%3Csvg%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%220%200%2040%2040%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M35.6817%2015.5883C36.4822%2016.014%2037.1517%2016.6494%2037.6187%2017.4266C38.0856%2018.2037%2038.3323%2019.0933%2038.3323%2019.9999C38.3323%2020.9066%2038.0856%2021.7961%2037.6187%2022.5733C37.1517%2023.3505%2036.4822%2023.9859%2035.6817%2024.4116L14.3283%2036.0233C10.89%2037.8949%206.66666%2035.4616%206.66666%2031.6133V8.38828C6.66666%204.53828%2010.89%202.10661%2014.3283%203.97494L35.6817%2015.5883Z%22%20fill%3D%22white%22%2F%3E%3C%2Fsvg%3E");
+  -webkit-mask-image: url("data:image/svg+xml;utf8,%3Csvg%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%220%200%2040%2040%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M35.6817%2015.5883C36.4822%2016.014%2037.1517%2016.6494%2037.6187%2017.4266C38.0856%2018.2037%2038.3323%2019.0933%2038.3323%2019.9999C38.3323%2020.9066%2038.0856%2021.7961%2037.6187%2022.5733C37.1517%2023.3505%2036.4822%2023.9859%2035.6817%2024.4116L14.3283%2036.0233C10.89%2037.8949%206.66666%2035.4616%206.66666%2031.6133V8.38828C6.66666%204.53828%2010.89%202.10661%2014.3283%203.97494L35.6817%2015.5883Z%22%20fill%3D%22white%22%2F%3E%3C%2Fsvg%3E");
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-size: contain;
+  -webkit-mask-size: contain;
+  background-color: #fff;
+}
+
+/* Circular background via ::after */
+.media.lazy-media__video-wrapper > .lazy-media__play-button::after {
+  content: "";
+  border-radius: 50%;
+  position: absolute;
+  opacity: 0.7;
+  width: 3.2rem;
+  height: 3.2rem;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  background-color: #000;
+}
+
+/* Desktop sizes */
+@media (min-width: 990px) {
+  .media.lazy-media__video-wrapper > .lazy-media__play-button {
+    width: 4rem;
+    height: 4rem;
+  }
+  .media.lazy-media__video-wrapper > .lazy-media__play-button::before {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+  .media.lazy-media__video-wrapper > .lazy-media__play-button::after {
+    width: 4rem;
+    height: 4rem;
+  }
 }
 
 /* Placeholder with poster and preloader */
