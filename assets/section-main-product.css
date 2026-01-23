@@ -910,9 +910,14 @@ a.product__text {
     align-items: flex-start;
   }
 
+  .product-media-modal__content {
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+  }
+
   .product-media-modal__content>img {
     width: 200vw;
-    margin-left: -50vw;
+    margin: 0;
   }
 }
 

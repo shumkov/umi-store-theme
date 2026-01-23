@@ -5,13 +5,21 @@ if (!customElements.get('product-modal')) {
       constructor() {
         super();
         this.clickPosition = null;
+        this.savedScrollPosition = null;
       }
 
       hide() {
+        // Restore scroll position when closing
+        if (this.savedScrollPosition !== null) {
+          window.scrollTo(0, this.savedScrollPosition);
+          this.savedScrollPosition = null;
+        }
         super.hide();
       }
 
       show(opener, clickPosition = null) {
+        // Save current scroll position
+        this.savedScrollPosition = window.scrollY;
         this.clickPosition = clickPosition;
         super.show(opener);
         this.showActiveMedia();
@@ -32,10 +40,10 @@ if (!customElements.get('product-modal')) {
 
         // Scroll to clicked position if available
         if (this.clickPosition && activeMedia.tagName === 'IMG') {
-          // Wait for image to be visible and get its dimensions
-          requestAnimationFrame(() => {
-            const imgWidth = activeMedia.offsetWidth;
-            const imgHeight = activeMedia.offsetHeight;
+          // Wait for image to load and be visible
+          const scrollToClick = () => {
+            const imgWidth = activeMedia.offsetWidth || activeMedia.naturalWidth;
+            const imgHeight = activeMedia.offsetHeight || activeMedia.naturalHeight;
             const containerWidth = container.clientWidth;
             const containerHeight = container.clientHeight;
 
@@ -45,7 +53,13 @@ if (!customElements.get('product-modal')) {
 
             container.scrollLeft = Math.max(0, scrollX);
             container.scrollTop = Math.max(0, scrollY);
-          });
+          };
+
+          if (activeMedia.complete) {
+            requestAnimationFrame(scrollToClick);
+          } else {
+            activeMedia.addEventListener('load', scrollToClick, { once: true });
+          }
         } else {
           activeMedia.scrollIntoView();
           container.scrollLeft = (activeMedia.width - container.clientWidth) / 2;
