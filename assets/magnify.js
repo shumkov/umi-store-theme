@@ -175,6 +175,11 @@ function cleanupOverlay() {
 }
 
 function magnify(image) {
+  // Clean up any existing overlay before creating a new one
+  if (currentOverlay) {
+    cleanupOverlay();
+  }
+
   // Reset state for new zoom session
   currentZoomRatio = getInitialZoom();
   currentImage = image;
