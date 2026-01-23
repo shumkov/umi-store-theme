@@ -1,0 +1,22 @@
+name: Cleanup Theme Preview
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install Shopify CLI
+        run: npm install -g @shopify/cli@3.83.3
+      - name: Delete Preview Theme
+        env:
+          SHOPIFY_FLAG_STORE: ${{ secrets.SHOPIFY_FLAG_STORE }}
+          SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          shopify theme delete --theme "Preview PR #${PR_NUMBER}" --force || echo "Theme not found or already deleted"
