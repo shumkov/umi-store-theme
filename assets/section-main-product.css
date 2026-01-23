@@ -906,7 +906,7 @@ a.product__text {
   }
 
   .product-media-modal__content>img {
-    width: 150vw;
+    width: 100vw;
     margin: 0;
   }
 }

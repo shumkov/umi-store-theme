@@ -9,12 +9,14 @@ if (!customElements.get('product-modal')) {
       }
 
       hide() {
-        // Restore scroll position when closing
-        if (this.savedScrollPosition !== null) {
-          window.scrollTo(0, this.savedScrollPosition);
-          this.savedScrollPosition = null;
-        }
         super.hide();
+        // Restore scroll position after modal is hidden
+        if (this.savedScrollPosition !== null) {
+          setTimeout(() => {
+            window.scrollTo(0, this.savedScrollPosition);
+            this.savedScrollPosition = null;
+          }, 50);
+        }
       }
 
       show(opener, clickPosition = null) {
@@ -40,23 +42,28 @@ if (!customElements.get('product-modal')) {
 
         // Scroll to clicked position if available
         if (this.clickPosition && activeMedia.tagName === 'IMG') {
-          // Wait for image to load and be visible
           const scrollToClick = () => {
-            const imgWidth = activeMedia.offsetWidth || activeMedia.naturalWidth;
-            const imgHeight = activeMedia.offsetHeight || activeMedia.naturalHeight;
-            const containerWidth = container.clientWidth;
-            const containerHeight = container.clientHeight;
+            // Use setTimeout to ensure layout is complete
+            setTimeout(() => {
+              const imgWidth = activeMedia.offsetWidth;
+              const imgHeight = activeMedia.offsetHeight;
+              const containerWidth = container.clientWidth;
+              const containerHeight = container.clientHeight;
 
-            // Calculate scroll position to center the clicked point
-            const scrollX = (imgWidth * this.clickPosition.clickX) - (containerWidth / 2);
-            const scrollY = (imgHeight * this.clickPosition.clickY) - (containerHeight / 2);
+              // Calculate scroll position to center the clicked point
+              const scrollX = (imgWidth * this.clickPosition.clickX) - (containerWidth / 2);
+              const scrollY = (imgHeight * this.clickPosition.clickY) - (containerHeight / 2);
 
-            container.scrollLeft = Math.max(0, scrollX);
-            container.scrollTop = Math.max(0, scrollY);
+              container.scrollTo({
+                left: Math.max(0, scrollX),
+                top: Math.max(0, scrollY),
+                behavior: 'instant'
+              });
+            }, 100);
           };
 
-          if (activeMedia.complete) {
-            requestAnimationFrame(scrollToClick);
+          if (activeMedia.complete && activeMedia.naturalWidth > 0) {
+            scrollToClick();
           } else {
             activeMedia.addEventListener('load', scrollToClick, { once: true });
           }
