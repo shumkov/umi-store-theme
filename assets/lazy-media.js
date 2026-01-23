@@ -18,6 +18,7 @@ class LazyMedia extends HTMLElement {
     this.observer = null;
     this.preloader = null;
     this.playButton = null;
+    this.justExitedFullscreen = false;
   }
 
   connectedCallback() {
@@ -52,7 +53,7 @@ class LazyMedia extends HTMLElement {
           } else if (this.video) {
             this.tryAutoplay();
           }
-        } else if (this.video && this.isLoaded) {
+        } else if (this.video && this.isLoaded && !this.justExitedFullscreen) {
           this.video.pause();
         }
       });
@@ -81,12 +82,21 @@ class LazyMedia extends HTMLElement {
     });
 
     // Resume playback after exiting fullscreen (mobile browsers pause on exit)
-    this.video.addEventListener('webkitendfullscreen', () => {
+    const handleFullscreenExit = () => {
+      this.justExitedFullscreen = true;
+      setTimeout(() => {
+        this.justExitedFullscreen = false;
+      }, 500);
       this.video.play().catch(() => {});
-    });
-    this.video.addEventListener('fullscreenchange', () => {
+    };
+
+    // iOS Safari
+    this.video.addEventListener('webkitendfullscreen', handleFullscreenExit);
+
+    // Standard browsers
+    document.addEventListener('fullscreenchange', () => {
       if (!document.fullscreenElement) {
-        this.video.play().catch(() => {});
+        handleFullscreenExit();
       }
     });
   }

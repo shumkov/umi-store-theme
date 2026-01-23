@@ -117,16 +117,16 @@ lazy-media {
   transform: translate(-50%, -50%);
   cursor: pointer;
   z-index: 2;
-  width: 3.2rem;
-  height: 3.2rem;
+  width: 6rem;
+  height: 6rem;
 }
 
 /* Play icon via ::before with SVG mask */
 .media.lazy-media__video-wrapper > .lazy-media__play-button::before {
   content: "";
   position: absolute;
-  width: 1.2rem;
-  height: 1.2rem;
+  width: 2.4rem;
+  height: 2.4rem;
   z-index: 2;
   left: 50%;
   top: 50%;
@@ -146,8 +146,8 @@ lazy-media {
   border-radius: 50%;
   position: absolute;
   opacity: 0.7;
-  width: 3.2rem;
-  height: 3.2rem;
+  width: 6rem;
+  height: 6rem;
   transform: translate(-50%, -50%);
   left: 50%;
   top: 50%;
