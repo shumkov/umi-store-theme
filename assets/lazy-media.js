@@ -84,13 +84,22 @@ class LazyMedia extends HTMLElement {
       this.hidePlayButton();
     });
 
+    // Show play button when video is paused (if loaded)
+    this.video.addEventListener('pause', () => {
+      if (this.isLoaded) {
+        this.showPlayButton();
+      }
+    });
+
     // iOS Safari - resume playback after exiting fullscreen
     this.video.addEventListener('webkitendfullscreen', () => {
       this.justExitedFullscreen = true;
       setTimeout(() => {
         this.justExitedFullscreen = false;
       }, 500);
-      this.video.play().catch(() => {});
+      this.video.play().catch(() => {
+        this.showPlayButton();
+      });
     });
 
     // Standard browsers - use bound handler for proper cleanup
@@ -110,7 +119,9 @@ class LazyMedia extends HTMLElement {
       setTimeout(() => {
         this.justExitedFullscreen = false;
       }, 500);
-      this.video?.play().catch(() => {});
+      this.video?.play().catch(() => {
+        this.showPlayButton();
+      });
     }
   }
 
