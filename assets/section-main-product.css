@@ -900,8 +900,14 @@ a.product__text {
 }
 
 @media screen and (min-width: 750px) {
+  .product-media-modal__content:has(>img) {
+    padding: 0;
+    overflow: scroll;
+  }
+
   .product-media-modal__content>img {
-    margin-left: -11rem;
+    width: 150vw;
+    margin: 0;
   }
 }
 
@@ -916,7 +922,7 @@ a.product__text {
   }
 
   .product-media-modal__content>img {
-    width: 200vw;
+    width: 300vw;
     margin: 0;
   }
 }
