@@ -2,8 +2,8 @@
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 4;
 const ZOOM_STEP = 0.5;
-const DESKTOP_INITIAL_ZOOM = 2;
-const MOBILE_INITIAL_ZOOM = 1.2;
+const DESKTOP_INITIAL_ZOOM = 1;
+const MOBILE_INITIAL_ZOOM = 1;
 
 function isMobile() {
   // Check for touch-primary device (no hover capability) OR small screen
