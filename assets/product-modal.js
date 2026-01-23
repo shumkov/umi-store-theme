@@ -146,7 +146,7 @@ if (!customElements.get('product-modal')) {
         // Apply zoom transform
         img.style.transformOrigin = 'top left';
         img.style.transform = `scale(${newZoom})`;
-        img.style.cursor = newZoom > 1 ? 'grab' : 'default';
+        img.style.cursor = newZoom > 1 ? 'grab' : 'zoom-out';
 
         // Adjust scroll to zoom toward mouse position
         requestAnimationFrame(() => {
@@ -211,7 +211,7 @@ if (!customElements.get('product-modal')) {
       handleMouseUp() {
         if (this.isDragging && this.currentDragImg) {
           const state = this.zoomState.get(this.currentDragImg);
-          this.currentDragImg.style.cursor = state && state.zoom > 1 ? 'grab' : 'default';
+          this.currentDragImg.style.cursor = state && state.zoom > 1 ? 'grab' : 'zoom-out';
         }
         this.isDragging = false;
         this.currentWrapper = null;
