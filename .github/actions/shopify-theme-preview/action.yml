@@ -115,7 +115,7 @@ runs:
         reactions: hooray
         edit-mode: replace
     - name: Output Step Failed
-      if: ${{ failure() }}
+      if: ${{ failure() && steps.create-comment.outputs.comment-id != '' }}
       uses: peter-evans/create-or-update-comment@v4
       with:
         comment-id: ${{ steps.create-comment.outputs.comment-id }}
