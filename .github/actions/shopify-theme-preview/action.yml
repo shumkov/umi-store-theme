@@ -48,10 +48,10 @@ runs:
           | ${{ inputs.shopify_flag_store }} | :hourglass_flowing_sand: Loading |  |  | ${{ steps.date.outputs.date }} | ${{ steps.time.outputs.time }}
     - uses: actions/setup-node@v4
       with:
-        node-version: 18
+        node-version: 24
     - uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 3.1
+        ruby-version: "3.3"
         bundler: "latest"
     - name: Install Shopify CLI
       run: npm install -g @shopify/cli@3.83.3
@@ -71,7 +71,7 @@ runs:
         PR_NUMBER: ${{ github.event.pull_request.number }}
       run: |
         set -o pipefail
-        output=$(shopify theme push --json --unpublished --theme "Preview PR #${PR_NUMBER}" --path ${{ inputs.dir }})
+        output=$(shopify theme push --json --unpublished --theme "Preview PR #${PR_NUMBER}" --path "${{ inputs.dir }}")
         exit_code=$?
         if [ $exit_code -ne 0 ]; then
           echo "Shopify theme push failed with exit code $exit_code"
@@ -80,34 +80,28 @@ runs:
         echo "JSON_RESPONSE<<EOF" >> $GITHUB_OUTPUT
         echo "$output" >> $GITHUB_OUTPUT
         echo "EOF" >> $GITHUB_OUTPUT
-    - name: Format Data
-      id: temp
+    - name: Parse Preview URLs
+      id: parse
       shell: bash
       env:
         JSON_RESPONSE: ${{ steps.link.outputs.JSON_RESPONSE }}
       run: |
-        echo "$JSON_RESPONSE" > temp.txt
-        link_json=$(tail -n1 temp.txt)
-        if [ -z "$link_json" ]; then
+        if [ -z "$JSON_RESPONSE" ]; then
           echo "Error: Empty response from theme push"
           exit 1
         fi
-        echo "LINK<<EOF" >> $GITHUB_OUTPUT
-        echo "$link_json" >> $GITHUB_OUTPUT
-        echo "EOF" >> $GITHUB_OUTPUT
-    - name: Validate Preview Link
-      id: validate
-      shell: bash
-      env:
-        LINK: ${{ steps.temp.outputs.LINK }}
-      run: |
-        if ! echo "$LINK" | jq -e '.theme.preview_url and .theme.editor_url' > /dev/null 2>&1; then
+
+        preview_url=$(echo "$JSON_RESPONSE" | jq -r '.theme.preview_url // empty')
+        editor_url=$(echo "$JSON_RESPONSE" | jq -r '.theme.editor_url // empty')
+
+        if [ -z "$preview_url" ] || [ -z "$editor_url" ]; then
           echo "Error: Invalid or missing preview URLs in response"
-          echo "$LINK"
+          echo "$JSON_RESPONSE"
           exit 1
         fi
-        echo "preview_url=$(echo "$LINK" | jq -r '.theme.preview_url')" >> $GITHUB_OUTPUT
-        echo "editor_url=$(echo "$LINK" | jq -r '.theme.editor_url')" >> $GITHUB_OUTPUT
+
+        echo "preview_url=$preview_url" >> $GITHUB_OUTPUT
+        echo "editor_url=$editor_url" >> $GITHUB_OUTPUT
     - name: Comment Link
       uses: peter-evans/create-or-update-comment@v4
       with:
@@ -117,7 +111,7 @@ runs:
 
           | Name | Status | Preview | Editor | Date | Time |
           | :--- | :----- | :------ | :------ | :------ | :----- |
-          | ${{ inputs.shopify_flag_store }} | :white_check_mark: Ready | <a href="${{ steps.validate.outputs.preview_url }}" target="_blank">Preview</a> | [Editor](${{ steps.validate.outputs.editor_url }}) | ${{ steps.date.outputs.date }} | ${{ steps.time.outputs.time }}
+          | ${{ inputs.shopify_flag_store }} | :white_check_mark: Ready | <a href="${{ steps.parse.outputs.preview_url }}" target="_blank">Preview</a> | [Editor](${{ steps.parse.outputs.editor_url }}) | ${{ steps.date.outputs.date }} | ${{ steps.time.outputs.time }}
         reactions: hooray
         edit-mode: replace
     - name: Output Step Failed
