@@ -109,7 +109,8 @@ lazy-media {
 }
 
 /* Play button - black transparent circle with white arrow */
-.lazy-media__play-button {
+/* Override base.css .media > * rule */
+.media.lazy-media__video-wrapper > .lazy-media__play-button {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -128,11 +129,11 @@ lazy-media {
   transition: background 0.2s ease;
 }
 
-.lazy-media__play-button:hover {
+.media.lazy-media__video-wrapper > .lazy-media__play-button:hover {
   background: rgba(0, 0, 0, 0.8);
 }
 
-.lazy-media__play-button svg {
+.media.lazy-media__video-wrapper > .lazy-media__play-button svg {
   width: 2.4rem;
   height: 2.4rem;
   fill: #fff;
