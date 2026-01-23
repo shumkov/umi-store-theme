@@ -115,7 +115,16 @@ if (!customElements.get('product-modal')) {
         }
 
         // Calculate zoom change
-        const delta = e.deltaY > 0 ? -0.2 : 0.2;
+        // ctrlKey indicates trackpad pinch gesture - use finer control
+        // Regular wheel scroll uses larger steps
+        let delta;
+        if (e.ctrlKey) {
+          // Trackpad pinch-to-zoom (more sensitive, smaller steps)
+          delta = -e.deltaY * 0.01;
+        } else {
+          // Mouse wheel zoom (larger steps)
+          delta = e.deltaY > 0 ? -0.2 : 0.2;
+        }
         const newZoom = Math.max(1, Math.min(4, state.zoom + delta));
 
         if (newZoom === state.zoom) return;
