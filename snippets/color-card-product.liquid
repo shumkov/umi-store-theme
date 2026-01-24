@@ -89,10 +89,12 @@
                   assign secondary_image = blank
                   assign first_variant_link = blank
 
-                  # There is not other way to get the first image link from the metafield type list
+                  # Get the first image link from the metafield, skipping videos
                   for image_link in variant_images
-                    assign first_variant_link = image_link
-                    break
+                    if image_link.media_type != 'video'
+                      assign first_variant_link = image_link
+                      break
+                    endif
                   endfor
                   for media in card_product.media
                     if media.src == first_variant_link
