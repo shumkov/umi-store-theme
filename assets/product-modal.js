@@ -83,8 +83,12 @@ if (!customElements.get('product-modal')) {
       }
 
       applyInitialZoom() {
-        // If we have a click position, start zoomed in on that point
+        // If we have a click position, start zoomed in on that point (mobile only)
         if (!this.clickPosition) return;
+
+        const isMobile = window.matchMedia('(hover: none)').matches ||
+                         window.matchMedia('(max-width: 749px)').matches;
+        if (!isMobile) return;
 
         // Wait for modal to render
         setTimeout(() => {
