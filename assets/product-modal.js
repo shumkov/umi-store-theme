@@ -60,8 +60,10 @@ if (!customElements.get('product-modal')) {
           }
         }
 
-        // Reset all zoom states
+        // Reset all zoom states and content-ready class for next open
         this.resetAllZoom();
+        const wrapper = this.querySelector('.product-media-modal__content');
+        if (wrapper) wrapper.classList.remove('content-ready');
 
         super.hide();
 
@@ -92,40 +94,88 @@ if (!customElements.get('product-modal')) {
       }
 
       applyInitialZoom() {
-        // If we have a click position, scroll to that point (mobile only)
-        if (!this.clickPosition) return;
+        const wrapper = this.querySelector('.product-media-modal__content');
+        if (!wrapper) return;
+
+        const activeMedia = this.querySelector('[data-media-id].active');
+        if (!activeMedia) {
+          wrapper.classList.add('content-ready');
+          return;
+        }
+
+        // activeMedia might be the img itself (for images) or a wrapper (for videos)
+        const img = activeMedia.tagName === 'IMG' ? activeMedia : activeMedia.querySelector('img');
+
+        // If no click position, just show content immediately
+        if (!this.clickPosition) {
+          wrapper.classList.add('content-ready');
+          return;
+        }
+
+        if (!img) {
+          wrapper.classList.add('content-ready');
+          return;
+        }
 
         const isMobile = window.matchMedia('(hover: none)').matches ||
                          window.matchMedia('(max-width: 749px)').matches;
-        if (!isMobile) return;
 
-        // Wait for modal to render
-        setTimeout(() => {
-          const activeMedia = this.querySelector('[data-media-id].active');
-          if (!activeMedia) return;
+        // Reset scroll position immediately to prevent "jumping" when reopening
+        wrapper.scrollLeft = 0;
+        wrapper.scrollTop = 0;
 
-          // activeMedia might be the img itself (for images) or a wrapper (for videos)
-          const img = activeMedia.tagName === 'IMG' ? activeMedia : activeMedia.querySelector('img');
-          if (!img) return;
-
-          const wrapper = img.closest('.product-media-modal__content');
-          if (!wrapper) return;
-
-          // On mobile, image is already zoomed via CSS (width: 300vw)
-          // Just scroll to the clicked position without additional transform
+        // Function to position and reveal the content
+        const positionAndReveal = () => {
           requestAnimationFrame(() => {
             const clickX = this.clickPosition.clickX;
             const clickY = this.clickPosition.clickY;
 
-            // Calculate scroll position based on actual image dimensions
-            // to center the clicked point in the viewport
-            const scrollX = (img.offsetWidth * clickX) - (wrapper.clientWidth / 2);
-            const scrollY = (img.offsetHeight * clickY) - (wrapper.clientHeight / 2);
+            if (isMobile) {
+              // On mobile, image is already zoomed via CSS (width: 300vw)
+              const scrollX = (img.offsetWidth * clickX) - (wrapper.clientWidth / 2);
+              const scrollY = (img.offsetHeight * clickY) - (wrapper.clientHeight / 2);
 
-            wrapper.scrollLeft = Math.max(0, scrollX);
-            wrapper.scrollTop = Math.max(0, scrollY);
+              wrapper.scrollLeft = Math.max(0, scrollX);
+              wrapper.scrollTop = Math.max(0, scrollY);
+            } else {
+              // On desktop, image is at 100vw
+              const containerRect = wrapper.getBoundingClientRect();
+
+              const clickedPointX = img.offsetWidth * clickX;
+              const clickedPointY = img.offsetHeight * clickY;
+
+              const scrollX = clickedPointX - (containerRect.width / 2);
+              const scrollY = (img.offsetTop + clickedPointY) - (containerRect.height / 2);
+
+              wrapper.scrollLeft = Math.max(0, scrollX);
+              wrapper.scrollTop = Math.max(0, scrollY);
+            }
+
+            // Reveal content after positioning with a small delay for scroll to apply
+            requestAnimationFrame(() => {
+              wrapper.classList.add('content-ready');
+            });
           });
-        }, 100);
+        };
+
+        // Wait for image to load before calculating dimensions
+        if (img.complete && img.naturalHeight !== 0) {
+          // Image already loaded
+          setTimeout(positionAndReveal, 50);
+        } else {
+          // Wait for image to load
+          const onLoad = () => {
+            img.removeEventListener('load', onLoad);
+            positionAndReveal();
+          };
+          img.addEventListener('load', onLoad);
+
+          // Fallback timeout in case load event doesn't fire
+          setTimeout(() => {
+            img.removeEventListener('load', onLoad);
+            positionAndReveal();
+          }, 500);
+        }
       }
 
       initZoomHandlers() {
@@ -244,6 +294,7 @@ if (!customElements.get('product-modal')) {
         if (this.didDrag) {
           e.preventDefault();
           e.stopPropagation();
+          this.didDrag = false;
         }
       }
 
@@ -252,7 +303,7 @@ if (!customElements.get('product-modal')) {
         // This prevents ModalDialog from closing the modal on drag release
         if (this.didDrag) {
           e.stopPropagation();
-          this.didDrag = false;
+          // Don't clear didDrag here - let handleClick do it
         }
       }
 
@@ -262,9 +313,11 @@ if (!customElements.get('product-modal')) {
           this.currentDragImg.style.cursor = state && state.zoom > 1 ? 'grab' : 'zoom-out';
         }
         this.isDragging = false;
-        this.didDrag = false;
         this.currentWrapper = null;
         this.currentDragImg = null;
+        // Defer clearing didDrag so click event can see it first
+        // This also handles mouseleave where no click follows
+        setTimeout(() => { this.didDrag = false; }, 0);
       }
 
       // Touch handlers for pinch-to-zoom
@@ -383,13 +436,9 @@ if (!customElements.get('product-modal')) {
         const activeMediaContent = activeMediaTemplate ? activeMediaTemplate.content : null;
         activeMedia.classList.add('active');
 
-        // On mobile with click position, applyInitialZoom will handle scrolling
+        // When click position is available, applyInitialZoom will handle scrolling
         // Otherwise, scroll to the image after a short delay
-        const isMobile = window.matchMedia('(hover: none)').matches ||
-                         window.matchMedia('(max-width: 749px)').matches;
-        const willApplyInitialZoom = isMobile && this.clickPosition;
-
-        if (!willApplyInitialZoom) {
+        if (!this.clickPosition) {
           setTimeout(() => {
             activeMedia.scrollIntoView({ behavior: 'instant', block: 'start' });
           }, 50);
