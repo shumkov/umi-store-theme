@@ -19,17 +19,17 @@ test.describe('Product Image Zoom', () => {
   test.beforeEach(async ({ page }) => {
     // Navigate to products page and click the first product
     await page.goto('/collections/all');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
 
     // Click first product to go to product page
     const productLink = page.locator('.card__heading a, .card__content a, .product-card a').first();
-    if (await productLink.isVisible()) {
+    if (await productLink.isVisible({ timeout: 5000 }).catch(() => false)) {
       await productLink.click();
-      await page.waitForLoadState('networkidle');
+      await page.waitForLoadState('domcontentloaded');
     } else {
       // If no collection page, try to go to a product directly
       await page.goto('/products');
-      await page.waitForLoadState('networkidle');
+      await page.waitForLoadState('domcontentloaded');
     }
   });
 
