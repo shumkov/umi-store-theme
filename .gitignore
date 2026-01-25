@@ -1,2 +1,7 @@
 node_modules
 .idea
+
+# Playwright
+playwright-report/
+test-results/
+.playwright-mcp/
