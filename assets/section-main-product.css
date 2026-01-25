@@ -836,6 +836,16 @@ a.product__text {
   z-index: 101;
 }
 
+/* Fade-in transition for lightbox content to mask scroll positioning */
+.product-media-modal__content {
+  opacity: 0;
+  transition: opacity 0.2s ease-out;
+}
+
+.product-media-modal__content.content-ready {
+  opacity: 1;
+}
+
 .product-media-modal__dialog {
   display: flex;
   align-items: center;
