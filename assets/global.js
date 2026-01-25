@@ -683,9 +683,15 @@ class ModalOpener extends HTMLElement {
     const button = this.querySelector('button');
 
     if (!button) return;
-    button.addEventListener('click', () => {
+    button.addEventListener('click', (event) => {
       const modal = document.querySelector(this.getAttribute('data-modal'));
-      if (modal) modal.show(button);
+      if (modal) {
+        // Calculate click position as percentage of the image
+        const rect = this.getBoundingClientRect();
+        const clickX = (event.clientX - rect.left) / rect.width;
+        const clickY = (event.clientY - rect.top) / rect.height;
+        modal.show(button, { clickX, clickY });
+      }
     });
   }
 }
