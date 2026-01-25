@@ -8,10 +8,7 @@ const { defineConfig, devices } = require('@playwright/test');
 module.exports = defineConfig({
   testDir: './tests',
   fullyParallel: true,
-  forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
-  reporter: 'html',
+  reporter: process.env.CI ? 'list' : 'html',
   use: {
     baseURL: process.env.SHOPIFY_PREVIEW_URL,
     trace: 'on-first-retry',
@@ -19,7 +16,7 @@ module.exports = defineConfig({
 
   projects: [
     {
-      name: 'chromium',
+      name: 'Desktop Chrome',
       use: { ...devices['Desktop Chrome'] },
     },
     {
@@ -27,8 +24,12 @@ module.exports = defineConfig({
       use: { ...devices['Pixel 5'] },
     },
     {
-      name: 'Mobile Safari',
-      use: { ...devices['iPhone 12'] },
+      name: 'Mobile Safari 13',
+      use: { ...devices['iPhone 13'] },
+    },
+    {
+      name: 'Mobile Safari 16 Pro Max',
+      use: { ...devices['iPhone 16 Pro Max'] },
     },
   ],
 });
