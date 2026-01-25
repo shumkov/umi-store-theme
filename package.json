@@ -1,8 +1,11 @@
 {
   "scripts": {
-    "prettier": "prettier */*.liquid --write"
+    "prettier": "prettier */*.liquid --write",
+    "test": "playwright test",
+    "test:ui": "playwright test --ui"
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.0",
     "@shopify/prettier-plugin-liquid": "^1.9.0",
     "prettier": "^3.5.3"
   }
