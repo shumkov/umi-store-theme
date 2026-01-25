@@ -95,7 +95,8 @@ if (!customElements.get('product-modal')) {
           const activeMedia = this.querySelector('[data-media-id].active');
           if (!activeMedia) return;
 
-          const img = activeMedia.querySelector('img');
+          // activeMedia might be the img itself (for images) or a wrapper (for videos)
+          const img = activeMedia.tagName === 'IMG' ? activeMedia : activeMedia.querySelector('img');
           if (!img) return;
 
           const wrapper = img.closest('.product-media-modal__content');
