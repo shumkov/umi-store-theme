@@ -294,6 +294,7 @@ if (!customElements.get('product-modal')) {
         if (this.didDrag) {
           e.preventDefault();
           e.stopPropagation();
+          this.didDrag = false;
         }
       }
 
@@ -302,7 +303,7 @@ if (!customElements.get('product-modal')) {
         // This prevents ModalDialog from closing the modal on drag release
         if (this.didDrag) {
           e.stopPropagation();
-          this.didDrag = false;
+          // Don't clear didDrag here - let handleClick do it
         }
       }
 
@@ -312,9 +313,11 @@ if (!customElements.get('product-modal')) {
           this.currentDragImg.style.cursor = state && state.zoom > 1 ? 'grab' : 'zoom-out';
         }
         this.isDragging = false;
-        this.didDrag = false;
         this.currentWrapper = null;
         this.currentDragImg = null;
+        // Defer clearing didDrag so click event can see it first
+        // This also handles mouseleave where no click follows
+        setTimeout(() => { this.didDrag = false; }, 0);
       }
 
       // Touch handlers for pinch-to-zoom
