@@ -1,10 +1,10 @@
-/* Cache Test - Version 1 */
+/* Cache Test - Version 2 */
 .cache-test-banner {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  background: #ff0000;
+  background: #00cc00;
   color: white;
   padding: 10px;
   text-align: center;
