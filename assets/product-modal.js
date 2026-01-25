@@ -92,38 +92,61 @@ if (!customElements.get('product-modal')) {
       }
 
       applyInitialZoom() {
-        // If we have a click position, scroll to that point (mobile only)
+        // If we have a click position, scroll to that point
         if (!this.clickPosition) return;
 
         const isMobile = window.matchMedia('(hover: none)').matches ||
                          window.matchMedia('(max-width: 749px)').matches;
-        if (!isMobile) return;
 
-        // Wait for modal to render
+        const activeMedia = this.querySelector('[data-media-id].active');
+        if (!activeMedia) return;
+
+        // activeMedia might be the img itself (for images) or a wrapper (for videos)
+        const img = activeMedia.tagName === 'IMG' ? activeMedia : activeMedia.querySelector('img');
+        if (!img) return;
+
+        const wrapper = img.closest('.product-media-modal__content');
+        if (!wrapper) return;
+
+        // Reset scroll position immediately to prevent "jumping" when reopening
+        // This ensures we don't briefly show the old scroll position
+        wrapper.scrollLeft = 0;
+        wrapper.scrollTop = 0;
+
+        // Wait for modal to render, then scroll to clicked position
         setTimeout(() => {
-          const activeMedia = this.querySelector('[data-media-id].active');
-          if (!activeMedia) return;
-
-          // activeMedia might be the img itself (for images) or a wrapper (for videos)
-          const img = activeMedia.tagName === 'IMG' ? activeMedia : activeMedia.querySelector('img');
-          if (!img) return;
-
-          const wrapper = img.closest('.product-media-modal__content');
-          if (!wrapper) return;
-
-          // On mobile, image is already zoomed via CSS (width: 300vw)
-          // Just scroll to the clicked position without additional transform
           requestAnimationFrame(() => {
             const clickX = this.clickPosition.clickX;
             const clickY = this.clickPosition.clickY;
 
-            // Calculate scroll position based on actual image dimensions
-            // to center the clicked point in the viewport
-            const scrollX = (img.offsetWidth * clickX) - (wrapper.clientWidth / 2);
-            const scrollY = (img.offsetHeight * clickY) - (wrapper.clientHeight / 2);
+            if (isMobile) {
+              // On mobile, image is already zoomed via CSS (width: 300vw)
+              // Just scroll to the clicked position
+              const scrollX = (img.offsetWidth * clickX) - (wrapper.clientWidth / 2);
+              const scrollY = (img.offsetHeight * clickY) - (wrapper.clientHeight / 2);
 
-            wrapper.scrollLeft = Math.max(0, scrollX);
-            wrapper.scrollTop = Math.max(0, scrollY);
+              wrapper.scrollLeft = Math.max(0, scrollX);
+              wrapper.scrollTop = Math.max(0, scrollY);
+            } else {
+              // On desktop, image is at 100vw, we need to scroll the container
+              // to center the clicked point in the viewport
+              // First scroll the container to show the clicked image at the right position
+              const containerRect = wrapper.getBoundingClientRect();
+              const imgRect = img.getBoundingClientRect();
+
+              // Calculate the position within the image that was clicked
+              // and scroll so that point is centered in the viewport
+              const clickedPointX = img.offsetWidth * clickX;
+              const clickedPointY = img.offsetHeight * clickY;
+
+              // Calculate scroll position to center the clicked point
+              // Account for the image's position within the scrollable container
+              const scrollX = clickedPointX - (containerRect.width / 2);
+              const scrollY = (img.offsetTop + clickedPointY) - (containerRect.height / 2);
+
+              wrapper.scrollLeft = Math.max(0, scrollX);
+              wrapper.scrollTop = Math.max(0, scrollY);
+            }
           });
         }, 100);
       }
@@ -383,13 +406,9 @@ if (!customElements.get('product-modal')) {
         const activeMediaContent = activeMediaTemplate ? activeMediaTemplate.content : null;
         activeMedia.classList.add('active');
 
-        // On mobile with click position, applyInitialZoom will handle scrolling
+        // When click position is available, applyInitialZoom will handle scrolling
         // Otherwise, scroll to the image after a short delay
-        const isMobile = window.matchMedia('(hover: none)').matches ||
-                         window.matchMedia('(max-width: 749px)').matches;
-        const willApplyInitialZoom = isMobile && this.clickPosition;
-
-        if (!willApplyInitialZoom) {
+        if (!this.clickPosition) {
           setTimeout(() => {
             activeMedia.scrollIntoView({ behavior: 'instant', block: 'start' });
           }, 50);
