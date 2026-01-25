@@ -33,8 +33,8 @@ module.exports = defineConfig({
       use: { ...devices['iPhone 13'] },
     },
     {
-      name: 'Mobile Safari 16 Pro Max',
-      use: { ...devices['iPhone 16 Pro Max'] },
+      name: 'Mobile Safari 15 Pro Max',
+      use: { ...devices['iPhone 15 Pro Max'] },
     },
   ],
 });
