@@ -625,6 +625,9 @@ a.product__text {
 }
 
 @media screen and (min-width: 750px) {
+  .product__media-item {
+    max-height: 100vh;
+  }
 
   .product--thumbnail .product__media-list,
   .product--thumbnail_slider .product__media-list {
