@@ -66,8 +66,9 @@ if (!customElements.get('product-modal')) {
 
         super.hide();
 
-        // Scroll product page to the image that was visible in the lightbox
-        if (visibleMediaId) {
+        // Scroll product page to the image that was visible in the lightbox (desktop only)
+        // On mobile, don't scroll - user is already at the image position
+        if (visibleMediaId && !isMobile) {
           setTimeout(() => {
             // Find the corresponding image on the product page using media-gallery element
             // This selector works across all locales (aria-label is localized)
