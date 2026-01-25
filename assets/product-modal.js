@@ -22,30 +22,42 @@ if (!customElements.get('product-modal')) {
       }
 
       hide() {
-        // Determine which image is currently visible in the lightbox
-        const container = this.querySelector('[role="document"]');
-        const mediaItems = this.querySelectorAll('[data-media-id]');
+        // Determine which image to scroll back to on the product page
         let visibleMediaId = null;
 
-        if (container && mediaItems.length > 0) {
-          const scrollTop = container.scrollTop;
-          const viewportCenter = scrollTop + container.clientHeight / 2;
+        const isMobile = window.matchMedia('(hover: none)').matches ||
+                         window.matchMedia('(max-width: 749px)').matches;
 
-          // Find the media item that's most visible (closest to viewport center)
-          let closestItem = null;
-          let closestDistance = Infinity;
+        if (isMobile) {
+          // On mobile, only one image is shown - use the one that was clicked to open
+          if (this.openedBy) {
+            visibleMediaId = this.openedBy.getAttribute('data-media-id');
+          }
+        } else {
+          // On desktop, detect which image is currently visible by scroll position
+          const container = this.querySelector('[role="document"]');
+          const mediaItems = this.querySelectorAll('[data-media-id]');
 
-          mediaItems.forEach(item => {
-            const itemCenter = item.offsetTop + item.offsetHeight / 2;
-            const distance = Math.abs(viewportCenter - itemCenter);
-            if (distance < closestDistance) {
-              closestDistance = distance;
-              closestItem = item;
+          if (container && mediaItems.length > 0) {
+            const scrollTop = container.scrollTop;
+            const viewportCenter = scrollTop + container.clientHeight / 2;
+
+            // Find the media item that's most visible (closest to viewport center)
+            let closestItem = null;
+            let closestDistance = Infinity;
+
+            mediaItems.forEach(item => {
+              const itemCenter = item.offsetTop + item.offsetHeight / 2;
+              const distance = Math.abs(viewportCenter - itemCenter);
+              if (distance < closestDistance) {
+                closestDistance = distance;
+                closestItem = item;
+              }
+            });
+
+            if (closestItem) {
+              visibleMediaId = closestItem.getAttribute('data-media-id');
             }
-          });
-
-          if (closestItem) {
-            visibleMediaId = closestItem.getAttribute('data-media-id');
           }
         }
 
