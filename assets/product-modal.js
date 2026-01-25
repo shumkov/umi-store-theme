@@ -83,12 +83,8 @@ if (!customElements.get('product-modal')) {
       }
 
       applyInitialZoom() {
-        // On mobile, if we have a click position, start zoomed in on that point
+        // If we have a click position, start zoomed in on that point
         if (!this.clickPosition) return;
-
-        const isMobile = window.matchMedia('(hover: none)').matches ||
-                         window.matchMedia('(max-width: 749px)').matches;
-        if (!isMobile) return;
 
         // Wait for modal to render
         setTimeout(() => {
@@ -106,11 +102,23 @@ if (!customElements.get('product-modal')) {
           const state = { zoom: initialZoom, panX: 0, panY: 0 };
           this.zoomState.set(img, state);
 
-          const originX = this.clickPosition.clickX * 100;
-          const originY = this.clickPosition.clickY * 100;
-
-          img.style.transformOrigin = `${originX}% ${originY}%`;
+          // Use top-left origin for predictable scroll positioning
+          img.style.transformOrigin = 'top left';
           img.style.transform = `scale(${initialZoom})`;
+          img.style.cursor = 'grab';
+
+          // Scroll to the clicked position after zoom is applied
+          requestAnimationFrame(() => {
+            const clickX = this.clickPosition.clickX;
+            const clickY = this.clickPosition.clickY;
+
+            // Calculate scroll position to center the clicked point
+            const scrollX = (img.offsetWidth * initialZoom * clickX) - (wrapper.clientWidth / 2);
+            const scrollY = (img.offsetHeight * initialZoom * clickY) - (wrapper.clientHeight / 2);
+
+            wrapper.scrollLeft = Math.max(0, scrollX);
+            wrapper.scrollTop = Math.max(0, scrollY);
+          });
         }, 100);
       }
 
