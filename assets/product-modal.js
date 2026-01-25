@@ -282,13 +282,13 @@ if (!customElements.get('product-modal')) {
           this.currentTouchImg = img;
           this.currentTouchWrapper = wrapper;
 
-          // Calculate pinch center relative to wrapper (consistent with wheel zoom)
+          // Calculate pinch center relative to image (percentage-based for touch)
           const centerX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
           const centerY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
-          const wrapperRect = wrapper.getBoundingClientRect();
+          const imgRect = img.getBoundingClientRect();
           this.pinchCenter = {
-            x: centerX - wrapperRect.left,
-            y: centerY - wrapperRect.top
+            x: ((centerX - imgRect.left) / imgRect.width) * 100,
+            y: ((centerY - imgRect.top) / imgRect.height) * 100
           };
 
           // Get or initialize zoom state
@@ -329,25 +329,11 @@ if (!customElements.get('product-modal')) {
             this.zoomState.set(img, state);
           }
 
-          if (newZoom === state.zoom) return;
-
-          // Calculate zoom point as percentage (consistent with wheel zoom)
-          const percentX = (this.pinchCenter.x + wrapper.scrollLeft) / wrapper.scrollWidth;
-          const percentY = (this.pinchCenter.y + wrapper.scrollTop) / wrapper.scrollHeight;
-
           state.zoom = newZoom;
 
-          // Apply zoom transform with consistent origin (same as wheel zoom)
-          img.style.transformOrigin = 'top left';
+          // Apply zoom transform centered on pinch point (percentage-based origin)
+          img.style.transformOrigin = `${this.pinchCenter.x}% ${this.pinchCenter.y}%`;
           img.style.transform = `scale(${newZoom})`;
-
-          // Adjust scroll to zoom toward pinch center
-          requestAnimationFrame(() => {
-            const newScrollLeft = (wrapper.scrollWidth * percentX) - this.pinchCenter.x;
-            const newScrollTop = (wrapper.scrollHeight * percentY) - this.pinchCenter.y;
-            wrapper.scrollLeft = Math.max(0, newScrollLeft);
-            wrapper.scrollTop = Math.max(0, newScrollTop);
-          });
         } else if (e.touches.length === 1 && this.isDragging && this.currentWrapper) {
           // Single touch pan when zoomed
           e.preventDefault(); // Prevent page scroll while panning
