@@ -83,7 +83,7 @@ if (!customElements.get('product-modal')) {
       }
 
       applyInitialZoom() {
-        // If we have a click position, start zoomed in on that point (mobile only)
+        // If we have a click position, scroll to that point (mobile only)
         if (!this.clickPosition) return;
 
         const isMobile = window.matchMedia('(hover: none)').matches ||
@@ -101,24 +101,16 @@ if (!customElements.get('product-modal')) {
           const wrapper = img.closest('.product-media-modal__content');
           if (!wrapper) return;
 
-          // Apply 2x zoom centered on click position
-          const initialZoom = 2;
-          const state = { zoom: initialZoom, panX: 0, panY: 0 };
-          this.zoomState.set(img, state);
-
-          // Use top-left origin for predictable scroll positioning
-          img.style.transformOrigin = 'top left';
-          img.style.transform = `scale(${initialZoom})`;
-          img.style.cursor = 'grab';
-
-          // Scroll to the clicked position after zoom is applied
+          // On mobile, image is already zoomed via CSS (width: 300vw)
+          // Just scroll to the clicked position without additional transform
           requestAnimationFrame(() => {
             const clickX = this.clickPosition.clickX;
             const clickY = this.clickPosition.clickY;
 
-            // Calculate scroll position to center the clicked point
-            const scrollX = (img.offsetWidth * initialZoom * clickX) - (wrapper.clientWidth / 2);
-            const scrollY = (img.offsetHeight * initialZoom * clickY) - (wrapper.clientHeight / 2);
+            // Calculate scroll position based on actual image dimensions
+            // to center the clicked point in the viewport
+            const scrollX = (img.offsetWidth * clickX) - (wrapper.clientWidth / 2);
+            const scrollY = (img.offsetHeight * clickY) - (wrapper.clientHeight / 2);
 
             wrapper.scrollLeft = Math.max(0, scrollX);
             wrapper.scrollTop = Math.max(0, scrollY);
