@@ -592,11 +592,6 @@ a.product__text {
     width: calc(100% + 3rem);
   }
 
-  .product__media-item {
-    max-height: 65vh;
-    overflow: hidden;
-  }
-
   .slider.product__media-list::-webkit-scrollbar {
     height: 0.2rem;
     width: 0.2rem;
@@ -625,9 +620,21 @@ a.product__text {
 }
 
 @media screen and (min-width: 750px) {
-  .product__media-item {
-    max-height: 100vh;
-    margin-bottom: var(--grid-desktop-vertical-spacing);
+  .product__media-list .product__media-item:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+
+  /* Constrain media height to viewport while maintaining aspect ratio (resize, not clip) */
+  .product__media-list .product-media-container {
+    --viewport-max-height: 100vh;
+    --contained-max-width: calc(var(--viewport-max-height) * var(--aspect-ratio));
+    width: min(var(--contained-max-width), 100%);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .product__media-list .product-media-container .media {
+    padding-top: min(var(--viewport-max-height), var(--ratio-percent));
   }
 
   .product--thumbnail .product__media-list,
