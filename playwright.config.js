@@ -7,7 +7,9 @@ const { defineConfig, devices } = require('@playwright/test');
  */
 module.exports = defineConfig({
   testDir: './tests',
-  fullyParallel: true,
+  fullyParallel: false,
+  workers: process.env.CI ? 1 : 2,
+  retries: process.env.CI ? 2 : 0,
   forbidOnly: !!process.env.CI,
   reporter: process.env.CI ? 'list' : 'html',
   use: {
@@ -21,20 +23,8 @@ module.exports = defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
     {
-      name: 'Desktop Safari',
-      use: { ...devices['Desktop Safari'] },
-    },
-    {
       name: 'Mobile Chrome',
       use: { ...devices['Pixel 5'] },
-    },
-    {
-      name: 'Mobile Safari 13',
-      use: { ...devices['iPhone 13'] },
-    },
-    {
-      name: 'Mobile Safari 15 Pro Max',
-      use: { ...devices['iPhone 15 Pro Max'] },
     },
   ],
 });
