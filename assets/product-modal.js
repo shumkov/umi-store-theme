@@ -5,7 +5,6 @@ if (!customElements.get('product-modal')) {
       constructor() {
         super();
         this.clickPosition = null;
-        this.savedScrollPosition = null;
         this.zoomState = new Map(); // Track zoom state per image
         this.isDragging = false;
         this.didDrag = false; // Track if actual drag movement occurred
@@ -82,12 +81,9 @@ if (!customElements.get('product-modal')) {
           }, 50);
         }
 
-        this.savedScrollPosition = null;
       }
 
       show(opener, clickPosition = null) {
-        // Save current scroll position
-        this.savedScrollPosition = window.scrollY;
         this.clickPosition = clickPosition;
         super.show(opener);
         this.showActiveMedia();
@@ -266,6 +262,7 @@ if (!customElements.get('product-modal')) {
           this.currentDragImg.style.cursor = state && state.zoom > 1 ? 'grab' : 'zoom-out';
         }
         this.isDragging = false;
+        this.didDrag = false;
         this.currentWrapper = null;
         this.currentDragImg = null;
       }
@@ -285,13 +282,13 @@ if (!customElements.get('product-modal')) {
           this.currentTouchImg = img;
           this.currentTouchWrapper = wrapper;
 
-          // Calculate pinch center relative to image
+          // Calculate pinch center relative to wrapper (consistent with wheel zoom)
           const centerX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
           const centerY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
-          const imgRect = img.getBoundingClientRect();
+          const wrapperRect = wrapper.getBoundingClientRect();
           this.pinchCenter = {
-            x: ((centerX - imgRect.left) / imgRect.width) * 100,
-            y: ((centerY - imgRect.top) / imgRect.height) * 100
+            x: centerX - wrapperRect.left,
+            y: centerY - wrapperRect.top
           };
 
           // Get or initialize zoom state
@@ -331,11 +328,26 @@ if (!customElements.get('product-modal')) {
             state = { zoom: 1, panX: 0, panY: 0 };
             this.zoomState.set(img, state);
           }
+
+          if (newZoom === state.zoom) return;
+
+          // Calculate zoom point as percentage (consistent with wheel zoom)
+          const percentX = (this.pinchCenter.x + wrapper.scrollLeft) / wrapper.scrollWidth;
+          const percentY = (this.pinchCenter.y + wrapper.scrollTop) / wrapper.scrollHeight;
+
           state.zoom = newZoom;
 
-          // Apply zoom transform centered on pinch point
-          img.style.transformOrigin = `${this.pinchCenter.x}% ${this.pinchCenter.y}%`;
+          // Apply zoom transform with consistent origin (same as wheel zoom)
+          img.style.transformOrigin = 'top left';
           img.style.transform = `scale(${newZoom})`;
+
+          // Adjust scroll to zoom toward pinch center
+          requestAnimationFrame(() => {
+            const newScrollLeft = (wrapper.scrollWidth * percentX) - this.pinchCenter.x;
+            const newScrollTop = (wrapper.scrollHeight * percentY) - this.pinchCenter.y;
+            wrapper.scrollLeft = Math.max(0, newScrollLeft);
+            wrapper.scrollTop = Math.max(0, newScrollTop);
+          });
         } else if (e.touches.length === 1 && this.isDragging && this.currentWrapper) {
           // Single touch pan when zoomed
           e.preventDefault(); // Prevent page scroll while panning
