@@ -17,17 +17,37 @@ const { test, expect } = require('@playwright/test');
 test.describe('Product Image Zoom', () => {
   // Navigate to a product page before each test
   test.beforeEach(async ({ page }) => {
-    // Navigate to products page and click the first product
-    await page.goto('/collections/all');
-    await page.waitForLoadState('domcontentloaded');
+    // Try multiple paths to find a product page
+    const collectionUrls = ['/collections/all', '/collections', '/'];
+    let foundProduct = false;
 
-    // Click first product to go to product page
-    const productLink = page.locator('.card__heading a, .card__content a, .product-card a').first();
-    if (await productLink.isVisible({ timeout: 5000 }).catch(() => false)) {
-      await productLink.click();
+    for (const url of collectionUrls) {
+      if (foundProduct) break;
+
+      await page.goto(url);
       await page.waitForLoadState('domcontentloaded');
-    } else {
-      // If no collection page, try to go to a product directly
+
+      // Try multiple selectors for product links
+      const productSelectors = [
+        '.card__heading a',
+        '.full-unstyled-link[href*="/products/"]',
+        'a[href*="/products/"]',
+        '.product-card a',
+      ];
+
+      for (const selector of productSelectors) {
+        const productLink = page.locator(selector).first();
+        if (await productLink.isVisible({ timeout: 2000 }).catch(() => false)) {
+          await productLink.click();
+          await page.waitForLoadState('domcontentloaded');
+          foundProduct = true;
+          break;
+        }
+      }
+    }
+
+    // If still no product found, try direct products page
+    if (!foundProduct) {
       await page.goto('/products');
       await page.waitForLoadState('domcontentloaded');
     }
