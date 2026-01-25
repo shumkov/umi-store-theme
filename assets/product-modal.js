@@ -95,26 +95,37 @@ if (!customElements.get('product-modal')) {
           const activeMedia = this.querySelector('[data-media-id].active');
           if (!activeMedia) return;
 
-          const img = activeMedia.querySelector('img');
+          // For images, data-media-id is on the img element itself
+          // For videos/models, it's on a wrapper element containing an img
+          const img = activeMedia.tagName === 'IMG' ? activeMedia : activeMedia.querySelector('img');
           if (!img) return;
 
           const wrapper = img.closest('.product-media-modal__content');
           if (!wrapper) return;
 
+          // Function to apply scroll position
+          const applyScroll = () => {
+            requestAnimationFrame(() => {
+              const clickX = this.clickPosition.clickX;
+              const clickY = this.clickPosition.clickY;
+
+              // Calculate scroll position based on actual image dimensions
+              // to center the clicked point in the viewport
+              const scrollX = (img.offsetWidth * clickX) - (wrapper.clientWidth / 2);
+              const scrollY = (img.offsetHeight * clickY) - (wrapper.clientHeight / 2);
+
+              wrapper.scrollLeft = Math.max(0, scrollX);
+              wrapper.scrollTop = Math.max(0, scrollY);
+            });
+          };
+
           // On mobile, image is already zoomed via CSS (width: 300vw)
-          // Just scroll to the clicked position without additional transform
-          requestAnimationFrame(() => {
-            const clickX = this.clickPosition.clickX;
-            const clickY = this.clickPosition.clickY;
-
-            // Calculate scroll position based on actual image dimensions
-            // to center the clicked point in the viewport
-            const scrollX = (img.offsetWidth * clickX) - (wrapper.clientWidth / 2);
-            const scrollY = (img.offsetHeight * clickY) - (wrapper.clientHeight / 2);
-
-            wrapper.scrollLeft = Math.max(0, scrollX);
-            wrapper.scrollTop = Math.max(0, scrollY);
-          });
+          // Wait for image to load if needed before applying scroll
+          if (img.complete && img.naturalHeight > 0) {
+            applyScroll();
+          } else {
+            img.addEventListener('load', applyScroll, { once: true });
+          }
         }, 100);
       }
 

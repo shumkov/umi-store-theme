@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Modal Test</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, sans-serif;
+      background: #f5f5f5;
+    }
+
+    .product-page {
+      padding: 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .product__media-item {
+      position: relative;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+
+    .product__media-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Modal styles */
+    product-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1000;
+    }
+
+    product-modal[open] {
+      display: block;
+    }
+
+    .product-media-modal__content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background: white;
+    }
+
+    .product-media-modal__content [data-media-id] {
+      display: none;
+    }
+
+    .product-media-modal__content [data-media-id].active {
+      display: block;
+    }
+
+    /* Mobile: image width is 300vw (3x viewport width) */
+    @media (max-width: 749px), (hover: none) {
+      .product-media-modal__content img {
+        width: 300vw;
+        height: auto;
+      }
+    }
+
+    /* Desktop: image width is 100vw */
+    @media (min-width: 750px) and (hover: hover) {
+      .product-media-modal__content img {
+        width: 100vw;
+        height: auto;
+      }
+    }
+
+    .close-button {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 1001;
+      background: rgba(0,0,0,0.5);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .debug-info {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      right: 10px;
+      background: rgba(0,0,0,0.8);
+      color: #0f0;
+      padding: 10px;
+      font-family: monospace;
+      font-size: 12px;
+      z-index: 1002;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="product-page">
+    <h1>Product Test Page</h1>
+    <p>Click anywhere on the image below to open the lightbox. The lightbox should scroll to center on where you clicked.</p>
+
+    <div class="product__media-item" data-media-id="test-media-1">
+      <button id="media-opener">
+        <!-- A tall image with clear sections for testing -->
+        <img
+          src="https://picsum.photos/800/2400"
+          alt="Test product image"
+          id="product-image"
+        >
+      </button>
+    </div>
+  </div>
+
+  <product-modal id="product-modal">
+    <button class="close-button" id="close-modal">Close (X)</button>
+    <div class="product-media-modal__content" role="document">
+      <!-- Note: In the real theme, data-media-id is ON the img element for images -->
+      <img
+        data-media-id="test-media-1"
+        src="https://picsum.photos/800/2400"
+        alt="Test product image in modal"
+        id="modal-image"
+        loading="lazy"
+      >
+    </div>
+  </product-modal>
+
+  <div class="debug-info" id="debug"></div>
+
+  <script>
+    // Debug logging
+    function log(msg) {
+      const debug = document.getElementById('debug');
+      debug.innerHTML += msg + '<br>';
+      debug.scrollTop = debug.scrollHeight;
+      console.log(msg);
+    }
+
+    // ProductModal class (simplified from product-modal.js)
+    class ProductModal extends HTMLElement {
+      constructor() {
+        super();
+        this.clickPosition = null;
+      }
+
+      show(opener, clickPosition = null) {
+        this.clickPosition = clickPosition;
+        this.setAttribute('open', '');
+        this.openedBy = opener;
+        this.showActiveMedia();
+        this.applyInitialZoom();
+      }
+
+      hide() {
+        this.removeAttribute('open');
+        this.clickPosition = null;
+      }
+
+      applyInitialZoom() {
+        log('=== applyInitialZoom called ===');
+
+        // If we have a click position, scroll to that point (mobile only)
+        if (!this.clickPosition) {
+          log('No click position, returning');
+          return;
+        }
+
+        log(`Click position: clickX=${this.clickPosition.clickX.toFixed(3)}, clickY=${this.clickPosition.clickY.toFixed(3)}`);
+
+        const isMobile = window.matchMedia('(hover: none)').matches ||
+                         window.matchMedia('(max-width: 749px)').matches;
+        log(`isMobile: ${isMobile}`);
+
+        if (!isMobile) {
+          log('Not mobile, returning');
+          return;
+        }
+
+        // Wait for modal to render
+        setTimeout(() => {
+          const activeMedia = this.querySelector('[data-media-id].active');
+          if (!activeMedia) {
+            log('No active media found');
+            return;
+          }
+
+          // For images, data-media-id is on the img element itself
+          // For videos/models, it's on a wrapper element containing an img
+          const img = activeMedia.tagName === 'IMG' ? activeMedia : activeMedia.querySelector('img');
+          if (!img) {
+            log('No image found');
+            return;
+          }
+
+          log(`activeMedia.tagName: ${activeMedia.tagName}`);
+          log(`img found: ${img.tagName}`);
+
+          const wrapper = img.closest('.product-media-modal__content');
+          if (!wrapper) {
+            log('No wrapper found');
+            return;
+          }
+
+          // Function to apply scroll position
+          const applyScroll = () => {
+            log(`Wrapper dimensions: ${wrapper.clientWidth}x${wrapper.clientHeight}`);
+            log(`Image dimensions: ${img.offsetWidth}x${img.offsetHeight}`);
+            log(`Scroll dimensions: ${wrapper.scrollWidth}x${wrapper.scrollHeight}`);
+
+            requestAnimationFrame(() => {
+              const clickX = this.clickPosition.clickX;
+              const clickY = this.clickPosition.clickY;
+
+              // Calculate scroll position based on actual image dimensions
+              // to center the clicked point in the viewport
+              const scrollX = (img.offsetWidth * clickX) - (wrapper.clientWidth / 2);
+              const scrollY = (img.offsetHeight * clickY) - (wrapper.clientHeight / 2);
+
+              const clampedScrollX = Math.max(0, Math.min(scrollX, wrapper.scrollWidth - wrapper.clientWidth));
+              const clampedScrollY = Math.max(0, Math.min(scrollY, wrapper.scrollHeight - wrapper.clientHeight));
+
+              log(`Calculated scroll: X=${scrollX.toFixed(0)}, Y=${scrollY.toFixed(0)}`);
+              log(`Clamped scroll: X=${clampedScrollX.toFixed(0)}, Y=${clampedScrollY.toFixed(0)}`);
+              log(`Max scroll: X=${wrapper.scrollWidth - wrapper.clientWidth}, Y=${wrapper.scrollHeight - wrapper.clientHeight}`);
+
+              wrapper.scrollLeft = Math.max(0, scrollX);
+              wrapper.scrollTop = Math.max(0, scrollY);
+
+              log(`Actual scroll after set: X=${wrapper.scrollLeft}, Y=${wrapper.scrollTop}`);
+            });
+          };
+
+          // Wait for image to load if needed before applying scroll
+          if (img.complete && img.naturalHeight > 0) {
+            log('Image already loaded, applying scroll');
+            applyScroll();
+          } else {
+            log('Waiting for image to load...');
+            img.addEventListener('load', () => {
+              log('Image loaded, applying scroll');
+              applyScroll();
+            }, { once: true });
+          }
+        }, 100);
+      }
+
+      showActiveMedia() {
+        const mediaId = 'test-media-1';
+        this.querySelectorAll('[data-media-id]').forEach(el => {
+          el.classList.remove('active');
+        });
+        const activeMedia = this.querySelector(`[data-media-id="${mediaId}"]`);
+        if (activeMedia) {
+          activeMedia.classList.add('active');
+        }
+      }
+    }
+
+    customElements.define('product-modal', ProductModal);
+
+    // Setup event listeners
+    document.getElementById('media-opener').addEventListener('click', (event) => {
+      const modal = document.getElementById('product-modal');
+      const button = event.currentTarget;
+      const rect = button.getBoundingClientRect();
+
+      const clickX = (event.clientX - rect.left) / rect.width;
+      const clickY = (event.clientY - rect.top) / rect.height;
+
+      log('=== Click detected ===');
+      log(`Button rect: top=${rect.top.toFixed(0)}, left=${rect.left.toFixed(0)}, width=${rect.width.toFixed(0)}, height=${rect.height.toFixed(0)}`);
+      log(`Click coords: clientX=${event.clientX}, clientY=${event.clientY}`);
+      log(`Calculated position: clickX=${clickX.toFixed(3)} (${(clickX*100).toFixed(1)}%), clickY=${clickY.toFixed(3)} (${(clickY*100).toFixed(1)}%)`);
+
+      modal.show(button, { clickX, clickY });
+    });
+
+    document.getElementById('close-modal').addEventListener('click', () => {
+      document.getElementById('product-modal').hide();
+    });
+
+    log('Test page loaded. Click on the image to test.');
+  </script>
+</body>
+</html>
