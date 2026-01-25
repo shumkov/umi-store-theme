@@ -371,10 +371,17 @@ if (!customElements.get('product-modal')) {
         const activeMediaContent = activeMediaTemplate ? activeMediaTemplate.content : null;
         activeMedia.classList.add('active');
 
-        // Scroll to the clicked image after a short delay to ensure modal is rendered
-        setTimeout(() => {
-          activeMedia.scrollIntoView({ behavior: 'instant', block: 'start' });
-        }, 50);
+        // On mobile with click position, applyInitialZoom will handle scrolling
+        // Otherwise, scroll to the image after a short delay
+        const isMobile = window.matchMedia('(hover: none)').matches ||
+                         window.matchMedia('(max-width: 749px)').matches;
+        const willApplyInitialZoom = isMobile && this.clickPosition;
+
+        if (!willApplyInitialZoom) {
+          setTimeout(() => {
+            activeMedia.scrollIntoView({ behavior: 'instant', block: 'start' });
+          }, 50);
+        }
 
         if (
           activeMedia.nodeName == 'DEFERRED-MEDIA' &&
