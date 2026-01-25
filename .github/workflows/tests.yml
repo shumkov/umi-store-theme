@@ -13,6 +13,11 @@ jobs:
     timeout-minutes: 15
     runs-on: ubuntu-latest
 
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, webkit]
+
     steps:
       - uses: actions/checkout@v4
 
@@ -22,13 +27,13 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci --ignore-optional
 
       - name: Install Shopify CLI
         run: npm install -g @shopify/cli@3.83.3
 
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium webkit
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps ${{ matrix.browser }}
 
       - name: Start theme dev server
         run: |
@@ -37,7 +42,7 @@ jobs:
         env:
           SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
 
-      - name: Run Playwright tests
-        run: npm test
+      - name: Run Playwright tests (${{ matrix.browser }})
+        run: npx playwright test --project='*${{ matrix.browser == 'chromium' && 'Chrome' || 'Safari' }}*'
         env:
           SHOPIFY_PREVIEW_URL: http://localhost:9292
