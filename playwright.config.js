@@ -7,9 +7,6 @@ const { defineConfig, devices } = require('@playwright/test');
  */
 module.exports = defineConfig({
   testDir: './tests',
-  fullyParallel: false,
-  workers: process.env.CI ? 1 : 2,
-  retries: process.env.CI ? 2 : 0,
   forbidOnly: !!process.env.CI,
   reporter: process.env.CI ? 'list' : 'html',
   use: {
