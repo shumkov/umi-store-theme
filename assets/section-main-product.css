@@ -627,6 +627,7 @@ a.product__text {
 @media screen and (min-width: 750px) {
   .product__media-item {
     max-height: 100vh;
+    margin-bottom: var(--grid-desktop-vertical-spacing);
   }
 
   .product--thumbnail .product__media-list,
