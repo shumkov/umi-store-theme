@@ -18,7 +18,7 @@ test.describe('Product Image Zoom', () => {
   // Navigate to a product page before each test
   test.beforeEach(async ({ page }) => {
     // Try multiple paths to find a product page
-    const collectionUrls = ['/collections/all', '/collections', '/'];
+    const collectionUrls = ['/collections/appearance', '/collections/all', '/'];
     let foundProduct = false;
 
     for (const url of collectionUrls) {
