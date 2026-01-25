@@ -71,7 +71,19 @@ runs:
         PR_NUMBER: ${{ github.event.pull_request.number }}
       run: |
         set -o pipefail
-        output=$(shopify theme push --json --unpublished --theme "Preview PR #${PR_NUMBER}" --path "${{ inputs.dir }}")
+        THEME_NAME="Preview PR #${PR_NUMBER}"
+
+        # Check if theme already exists
+        existing_theme_id=$(shopify theme list --json | jq -r --arg name "$THEME_NAME" '.[] | select(.name == $name) | .id' | head -n 1)
+
+        if [ -n "$existing_theme_id" ]; then
+          echo "Updating existing theme: $THEME_NAME (ID: $existing_theme_id)"
+          output=$(shopify theme push --json --theme "$existing_theme_id" --path "${{ inputs.dir }}")
+        else
+          echo "Creating new theme: $THEME_NAME"
+          output=$(shopify theme push --json --unpublished --theme "$THEME_NAME" --path "${{ inputs.dir }}")
+        fi
+
         exit_code=$?
         if [ $exit_code -ne 0 ]; then
           echo "Shopify theme push failed with exit code $exit_code"
