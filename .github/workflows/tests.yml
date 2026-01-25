@@ -28,7 +28,7 @@ jobs:
         run: npm install -g @shopify/cli@3.83.3
 
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install --with-deps chromium webkit
 
       - name: Start theme dev server
         run: |
