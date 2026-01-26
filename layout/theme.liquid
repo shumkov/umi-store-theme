@@ -409,37 +409,19 @@
 
         const scrollThreshold = 50;
 
-        function isFormsInTeaseMode(formsEmbed) {
-          // Check shadow DOM for tease mode
-          if (formsEmbed.shadowRoot) {
-            const appEmbed = formsEmbed.shadowRoot.querySelector('#app-embed');
-            if (appEmbed && appEmbed.getAttribute('data-current-step') === 'tease') {
-              return true;
-            }
-          }
-          return false;
-        }
-
         function updateScrolledElements() {
           const isScrolled = window.scrollY > scrollThreshold;
 
-          // Handle forms embed - only when in teaser/collapsed mode
+          // Handle forms embed with inline styles
           const formsEmbed = document.querySelector('shopify-forms-embed');
           if (formsEmbed) {
-            // Only apply hide/show when form is in tease (collapsed) mode
-            if (isFormsInTeaseMode(formsEmbed)) {
-              formsEmbed.style.setProperty('transition', 'transform 0.3s ease, opacity 0.3s ease', 'important');
-              if (isScrolled) {
-                formsEmbed.style.setProperty('transform', 'translateY(0)', 'important');
-                formsEmbed.style.setProperty('opacity', '1', 'important');
-              } else {
-                formsEmbed.style.setProperty('transform', 'translateY(100%)', 'important');
-                formsEmbed.style.setProperty('opacity', '0', 'important');
-              }
+            formsEmbed.style.setProperty('transition', 'transform 0.3s ease, opacity 0.3s ease', 'important');
+            if (isScrolled) {
+              formsEmbed.style.setProperty('transform', 'translateY(0)', 'important');
+              formsEmbed.style.setProperty('opacity', '1', 'important');
             } else {
-              // Form is open - remove our transform/opacity overrides
-              formsEmbed.style.removeProperty('transform');
-              formsEmbed.style.removeProperty('opacity');
+              formsEmbed.style.setProperty('transform', 'translateY(100%)', 'important');
+              formsEmbed.style.setProperty('opacity', '0', 'important');
             }
           }
 
