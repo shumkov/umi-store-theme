@@ -3632,3 +3632,18 @@ details-disclosure>details {
     transform: translateX(100%) scaleX(0);
   }
 }
+
+/* Hide Shopify forms popup and chat on mobile when at top, show on scroll */
+@media screen and (max-width: 749px) {
+  shopify-forms-embed,
+  inbox-online-store-chat[is-open="false"] {
+    transition: transform 0.3s ease, opacity 0.3s ease !important;
+  }
+
+  shopify-forms-embed.is-at-top,
+  inbox-online-store-chat[is-open="false"].is-at-top {
+    transform: translateY(100%) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+}
