@@ -410,7 +410,7 @@
         const scrollThreshold = 50;
 
         function updateScrolledElements() {
-          const isScrolled = window.scrollY > scrollThreshold;
+          const isAtTop = window.scrollY <= scrollThreshold;
 
           // Handle forms embed and chat with CSS classes
           const elementsToToggle = [
@@ -419,10 +419,10 @@
           ];
 
           elementsToToggle.forEach(function(el) {
-            if (isScrolled) {
-              el.classList.add('is-scrolled');
+            if (isAtTop) {
+              el.classList.add('is-at-top');
             } else {
-              el.classList.remove('is-scrolled');
+              el.classList.remove('is-at-top');
             }
           });
         }

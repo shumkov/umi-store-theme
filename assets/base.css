@@ -3635,25 +3635,15 @@ details-disclosure>details {
 
 /* Hide Shopify forms popup and chat on mobile when at top, show on scroll */
 @media screen and (max-width: 749px) {
-  shopify-forms-embed {
-    transform: translateY(100%) !important;
-    opacity: 0 !important;
-    transition: transform 0.3s ease, opacity 0.3s ease !important;
-  }
-
-  shopify-forms-embed.is-scrolled {
-    transform: translateY(0) !important;
-    opacity: 1 !important;
-  }
-
+  shopify-forms-embed,
   inbox-online-store-chat[is-open="false"] {
-    transform: translateY(100%) !important;
-    opacity: 0 !important;
     transition: transform 0.3s ease, opacity 0.3s ease !important;
   }
 
-  inbox-online-store-chat[is-open="false"].is-scrolled {
-    transform: translateY(0) !important;
-    opacity: 1 !important;
+  shopify-forms-embed.is-at-top,
+  inbox-online-store-chat[is-open="false"].is-at-top {
+    transform: translateY(100%) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
   }
 }
