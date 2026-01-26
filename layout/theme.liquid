@@ -405,21 +405,46 @@
     <script>
       // Hide Shopify forms popup and chat on mobile when at top, show on scroll
       (function() {
-        if (window.innerWidth > 749) return;
+        // Check mobile on each call since viewport might change
+        function isMobile() {
+          return window.innerWidth <= 749;
+        }
 
         const scrollThreshold = 50;
 
+        function isFormsPopupOpen(formsEmbed) {
+          // Check if the form popup is open (not just the teaser)
+          if (!formsEmbed || !formsEmbed.shadowRoot) return null; // Unknown state
+          const appEmbed = formsEmbed.shadowRoot.querySelector('[data-current-step]');
+          if (!appEmbed) return null; // Unknown state
+          // "tease" means collapsed teaser, anything else means popup is open
+          return appEmbed.getAttribute('data-current-step') !== 'tease';
+        }
+
         function updateScrolledElements() {
+          if (!isMobile()) return;
+
           const isAtTop = window.scrollY <= scrollThreshold;
 
-          // Handle forms embed and chat with CSS classes
-          const elementsToToggle = [
-            ...document.querySelectorAll('shopify-forms-embed'),
-            ...document.querySelectorAll('inbox-online-store-chat[is-open="false"]')
-          ];
-
-          elementsToToggle.forEach(function(el) {
+          // Handle chat
+          document.querySelectorAll('inbox-online-store-chat[is-open="false"]').forEach(function(el) {
             if (isAtTop) {
+              el.classList.add('is-at-top');
+            } else {
+              el.classList.remove('is-at-top');
+            }
+          });
+
+          // Handle forms embed - don't hide if popup is open
+          document.querySelectorAll('shopify-forms-embed').forEach(function(el) {
+            const popupState = isFormsPopupOpen(el);
+            // If state is unknown (shadow DOM not ready), schedule retry
+            if (popupState === null) {
+              setTimeout(updateScrolledElements, 200);
+              return;
+            }
+
+            if (isAtTop && !popupState) {
               el.classList.add('is-at-top');
             } else {
               el.classList.remove('is-at-top');
@@ -428,8 +453,18 @@
         }
 
         window.addEventListener('scroll', updateScrolledElements, { passive: true });
-        // Initial check after a delay to ensure elements are loaded
-        setTimeout(updateScrolledElements, 1000);
+        // Initial check - keep retrying until forms embed is ready
+        function initCheck() {
+          var formsEmbed = document.querySelector('shopify-forms-embed');
+          if (!formsEmbed || !formsEmbed.shadowRoot || !formsEmbed.shadowRoot.querySelector('[data-current-step]')) {
+            // Shadow DOM not ready, retry
+            setTimeout(initCheck, 300);
+            return;
+          }
+          // Shadow DOM ready, trigger update
+          updateScrolledElements();
+        }
+        setTimeout(initCheck, 300);
       })();
     </script>
   </body>
