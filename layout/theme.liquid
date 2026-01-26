@@ -412,22 +412,13 @@
         function updateScrolledElements() {
           const isScrolled = window.scrollY > scrollThreshold;
 
-          // Handle forms embed with inline styles
-          const formsEmbed = document.querySelector('shopify-forms-embed');
-          if (formsEmbed) {
-            formsEmbed.style.setProperty('transition', 'transform 0.3s ease, opacity 0.3s ease', 'important');
-            if (isScrolled) {
-              formsEmbed.style.setProperty('transform', 'translateY(0)', 'important');
-              formsEmbed.style.setProperty('opacity', '1', 'important');
-            } else {
-              formsEmbed.style.setProperty('transform', 'translateY(100%)', 'important');
-              formsEmbed.style.setProperty('opacity', '0', 'important');
-            }
-          }
+          // Handle forms embed and chat with CSS classes
+          const elementsToToggle = [
+            ...document.querySelectorAll('shopify-forms-embed'),
+            ...document.querySelectorAll('inbox-online-store-chat[is-open="false"]')
+          ];
 
-          // Handle chat with CSS classes
-          const chatElements = document.querySelectorAll('inbox-online-store-chat[is-open="false"]');
-          chatElements.forEach(function(el) {
+          elementsToToggle.forEach(function(el) {
             if (isScrolled) {
               el.classList.add('is-scrolled');
             } else {
