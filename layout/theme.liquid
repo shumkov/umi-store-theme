@@ -401,5 +401,45 @@
     {%- if settings.cart_type == 'drawer' -%}
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
+
+    <script>
+      // Hide Shopify forms popup and chat on mobile when at top, show on scroll
+      (function() {
+        if (window.innerWidth > 749) return;
+
+        const scrollThreshold = 50;
+
+        function updateScrolledElements() {
+          const isScrolled = window.scrollY > scrollThreshold;
+
+          // Handle forms embed with inline styles (CSS classes don't work on this web component)
+          const formsEmbed = document.querySelector('shopify-forms-embed');
+          if (formsEmbed) {
+            formsEmbed.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+            if (isScrolled) {
+              formsEmbed.style.transform = 'translateY(0)';
+              formsEmbed.style.opacity = '1';
+            } else {
+              formsEmbed.style.transform = 'translateY(100%)';
+              formsEmbed.style.opacity = '0';
+            }
+          }
+
+          // Handle chat with CSS classes
+          const chatElements = document.querySelectorAll('inbox-online-store-chat[is-open="false"]');
+          chatElements.forEach(function(el) {
+            if (isScrolled) {
+              el.classList.add('is-scrolled');
+            } else {
+              el.classList.remove('is-scrolled');
+            }
+          });
+        }
+
+        window.addEventListener('scroll', updateScrolledElements, { passive: true });
+        // Initial check after a delay to ensure elements are loaded
+        setTimeout(updateScrolledElements, 1000);
+      })();
+    </script>
   </body>
 </html>
