@@ -63,6 +63,106 @@
   data-desktop-layout="{{ section.settings.gallery_layout }}"
 >
   <div id="GalleryStatus-{{ section.id }}" class="visually-hidden" role="status"></div>
+
+  {%- comment -%} Hover thumbnails for desktop - shown on hover over main media {%- endcomment -%}
+  {%- if media_count > 1 -%}
+    <div class="product__hover-thumbnails" aria-hidden="true">
+      <ul class="product__hover-thumbnails-list list-unstyled">
+        {%- if selected_variant_files.size > 0 -%}
+          {%- for file in selected_variant_files -%}
+            <li
+              class="product__hover-thumbnail-item{% if forloop.first %} is-active{% endif %}"
+              data-media-target="{{ section.id }}-{{ forloop.index }}"
+            >
+              <button type="button" class="product__hover-thumbnail-button">
+                {%- if file.media_type == 'video' -%}
+                  <span class="product__hover-thumbnail-play-icon">
+                    <span class="svg-wrapper">
+                      {{- 'icon-play.svg' | inline_asset_content -}}
+                    </span>
+                  </span>
+                  <img
+                    src="{{ file.preview_image | image_url: width: 200 }}"
+                    loading="lazy"
+                    width="100"
+                    height="100"
+                    alt="{{ file.alt | escape }}"
+                  >
+                {%- else -%}
+                  <img
+                    src="{{ file | image_url: width: 200 }}"
+                    loading="lazy"
+                    width="100"
+                    height="100"
+                    alt="{{ file.alt | escape }}"
+                  >
+                {%- endif -%}
+              </button>
+            </li>
+          {%- endfor -%}
+        {%- else -%}
+          {%- if selected_variant.featured_media != null -%}
+            <li
+              class="product__hover-thumbnail-item is-active"
+              data-media-target="{{ section.id }}-{{ selected_variant.featured_media.id }}"
+            >
+              <button type="button" class="product__hover-thumbnail-button">
+                {%- if selected_variant.featured_media.media_type == 'video' or selected_variant.featured_media.media_type == 'external_video' -%}
+                  <span class="product__hover-thumbnail-play-icon">
+                    <span class="svg-wrapper">
+                      {{- 'icon-play.svg' | inline_asset_content -}}
+                    </span>
+                  </span>
+                {%- endif -%}
+                <img
+                  src="{{ selected_variant.featured_media.preview_image | image_url: width: 200 }}"
+                  loading="lazy"
+                  width="100"
+                  height="100"
+                  alt="{{ selected_variant.featured_media.alt | escape }}"
+                >
+              </button>
+            </li>
+          {%- endif -%}
+          {%- for media in product.media -%}
+            {%- unless media.id == selected_variant.featured_media.id -%}
+              {%- if section.settings.hide_variants and variant_images contains media.src -%}
+                {%- continue -%}
+              {%- endif -%}
+              <li
+                class="product__hover-thumbnail-item{% if selected_variant.featured_media == nil and forloop.index == 1 %} is-active{% endif %}"
+                data-media-target="{{ section.id }}-{{ media.id }}"
+              >
+                <button type="button" class="product__hover-thumbnail-button">
+                  {%- if media.media_type == 'video' or media.media_type == 'external_video' -%}
+                    <span class="product__hover-thumbnail-play-icon">
+                      <span class="svg-wrapper">
+                        {{- 'icon-play.svg' | inline_asset_content -}}
+                      </span>
+                    </span>
+                  {%- elsif media.media_type == 'model' -%}
+                    <span class="product__hover-thumbnail-play-icon">
+                      <span class="svg-wrapper">
+                        {{- 'icon-3d-model.svg' | inline_asset_content -}}
+                      </span>
+                    </span>
+                  {%- endif -%}
+                  <img
+                    src="{{ media.preview_image | image_url: width: 200 }}"
+                    loading="lazy"
+                    width="100"
+                    height="100"
+                    alt="{{ media.alt | escape }}"
+                  >
+                </button>
+              </li>
+            {%- endunless -%}
+          {%- endfor -%}
+        {%- endif -%}
+      </ul>
+    </div>
+  {%- endif -%}
+
   <slider-component id="GalleryViewer-{{ section.id }}" class="slider-mobile-gutter">
     <a class="skip-to-content-link button visually-hidden quick-add-hidden" href="#ProductInfo-{{ section.id }}">
       {{ 'accessibility.skip_to_product_info' | t }}

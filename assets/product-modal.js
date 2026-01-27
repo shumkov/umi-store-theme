@@ -90,7 +90,83 @@ if (!customElements.get('product-modal')) {
         super.show(opener);
         this.showActiveMedia();
         this.initZoomHandlers();
+        this.initModalThumbnails();
         this.applyInitialZoom();
+      }
+
+      initModalThumbnails() {
+        const thumbnailsContainer = this.querySelector('.product__modal-thumbnails');
+        if (!thumbnailsContainer) return;
+
+        // Prevent all clicks on thumbnails container from bubbling to modal (which would close it)
+        thumbnailsContainer.addEventListener('click', (e) => e.stopPropagation());
+        thumbnailsContainer.addEventListener('pointerup', (e) => e.stopPropagation());
+
+        const thumbnailItems = thumbnailsContainer.querySelectorAll('[data-modal-media-index]');
+        const mediaItems = this.querySelectorAll('.product-media-modal__content > [data-media-id]');
+        const container = this.querySelector('[role="document"]');
+
+        // Set initial active thumbnail based on opened media
+        this.updateModalActiveThumbnail();
+
+        // Add click handlers to thumbnails
+        thumbnailItems.forEach((item) => {
+          const button = item.querySelector('button');
+          if (!button) return;
+
+          button.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const index = parseInt(item.dataset.modalMediaIndex, 10);
+            const targetMedia = mediaItems[index];
+            if (targetMedia && container) {
+              targetMedia.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              this.setModalActiveThumbnail(index);
+            }
+          });
+        });
+
+        // Track scroll to update active thumbnail
+        if (container && !container.dataset.thumbnailScrollInitialized) {
+          container.dataset.thumbnailScrollInitialized = 'true';
+          let scrollTimeout;
+          container.addEventListener('scroll', () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+              this.updateModalActiveThumbnail();
+            }, 100);
+          });
+        }
+      }
+
+      updateModalActiveThumbnail() {
+        const container = this.querySelector('[role="document"]');
+        const mediaItems = this.querySelectorAll('.product-media-modal__content > [data-media-id]');
+        if (!container || mediaItems.length === 0) return;
+
+        const scrollTop = container.scrollTop;
+        const viewportCenter = scrollTop + container.clientHeight / 2;
+
+        let closestIndex = 0;
+        let closestDistance = Infinity;
+
+        mediaItems.forEach((item, index) => {
+          const itemCenter = item.offsetTop + item.offsetHeight / 2;
+          const distance = Math.abs(viewportCenter - itemCenter);
+          if (distance < closestDistance) {
+            closestDistance = distance;
+            closestIndex = index;
+          }
+        });
+
+        this.setModalActiveThumbnail(closestIndex);
+      }
+
+      setModalActiveThumbnail(index) {
+        const thumbnailItems = this.querySelectorAll('.product__modal-thumbnails [data-modal-media-index]');
+        thumbnailItems.forEach((item, i) => {
+          item.classList.toggle('is-active', i === index);
+        });
       }
 
       applyInitialZoom() {
