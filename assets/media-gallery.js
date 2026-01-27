@@ -8,8 +8,14 @@ if (!customElements.get('media-gallery')) {
           liveRegion: this.querySelector('[id^="GalleryStatus"]'),
           viewer: this.querySelector('[id^="GalleryViewer"]'),
           thumbnails: this.querySelector('[id^="GalleryThumbnails"]'),
+          hoverThumbnails: this.querySelector('.product__hover-thumbnails'),
         };
         this.mql = window.matchMedia('(min-width: 750px)');
+        this.desktopMql = window.matchMedia('(min-width: 990px)');
+
+        // Initialize hover thumbnails for desktop
+        this.initHoverThumbnails();
+
         if (!this.elements.thumbnails) return;
 
         this.elements.viewer.addEventListener('slideChanged', debounce(this.onSlideChanged.bind(this), 500));
@@ -21,11 +27,138 @@ if (!customElements.get('media-gallery')) {
         if (this.dataset.desktopLayout.includes('thumbnail') && this.mql.matches) this.removeListSemantic();
       }
 
+      initHoverThumbnails() {
+        if (!this.elements.hoverThumbnails) return;
+
+        // Add click handlers to hover thumbnails
+        this.elements.hoverThumbnails.querySelectorAll('[data-media-target]').forEach((item) => {
+          item.querySelector('button').addEventListener('click', (e) => {
+            e.preventDefault();
+            this.scrollToMedia(item.dataset.mediaTarget);
+          });
+        });
+
+        // Update hover thumbnails active state on scroll (for stacked layout)
+        if (this.desktopMql.matches) {
+          this.initScrollObserver();
+        }
+      }
+
+      initScrollObserver() {
+        if (!this.elements.viewer) return;
+
+        // Only select direct children of media list to avoid nested elements with data-media-id
+        const mediaItems = this.elements.viewer.querySelectorAll('.product__media-list > [data-media-id]');
+        if (mediaItems.length === 0) return;
+
+        // Flag to pause observer during programmatic scrolling
+        this.isScrollingToMedia = false;
+
+        const observerOptions = {
+          root: null,
+          rootMargin: '-30% 0px -30% 0px',
+          threshold: 0,
+        };
+
+        this.scrollObserver = new IntersectionObserver((entries) => {
+          // Skip updates during programmatic scrolling to avoid glitchy border jumps
+          if (this.isScrollingToMedia) return;
+
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const mediaId = entry.target.dataset.mediaId;
+              this.setActiveHoverThumbnail(mediaId);
+            }
+          });
+        }, observerOptions);
+
+        mediaItems.forEach((item) => {
+          this.scrollObserver.observe(item);
+        });
+
+        // Constrain thumbnails to media list boundary
+        this.initBoundaryConstraint();
+      }
+
+      initBoundaryConstraint() {
+        if (!this.elements.hoverThumbnails || !this.elements.viewer) return;
+
+        const mediaList = this.elements.viewer.querySelector('.product__media-list');
+        if (!mediaList) return;
+
+        const updatePosition = () => {
+          const mediaListRect = mediaList.getBoundingClientRect();
+          const thumbnailsHeight = this.elements.hoverThumbnails.offsetHeight;
+          const viewportHeight = window.innerHeight;
+
+          // Calculate where the bottom of centered thumbnails would be
+          const centeredTop = (viewportHeight - thumbnailsHeight) / 2;
+          const centeredBottom = centeredTop + thumbnailsHeight;
+
+          // If media list bottom is above where thumbnails bottom would be, constrain
+          if (mediaListRect.bottom < centeredBottom) {
+            // Calculate top position so thumbnails bottom aligns with media list bottom
+            const constrainedTop = mediaListRect.bottom - thumbnailsHeight;
+            this.elements.hoverThumbnails.style.top = constrainedTop + 'px';
+            this.elements.hoverThumbnails.style.transform = 'none';
+            this.elements.hoverThumbnails.classList.add('is-constrained');
+          } else {
+            // Use normal fixed centered positioning
+            this.elements.hoverThumbnails.style.top = '50%';
+            this.elements.hoverThumbnails.style.transform = 'translateY(-50%)';
+            this.elements.hoverThumbnails.classList.remove('is-constrained');
+          }
+        };
+
+        window.addEventListener('scroll', updatePosition, { passive: true });
+        window.addEventListener('resize', updatePosition, { passive: true });
+        updatePosition();
+      }
+
+      scrollToMedia(mediaId) {
+        const targetMedia = this.elements.viewer.querySelector(`[data-media-id="${mediaId}"]`);
+        if (!targetMedia) return;
+
+        // Pause observer during programmatic scrolling to avoid glitchy border jumps
+        this.isScrollingToMedia = true;
+
+        // Set active thumbnail immediately before scrolling
+        this.setActiveHoverThumbnail(mediaId);
+
+        const top = targetMedia.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+
+        // Re-enable observer after scroll completes (estimate smooth scroll duration)
+        setTimeout(() => {
+          this.isScrollingToMedia = false;
+        }, 600);
+      }
+
+      setActiveHoverThumbnail(mediaId) {
+        if (!this.elements.hoverThumbnails) return;
+
+        const allThumbnails = this.elements.hoverThumbnails.querySelectorAll('.product__hover-thumbnail-item');
+        allThumbnails.forEach((item) => {
+          item.classList.remove('is-active');
+        });
+
+        let activeItem = this.elements.hoverThumbnails.querySelector(`[data-media-target="${mediaId}"]`);
+
+        // Fallback: if no match found, set first thumbnail as active
+        if (!activeItem && allThumbnails.length > 0) {
+          activeItem = allThumbnails[0];
+        }
+
+        if (activeItem) {
+          activeItem.classList.add('is-active');
+        }
+      }
+
       onSlideChanged(event) {
-        const thumbnail = this.elements.thumbnails.querySelector(
-          `[data-target="${event.detail.currentElement.dataset.mediaId}"]`
-        );
+        const mediaId = event.detail.currentElement.dataset.mediaId;
+        const thumbnail = this.elements.thumbnails.querySelector(`[data-target="${mediaId}"]`);
         this.setActiveThumbnail(thumbnail);
+        this.setActiveHoverThumbnail(mediaId);
       }
 
       setActiveMedia(mediaId, prepend) {
@@ -63,6 +196,9 @@ if (!customElements.get('media-gallery')) {
           window.scrollTo({ top: top, behavior: 'smooth' });
         });
         this.playActiveMedia(activeMedia);
+
+        // Update hover thumbnails active state
+        this.setActiveHoverThumbnail(mediaId);
 
         if (!this.elements.thumbnails) return;
         const activeThumbnail = this.elements.thumbnails.querySelector(`[data-target="${mediaId}"]`);
