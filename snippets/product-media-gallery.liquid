@@ -101,13 +101,13 @@
             </li>
           {%- endfor -%}
         {%- else -%}
-          {%- if featured_media != null -%}
+          {%- if selected_variant.featured_media != null -%}
             <li
               class="product__hover-thumbnail-item is-active"
-              data-media-target="{{ section.id }}-{{ featured_media.id }}"
+              data-media-target="{{ section.id }}-{{ selected_variant.featured_media.id }}"
             >
               <button type="button" class="product__hover-thumbnail-button">
-                {%- if featured_media.media_type == 'video' or featured_media.media_type == 'external_video' -%}
+                {%- if selected_variant.featured_media.media_type == 'video' or selected_variant.featured_media.media_type == 'external_video' -%}
                   <span class="product__hover-thumbnail-play-icon">
                     <span class="svg-wrapper">
                       {{- 'icon-play.svg' | inline_asset_content -}}
@@ -115,11 +115,11 @@
                   </span>
                 {%- endif -%}
                 <img
-                  src="{{ featured_media.preview_image | image_url: width: 200 }}"
+                  src="{{ selected_variant.featured_media.preview_image | image_url: width: 200 }}"
                   loading="lazy"
                   width="100"
                   height="100"
-                  alt="{{ featured_media.alt | escape }}"
+                  alt="{{ selected_variant.featured_media.alt | escape }}"
                 >
               </button>
             </li>

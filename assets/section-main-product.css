@@ -1831,6 +1831,11 @@ a.product__text {
     box-shadow: 0 0 0 0.1rem rgba(var(--color-foreground), 0.4);
   }
 
+  .product__hover-thumbnail-button:focus-visible {
+    outline: 0.2rem solid rgb(var(--color-foreground));
+    outline-offset: 2px;
+  }
+
   .product__hover-thumbnail-button img {
     width: 100%;
     height: 100%;
@@ -1932,6 +1937,11 @@ a.product__text {
 
   .product__modal-thumbnails .product__hover-thumbnail-button:hover {
     box-shadow: 0 0 0 0.1rem rgba(var(--color-foreground), 0.4);
+  }
+
+  .product__modal-thumbnails .product__hover-thumbnail-button:focus-visible {
+    outline: 0.2rem solid rgb(var(--color-foreground));
+    outline-offset: 2px;
   }
 
   .product__modal-thumbnails .product__hover-thumbnail-button img {

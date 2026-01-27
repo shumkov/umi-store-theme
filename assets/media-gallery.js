@@ -86,7 +86,7 @@ if (!customElements.get('media-gallery')) {
         const mediaList = this.elements.viewer.querySelector('.product__media-list');
         if (!mediaList) return;
 
-        const updatePosition = () => {
+        this.boundaryUpdateHandler = () => {
           const mediaListRect = mediaList.getBoundingClientRect();
           const thumbnailsHeight = this.elements.hoverThumbnails.offsetHeight;
           const viewportHeight = window.innerHeight;
@@ -110,9 +110,19 @@ if (!customElements.get('media-gallery')) {
           }
         };
 
-        window.addEventListener('scroll', updatePosition, { passive: true });
-        window.addEventListener('resize', updatePosition, { passive: true });
-        updatePosition();
+        window.addEventListener('scroll', this.boundaryUpdateHandler, { passive: true });
+        window.addEventListener('resize', this.boundaryUpdateHandler, { passive: true });
+        this.boundaryUpdateHandler();
+      }
+
+      disconnectedCallback() {
+        if (this.scrollObserver) {
+          this.scrollObserver.disconnect();
+        }
+        if (this.boundaryUpdateHandler) {
+          window.removeEventListener('scroll', this.boundaryUpdateHandler);
+          window.removeEventListener('resize', this.boundaryUpdateHandler);
+        }
       }
 
       scrollToMedia(mediaId) {

@@ -21,6 +21,9 @@
     assign media_count = selected_variant_files.size
   else
     assign media_count = product.media.size
+    if section.settings.hide_variants and media_count > 1 and variant_images.size > 0
+      assign media_count = media_count | minus: variant_images.size | plus: 1
+    endif
   endif
 -%}
 
@@ -112,6 +115,9 @@
             {%- endif -%}
             {%- for media in product.media -%}
               {%- unless media.id == selected_variant.featured_media.id -%}
+                {%- if section.settings.hide_variants and variant_images contains media.src -%}
+                  {%- continue -%}
+                {%- endif -%}
                 <li
                   class="product__hover-thumbnail-item{% if selected_variant.featured_media == nil and forloop.first %} is-active{% endif %}"
                   data-modal-media-index="{{ thumb_index }}"
