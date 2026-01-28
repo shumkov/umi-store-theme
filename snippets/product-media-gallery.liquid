@@ -274,7 +274,7 @@
         {%- endfor -%}
       {%- endif -%}
     </ul>
-    <div class="slider-buttons quick-add-hidden{% if hide_mobile_slider %} small-hide{% endif %}">
+    <div class="slider-buttons quick-add-hidden{% if hide_mobile_slider %} small-hide{% endif %} medium-hide large-up-hide">
       <button
         type="button"
         class="slider-button slider-button--prev"
@@ -302,6 +302,23 @@
         </span>
       </button>
     </div>
+    {%- comment -%} Mobile dots indicator - shown only on mobile {%- endcomment -%}
+    {%- unless hide_mobile_slider -%}
+      {%- if media_count > 1 -%}
+        <div class="product__media-dots medium-hide large-up-hide" aria-hidden="true">
+          {%- for i in (1..media_count) -%}
+            <button
+              type="button"
+              class="product__media-dot{% if forloop.first %} is-active{% endif %}"
+              data-slide-index="{{ forloop.index0 }}"
+              aria-label="{{ 'general.slider.slide' | t: index: forloop.index }}"
+            >
+              <span class="product__media-dot-inner"></span>
+            </button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    {%- endunless -%}
   </slider-component>
   {%- if first_3d_model -%}
     <button
