@@ -2,6 +2,37 @@ product-info {
   display: block;
 }
 
+/* Mobile product page: transparent header and full-bleed media from top */
+@media screen and (max-width: 749px) {
+  /* Make header fixed and transparent on product pages */
+  body:has(product-info) .section-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    margin-bottom: 0;
+  }
+
+  body:has(product-info) .header-wrapper {
+    background-color: transparent;
+    border-bottom: none;
+  }
+
+  body:has(product-info) .header-wrapper--border-bottom {
+    border-bottom: none;
+  }
+
+  /* Header icons - always black */
+  body:has(product-info) .header-wrapper .header__heading-link,
+  body:has(product-info) .header-wrapper .header__icon,
+  body:has(product-info) .header-wrapper .icon,
+  body:has(product-info) .header-wrapper svg {
+    color: black;
+    fill: black;
+  }
+}
+
 /* Lazy Media - Video placeholder styles */
 lazy-media {
   display: block;
@@ -605,10 +636,6 @@ a.product__text {
     background-color: rgba(var(--color-foreground), 0.2);
   }
 
-  .product__media-list .product__media-item {
-    width: calc(100% - 3rem - var(--grid-mobile-horizontal-spacing));
-  }
-
   .product--mobile-columns .product__media-item {
     width: calc(50% - 1.5rem - var(--grid-mobile-horizontal-spacing));
   }
@@ -616,6 +643,103 @@ a.product__text {
   .js .product__media-wrapper .slider-buttons,
   .js .product__media-wrapper .slider-counter {
     display: none;
+  }
+
+  /* Full-width slides: override grid--peek styles from base.css */
+  .product__media-list.grid--peek.slider--mobile {
+    scroll-padding-left: 0;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    /* Shift slider right to compensate for parent negative margins */
+    transform: translateX(1.5rem);
+  }
+
+  /* Override first item margin from base.css */
+  .product__media-list.grid--peek .product__media-item.grid__item:first-of-type {
+    margin-left: 0 !important;
+  }
+
+  .product__media-list.grid--peek .product__media-item.grid__item {
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box;
+    scroll-snap-align: start;
+    flex-shrink: 0;
+  }
+
+  /* Remove the ::after pseudo-element that creates right-side peek space */
+  .slider.product__media-list::after,
+  .product__media-list.grid--peek.slider::after {
+    display: none !important;
+    content: none !important;
+    width: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Ensure images fill the slide edge-to-edge */
+  .product__media-list .product__media-item {
+    --media-border-width: 0px;
+  }
+
+  .product__media-list .product__media-item .product-media-container {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .product__media-list .product__media-item .media {
+    margin: 0;
+    width: 100%;
+  }
+
+  .product__media-list .product__media-item img {
+    width: 100%;
+  }
+
+  /* Position slider-component as relative for absolute dots positioning */
+  .product__media-wrapper slider-component {
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Mobile dots indicator - using Horizon theme approach */
+  .product__media-dots {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.8rem;
+    z-index: 3;
+    padding: 0.8rem 1.2rem;
+    mix-blend-mode: difference;
+  }
+
+  .product__media-dot {
+    all: unset;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+
+  .product__media-dot-inner {
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.4);
+    transition: background-color 0.2s ease;
+  }
+
+  .product__media-dot.is-active .product__media-dot-inner {
+    background-color: #fff;
   }
 }
 
