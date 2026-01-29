@@ -102,6 +102,11 @@
                       break
                     endif
                   endfor
+
+                  # Skip if secondary image is the same as featured image
+                  if secondary_image.id == variant_sel.featured_media.id
+                    assign secondary_image = blank
+                  endif
                 %}
 
                 {%- if secondary_image != blank -%}
