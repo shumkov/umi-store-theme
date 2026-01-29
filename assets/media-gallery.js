@@ -9,12 +9,21 @@ if (!customElements.get('media-gallery')) {
           viewer: this.querySelector('[id^="GalleryViewer"]'),
           thumbnails: this.querySelector('[id^="GalleryThumbnails"]'),
           hoverThumbnails: this.querySelector('.product__hover-thumbnails'),
+          mobileDots: this.querySelector('.product__media-dots'),
         };
         this.mql = window.matchMedia('(min-width: 750px)');
         this.desktopMql = window.matchMedia('(min-width: 990px)');
 
         // Initialize hover thumbnails for desktop
         this.initHoverThumbnails();
+
+        // Initialize mobile dots
+        this.initMobileDots();
+
+        // Listen for slide changes to update dots
+        if (this.elements.viewer) {
+          this.elements.viewer.addEventListener('slideChanged', this.onSlideChangedForDots.bind(this));
+        }
 
         if (!this.elements.thumbnails) return;
 
@@ -42,6 +51,50 @@ if (!customElements.get('media-gallery')) {
         if (this.desktopMql.matches) {
           this.initScrollObserver();
         }
+      }
+
+      initMobileDots() {
+        if (!this.elements.mobileDots || !this.elements.viewer) return;
+
+        const dots = this.elements.mobileDots.querySelectorAll('.product__media-dot');
+        const slider = this.elements.viewer.querySelector('[id^="Slider-"]');
+
+        if (!slider) return;
+
+        dots.forEach((dot) => {
+          dot.addEventListener('click', () => {
+            const slideIndex = parseInt(dot.dataset.slideIndex, 10);
+            this.scrollToSlideByIndex(slideIndex);
+          });
+        });
+      }
+
+      scrollToSlideByIndex(index) {
+        const slider = this.elements.viewer.querySelector('[id^="Slider-"]');
+        const slides = this.elements.viewer.querySelectorAll('[id^="Slide-"]');
+
+        if (!slider || !slides[index]) return;
+
+        const targetSlide = slides[index];
+        slider.scrollTo({
+          left: targetSlide.offsetLeft - slider.offsetLeft,
+          behavior: 'smooth',
+        });
+      }
+
+      onSlideChangedForDots(event) {
+        if (!this.elements.mobileDots) return;
+
+        const currentPage = event.detail.currentPage;
+        const dots = this.elements.mobileDots.querySelectorAll('.product__media-dot');
+
+        dots.forEach((dot, index) => {
+          if (index === currentPage - 1) {
+            dot.classList.add('is-active');
+          } else {
+            dot.classList.remove('is-active');
+          }
+        });
       }
 
       initScrollObserver() {
