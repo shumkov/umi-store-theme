@@ -305,7 +305,7 @@
     {%- comment -%} Mobile dots indicator - shown only on mobile {%- endcomment -%}
     {%- unless hide_mobile_slider -%}
       {%- if media_count > 1 -%}
-        <div class="product__media-dots medium-hide large-up-hide" aria-hidden="true">
+        <div class="product__media-dots medium-hide large-up-hide">
           {%- for i in (1..media_count) -%}
             <button
               type="button"

@@ -730,6 +730,12 @@ a.product__text {
     height: 2.2rem;
   }
 
+  .product__media-dot:focus-visible {
+    outline: 2px solid white;
+    outline-offset: 2px;
+    border-radius: 50%;
+  }
+
   .product__media-dot-inner {
     width: 0.8rem;
     height: 0.8rem;
